@@ -1,0 +1,11 @@
+backend/
+supabase/
+docs/
+*.md
+.git/
+.vscode/
+*.pyc
+__pycache__/
+venv/
+.env
+.env.local

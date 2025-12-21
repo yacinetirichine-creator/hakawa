@@ -35,6 +35,8 @@ app.add_middleware(
         settings.frontend_url,
         "http://localhost:3000",
         "http://localhost:5173",
+        "https://hakawa.app",
+        "https://www.hakawa.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -43,7 +45,17 @@ app.add_middleware(
 
 # Trusted Host Middleware (protection contre Host Header Injection)
 app.add_middleware(
-    TrustedHostMiddleware, allowed_hosts=["localhost", "127.0.0.1", "*.hakawa.com"]
+    TrustedHostMiddleware,
+    allowed_hosts=[
+        "localhost",
+        "127.0.0.1",
+        "hakawa.app",
+        "www.hakawa.app",
+        "*.hakawa.app",
+        "*.railway.app",
+        "*.up.railway.app",
+        "*.onrender.com",
+    ],
 )
 
 
