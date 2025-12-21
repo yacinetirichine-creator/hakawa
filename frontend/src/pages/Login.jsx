@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { Moon, Mail, Lock, Chrome, AlertCircle } from "lucide-react";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import { Card } from "../components/ui/Card";
+import { Loader } from "../components/ui/Loader";
+import { motion } from "framer-motion";
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { signIn, signInWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
@@ -18,7 +25,7 @@ export default function Login() {
 
     // Validation basique
     if (!email || !password) {
-      setError("Veuillez remplir tous les champs");
+      setError(t("auth.fill_all_fields"));
       setLoading(false);
       return;
     }
@@ -26,7 +33,7 @@ export default function Login() {
     const { data, error } = await signIn(email, password);
 
     if (error) {
-      setError(error.message || "Email ou mot de passe incorrect");
+      setError(error.message || t("auth.error_login"));
       setLoading(false);
     } else {
       navigate("/dashboard");
@@ -40,136 +47,116 @@ export default function Login() {
     const { error } = await signInWithGoogle();
 
     if (error) {
-      setError(error.message || "Erreur lors de la connexion avec Google");
+      setError(error.message || t("auth.error_google"));
       setLoading(false);
     }
   };
 
   return (
-      return (
     <div className="min-h-screen bg-gradient-orient flex items-center justify-center p-4 font-body">
-      <div className="max-w-md w-full">
-        {/* Logo */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-md w-full"
+      >
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 group">
-            <div className="bg-orient-gold p-3 rounded-full text-white shadow-lg group-hover:scale-110 transition">
-              <Moon className="w-8 h-8 fill-current" />
+          <Link to="/" className="inline-block">
+            <div className="bg-white/20 backdrop-blur-sm p-4 rounded-full inline-flex items-center justify-center mb-4 shadow-lg border border-white/30">
+              <Moon className="w-10 h-10 text-white fill-current" />
             </div>
-            <span className="text-3xl font-display font-bold text-orient-dark">
-              HAKAWA
-            </span>
           </Link>
+          <h1 className="text-3xl font-display font-bold text-white mb-2">
+            {t("auth.login_title")}
+          </h1>
+          <p className="text-white/80">{t("auth.login_subtitle")}</p>
         </div>
 
-        {/* Card */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 border border-white/50">
-          <h2 className="text-2xl font-bold text-orient-dark mb-6 text-center">
-            Bon retour parmi nous !
-          </h2>
-          {/* Erreur */}
+        <Card className="p-8 shadow-2xl border-white/50 backdrop-blur-sm bg-white/95">
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl flex items-center gap-3 text-red-600 text-sm">
+              <AlertCircle className="w-5 h-5 shrink-0" />
+              {error}
             </div>
           )}
 
-          {/* Bouton Google */}
-          <button
-            onClick={handleGoogleLogin}
-            disabled={loading}
-            className="w-full mb-6 px-6 py-3 bg-white border-2 border-gray-100 text-gray-700 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-gray-50 hover:border-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Chrome className="w-5 h-5" />
-            Continuer avec Google
-          </button>
+          <form onSubmit={handleEmailLogin} className="space-y-6">
+            <Input
+              label={t("auth.email")}
+              type="email"
+              placeholder="ton@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              icon={<Mail className="w-5 h-5" />}
+              required
+            />
 
-          {/* Séparateur */}
-          <div className="relative mb-6">
+            <Input
+              label={t("auth.password")}
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              icon={<Lock className="w-5 h-5" />}
+              required
+            />
+
+            <div className="flex items-center justify-between text-sm">
+              <label className="flex items-center gap-2 cursor-pointer text-gray-600">
+                <input
+                  type="checkbox"
+                  className="rounded border-gray-300 text-orient-purple focus:ring-orient-purple"
+                />
+                {t("auth.remember_me")}
+              </label>
+              <Link
+                to="/forgot-password"
+                className="text-orient-purple hover:text-orient-blue font-medium"
+              >
+                {t("auth.forgot_password")}
+              </Link>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full py-6 text-lg"
+              disabled={loading}
+            >
+              {loading ? <Loader size="sm" /> : t("auth.login_button")}
+            </Button>
+          </form>
+
+          <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-400 font-medium">ou</span>
+              <span className="px-4 bg-white text-gray-500">
+                {t("auth.or_continue_with")}
+              </span>
             </div>
           </div>
 
-          {/* Formulaire email/password */}
-          <form onSubmit={handleEmailLogin} className="space-y-4">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-orient-text text-sm font-bold mb-2"
-              >
-                Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="votre@email.com"
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orient-purple focus:ring-0 transition"
-                  disabled={loading}
-                  autoComplete="email"
-                />
-              </div>
-            </div>
+          <Button
+            variant="outline"
+            className="w-full py-6"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+          >
+            <Chrome className="w-5 h-5 mr-2" />
+            {t("auth.google")}
+          </Button>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-orient-text text-sm font-bold mb-2"
-              >
-                Mot de passe
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orient-purple focus:ring-0 transition"
-                  disabled={loading}
-                  autoComplete="current-password"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full px-6 py-4 bg-gradient-to-r from-orient-purple to-orient-blue text-white rounded-xl font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          <div className="mt-8 text-center text-sm text-gray-600">
+            {t("auth.no_account")}{" "}
+            <Link
+              to="/register"
+              className="text-orient-purple font-bold hover:underline"
             >
-              {loading ? "Connexion..." : "Se connecter"}
-            </button>
-          </form>
-
-          {/* Lien inscription */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-500 text-sm">
-              Pas encore de compte ?{" "}
-              <Link
-                to="/register"
-                className="text-orient-purple hover:text-orient-blue font-bold"
-              >
-                Créer un compte
-              </Link>
-            </p>
+              {t("auth.create_account")}
+            </Link>
           </div>
-        </div>
-
-        {/* Lien retour */}
-        <div className="mt-6 text-center">
-          <Link to="/" className="text-orient-text/60 hover:text-orient-purple text-sm font-medium transition">
-            ← Retour à l'accueil
-          </Link>
-        </div>
-      </div>
+        </Card>
+      </motion.div>
     </div>
   );
 }

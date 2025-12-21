@@ -6,7 +6,17 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from app.config import settings
-from app.api import auth, projects, chapters, generation, images, exports
+from app.api import (
+    auth,
+    projects,
+    chapters,
+    generation,
+    images,
+    exports,
+    conversations,
+    profiles,
+    chatbot,
+)
 from app.utils.security import SECURITY_HEADERS, check_rate_limit
 import time
 
@@ -79,12 +89,17 @@ async def health():
 
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(profiles.router, prefix="/api/profiles", tags=["profiles"])
 app.include_router(projects.router, prefix="/api/projects", tags=["projects"])
 app.include_router(
     chapters.router, prefix="/api/projects/{project_id}/chapters", tags=["chapters"]
 )
+app.include_router(
+    conversations.router, prefix="/api/conversations", tags=["conversations"]
+)
 app.include_router(generation.router, prefix="/api/generation", tags=["generation"])
 app.include_router(images.router, prefix="/api/images", tags=["images"])
+app.include_router(chatbot.router)
 app.include_router(exports.router, prefix="/api/exports", tags=["exports"])
 
 

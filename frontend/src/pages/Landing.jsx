@@ -1,4 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Button } from "../components/ui/Button";
+import { LanguageSwitcher } from "../components/ui/LanguageSwitcher";
 import {
   Moon,
   Sparkles,
@@ -10,18 +15,30 @@ import {
 } from "lucide-react";
 
 export default function Landing() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-gradient-orient font-body text-orient-text overflow-hidden">
       {/* Décoration Nuages Flottants */}
-      <div className="absolute top-20 left-10 text-white/40 animate-float pointer-events-none">
+      <motion.div
+        animate={{ x: [0, 20, 0], y: [0, -10, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-20 left-10 text-white/40 pointer-events-none"
+      >
         <Cloud size={120} fill="currentColor" />
-      </div>
-      <div
-        className="absolute top-40 right-20 text-white/30 animate-float pointer-events-none"
-        style={{ animationDelay: "2s" }}
+      </motion.div>
+      <motion.div
+        animate={{ x: [0, -30, 0], y: [0, 15, 0] }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+        className="absolute top-40 right-20 text-white/30 pointer-events-none"
       >
         <Cloud size={180} fill="currentColor" />
-      </div>
+      </motion.div>
 
       {/* Header */}
       <header className="container mx-auto px-4 py-6 relative z-10">
@@ -31,16 +48,22 @@ export default function Landing() {
               <Moon className="w-6 h-6 fill-current" />
             </div>
             <span className="text-3xl font-display font-bold text-orient-dark tracking-wide">
-              HAKAWA
+              {t("app.name")}
             </span>
           </div>
-          <div className="flex gap-4">
-            <button className="hidden md:block px-6 py-2 text-orient-dark font-bold hover:text-orient-purple transition">
-              Découvrir
-            </button>
-            <button className="px-8 py-3 bg-orient-gold text-white rounded-full font-bold hover:bg-yellow-400 transition shadow-lg transform hover:scale-105 active:scale-95">
-              Connexion
-            </button>
+          <div className="flex gap-4 items-center">
+            <LanguageSwitcher />
+            <Link to="/login">
+              <Button
+                variant="ghost"
+                className="text-orient-dark font-bold hover:text-orient-purple"
+              >
+                {t("nav.login")}
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button className="shadow-lg">{t("nav.register")}</Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -50,38 +73,32 @@ export default function Landing() {
         <div className="text-center max-w-5xl mx-auto">
           <div className="inline-block mb-6 animate-bounce">
             <span className="px-6 py-2 bg-orient-purple/10 text-orient-purple rounded-full font-bold text-sm border border-orient-purple/20">
-              ✨ La magie commence ici
+              ✨ {t("app.tagline")}
             </span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 text-orient-dark leading-tight">
-            Deviens le Héros <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orient-purple to-orient-blue">
-              de ton Histoire
-            </span>
+            {t("landing.hero_title")}
           </h1>
 
           <p className="text-xl md:text-2xl text-orient-text/80 mb-12 leading-relaxed max-w-3xl mx-auto font-medium">
-            Imagine des contes merveilleux, crée des personnages fantastiques et
-            transforme tes rêves en vrais livres !
-            <br />
-            <span className="text-sm mt-4 block text-orient-purple font-bold">
-              Idéal pour les enfants de 6 à 99 ans 🎈
-            </span>
+            {t("landing.hero_subtitle")}
           </p>
 
           <div className="flex flex-col md:flex-row gap-6 justify-center mb-24 items-center">
-            <button className="group relative px-10 py-5 bg-gradient-to-r from-orient-purple to-orient-blue text-white rounded-full font-bold text-xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1 overflow-hidden">
-              <span className="relative z-10 flex items-center gap-3">
-                <Wand2 className="w-6 h-6 group-hover:rotate-12 transition" />
-                Commencer l'Aventure
-              </span>
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </button>
+            <Link to="/register">
+              <button className="group relative px-10 py-5 bg-gradient-to-r from-orient-purple to-orient-blue text-white rounded-full font-bold text-xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1 overflow-hidden">
+                <span className="relative z-10 flex items-center gap-3">
+                  <Wand2 className="w-6 h-6 group-hover:rotate-12 transition" />
+                  {t("landing.cta_start")}
+                </span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              </button>
+            </Link>
 
             <button className="px-10 py-5 bg-white text-orient-dark rounded-full font-bold text-xl shadow-md hover:shadow-lg border-2 border-orient-sand hover:border-orient-gold transition flex items-center gap-3">
               <BookOpen className="w-6 h-6 text-orient-gold" />
-              Voir un exemple
+              {t("landing.cta_demo")}
             </button>
           </div>
 
@@ -93,11 +110,10 @@ export default function Landing() {
                 <Sparkles className="w-10 h-10 text-orient-blue" />
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-orient-dark">
-                1. Imagine
+                {t("landing.feature1_title")}
               </h3>
               <p className="text-orient-text text-lg">
-                Raconte ton idée à notre génie magique. Il t'aidera à trouver
-                l'inspiration !
+                {t("landing.feature1_desc")}
               </p>
             </div>
 
@@ -107,11 +123,10 @@ export default function Landing() {
                 <Wand2 className="w-10 h-10 text-orient-purple" />
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-orient-dark">
-                2. Crée
+                {t("landing.feature2_title")}
               </h3>
               <p className="text-orient-text text-lg">
-                L'IA écrit les textes et dessine les images. Tu es le chef
-                d'orchestre !
+                {t("landing.feature2_desc")}
               </p>
             </div>
 
@@ -121,11 +136,10 @@ export default function Landing() {
                 <Rocket className="w-10 h-10 text-orient-gold" />
               </div>
               <h3 className="text-2xl font-display font-bold mb-4 text-orient-dark">
-                3. Décolle
+                {t("landing.feature3_title")}
               </h3>
               <p className="text-orient-text text-lg">
-                Reçois ton livre en PDF ou publie-le pour que le monde entier le
-                lise.
+                {t("landing.feature3_desc")}
               </p>
             </div>
           </div>
@@ -155,7 +169,7 @@ export default function Landing() {
               الحكواتي
             </p>
             <p className="text-orient-text">
-              © 2025 Hakawa - Fait avec ❤️ et un peu de poussière d'étoiles
+              © 2025 {t("app.name")} - {t("footer.tagline")}
             </p>
           </div>
         </footer>

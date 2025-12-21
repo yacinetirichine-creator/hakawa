@@ -54,6 +54,12 @@ class UserProfile(BaseModel):
     updated_at: datetime
 
 
+class UserProfileUpdate(BaseModel):
+    full_name: Optional[str] = None
+    avatar_url: Optional[str] = None
+    is_child_mode: Optional[bool] = None
+
+
 # Project Schemas
 class ProjectCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
@@ -157,3 +163,87 @@ class ImageGenerationRequest(BaseModel):
 class ImageGenerationResponse(BaseModel):
     image_url: str
     style: ImageStyle
+
+
+# Conversation Schemas
+class MessageCreate(BaseModel):
+    content: str = Field(..., min_length=1)
+
+
+class ConversationMessage(BaseModel):
+    role: str  # 'user' or 'assistant'
+    content: str
+    timestamp: str
+
+
+class ConversationCreate(BaseModel):
+    project_id: str
+    phase: str = "exploration"
+
+
+class Conversation(BaseModel):
+    id: str
+    project_id: str
+    phase: str
+    messages: List[dict] = []
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# Illustration Schemas
+class IllustrationCreate(BaseModel):
+    prompt: str = Field(..., min_length=1)
+    style: Optional[ImageStyle] = ImageStyle.REALISTIC
+    negative_prompt: Optional[str] = None
+    chapter_id: Optional[str] = None
+    position: Optional[str] = "inline"
+
+
+class IllustrationUpdate(BaseModel):
+    position: Optional[str] = None
+    caption: Optional[str] = None
+
+
+class Illustration(BaseModel):
+    id: str
+    project_id: str
+    chapter_id: Optional[str] = None
+    image_url: str
+    thumbnail_url: Optional[str] = None
+    prompt: str
+    negative_prompt: Optional[str] = None
+    model: Optional[str] = None
+    style: Optional[str] = None
+    width: Optional[int] = None
+    height: Optional[int] = None
+    position: Optional[str] = None
+    caption: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# Export Schemas
+class ExportCreate(BaseModel):
+    format: str = Field(..., pattern="^(pdf_interior|pdf_cover|epub|mobi|full_kdp)$")
+    config: Optional[dict] = None
+
+
+class Export(BaseModel):
+    id: str
+    project_id: str
+    format: str
+    file_url: Optional[str] = None
+    file_size: Optional[int] = None
+    config: Optional[dict] = None
+    status: str
+    error_message: Optional[str] = None
+    created_at: datetime
+    completed_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True

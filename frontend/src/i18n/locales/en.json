@@ -1,0 +1,152 @@
+{
+  "app": {
+    "name": "Hakawa",
+    "tagline": "Create your magical stories"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "create": "Create",
+    "explore": "Explore",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Sign up"
+  },
+  "landing": {
+    "hero_title": "Create your own magical stories",
+    "hero_subtitle": "The AI that transforms your imagination into illustrated children's books",
+    "cta_start": "Start for free",
+    "cta_demo": "See demo",
+    "feature1_title": "Tell your story",
+    "feature1_desc": "Share your idea and Hakawa enriches it with magic",
+    "feature2_title": "Creative AI",
+    "feature2_desc": "Our AI generates unique text and illustrations",
+    "feature3_title": "Publish easily",
+    "feature3_desc": "Format ready for Amazon KDP in a few clicks"
+  },
+  "auth": {
+    "login_title": "Welcome back!",
+    "login_subtitle": "Ready to continue your story?",
+    "register_title": "Join the adventure",
+    "register_subtitle": "Create your account and start writing",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "full_name": "Full name",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot password?",
+    "login_button": "Log in",
+    "register_button": "Create my account",
+    "or_continue_with": "Or continue with",
+    "google": "Google",
+    "no_account": "Don't have an account?",
+    "has_account": "Already have an account?",
+    "create_account": "Create an account",
+    "password_min": "Password must contain at least 8 characters",
+    "password_uppercase": "Password must contain at least one uppercase letter",
+    "password_lowercase": "Password must contain at least one lowercase letter",
+    "password_number": "Password must contain at least one number",
+    "password_mismatch": "Passwords do not match",
+    "success_created": "Account created successfully! Redirecting...",
+    "error_login": "Invalid email or password",
+    "error_register": "An error occurred during registration",
+    "error_google": "Error signing in with Google",
+    "fill_all_fields": "Please fill in all fields"
+  },
+  "dashboard": {
+    "welcome": "Hello, {{name}}! 👋",
+    "subtitle": "Ready to create new magical stories?",
+    "new_project": "New Project",
+    "my_stories": "My Stories",
+    "no_projects": "No projects yet",
+    "no_projects_desc": "Start by creating your first story!",
+    "delete_confirm": "Are you sure you want to delete this project?",
+    "deleted_success": "Project deleted",
+    "delete_error": "Error deleting project",
+    "load_error": "Unable to load your projects"
+  },
+  "project": {
+    "new_title": "Let's start a new story",
+    "new_subtitle": "Tell us a bit more about what you want to create",
+    "title_label": "Story title",
+    "title_placeholder": "e.g., The Secret of the Blue Mountain",
+    "pitch_label": "What is your story about?",
+    "pitch_placeholder": "Tell us your idea in a few sentences...",
+    "genre_label": "Genre",
+    "style_label": "Style",
+    "audience_label": "Target audience",
+    "continue": "Continue",
+    "back": "Back",
+    "create": "Create my project",
+    "created_success": "Project created successfully!",
+    "create_error": "Error creating project",
+    "fill_required": "Please fill in all required fields"
+  },
+  "genres": {
+    "fantasy": "Fantasy",
+    "scifi": "Science Fiction",
+    "adventure": "Adventure",
+    "mystery": "Mystery",
+    "romance": "Romance",
+    "horror": "Horror",
+    "comedy": "Comedy",
+    "drama": "Drama"
+  },
+  "styles": {
+    "roman": "Novel",
+    "manga": "Manga",
+    "bd": "Comic Book",
+    "comic": "Comics",
+    "enfants": "Children's Book"
+  },
+  "audiences": {
+    "children": "Children (3-10 years)",
+    "young_adult": "Teens / Young Adults",
+    "adult": "Adults"
+  },
+  "cookies": {
+    "title": "🍪 We use cookies",
+    "description": "We use cookies to improve your experience, analyze traffic, and personalize content. By clicking \"Accept all\", you consent to the use of ALL cookies. You can also customize your preferences.",
+    "accept_all": "Accept all",
+    "reject_non_essential": "Reject non-essential",
+    "customize": "Customize",
+    "save_preferences": "Save my preferences",
+    "essential": "Essential cookies",
+    "essential_desc": "Necessary for the site to function (authentication, cart, etc.). Always enabled.",
+    "analytics": "Analytics cookies",
+    "analytics_desc": "Help us understand how you use the site to improve it.",
+    "marketing": "Marketing cookies",
+    "marketing_desc": "Used to personalize ads and measure their effectiveness.",
+    "privacy_policy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "chatbot": {
+    "title": "Hakawa Assistant",
+    "subtitle": "I'm here to help you",
+    "placeholder": "Ask me a question...",
+    "send": "Send",
+    "welcome": "Hello! I'm your Hakawa assistant. How can I help you today?",
+    "examples": [
+      "How do I create my first book?",
+      "What genres are available?",
+      "How do I export to KDP?"
+    ]
+  },
+  "footer": {
+    "tagline": "Transform your imagination into magical stories",
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "company": "Company",
+    "about": "About",
+    "blog": "Blog",
+    "careers": "Careers",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "rights": "All rights reserved"
+  }
+}
