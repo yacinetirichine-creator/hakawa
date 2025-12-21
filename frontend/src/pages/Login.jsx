@@ -46,27 +46,31 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-bleu-nuit to-nuit-dark flex items-center justify-center p-4">
+      return (
+    <div className="min-h-screen bg-gradient-orient flex items-center justify-center p-4 font-body">
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-4">
-            <Moon className="w-10 h-10 text-or" />
-            <span className="text-3xl font-display font-bold text-or">
+          <Link to="/" className="inline-flex items-center gap-2 group">
+            <div className="bg-orient-gold p-3 rounded-full text-white shadow-lg group-hover:scale-110 transition">
+              <Moon className="w-8 h-8 fill-current" />
+            </div>
+            <span className="text-3xl font-display font-bold text-orient-dark">
               HAKAWA
             </span>
           </Link>
-          <h1 className="text-2xl font-display text-parchemin">Connexion</h1>
-          <p className="text-sable mt-2">Bienvenue sur votre atelier créatif</p>
         </div>
 
-        {/* Carte de connexion */}
-        <div className="bg-nuit-light rounded-xl p-8 border border-or/20 shadow-glow">
+        {/* Card */}
+        <div className="bg-white rounded-3xl shadow-xl p-8 border border-white/50">
+          <h2 className="text-2xl font-bold text-orient-dark mb-6 text-center">
+            Bon retour parmi nous !
+          </h2>
           {/* Erreur */}
           {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-              <p className="text-red-300 text-sm">{error}</p>
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <p className="text-red-600 text-sm">{error}</p>
             </div>
           )}
 
@@ -74,7 +78,7 @@ export default function Login() {
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full mb-6 px-6 py-3 bg-white text-gray-800 rounded-lg font-semibold flex items-center justify-center gap-3 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full mb-6 px-6 py-3 bg-white border-2 border-gray-100 text-gray-700 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-gray-50 hover:border-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Chrome className="w-5 h-5" />
             Continuer avec Google
@@ -83,10 +87,10 @@ export default function Login() {
           {/* Séparateur */}
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-or/20"></div>
+              <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-nuit-light text-sable">ou</span>
+              <span className="px-4 bg-white text-gray-400 font-medium">ou</span>
             </div>
           </div>
 
@@ -95,19 +99,19 @@ export default function Login() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sable text-sm font-medium mb-2"
+                className="block text-orient-text text-sm font-bold mb-2"
               >
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-or/50" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="votre@email.com"
-                  className="w-full pl-11 pr-4 py-3 bg-bleu-nuit border border-or/30 rounded-lg text-parchemin placeholder-sable/50 focus:outline-none focus:border-or focus:ring-2 focus:ring-or/20"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orient-purple focus:ring-0 transition"
                   disabled={loading}
                   autoComplete="email"
                 />
@@ -117,19 +121,19 @@ export default function Login() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sable text-sm font-medium mb-2"
+                className="block text-orient-text text-sm font-bold mb-2"
               >
                 Mot de passe
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-or/50" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3 bg-bleu-nuit border border-or/30 rounded-lg text-parchemin placeholder-sable/50 focus:outline-none focus:border-or focus:ring-2 focus:ring-or/20"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orient-purple focus:ring-0 transition"
                   disabled={loading}
                   autoComplete="current-password"
                 />
@@ -139,7 +143,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full px-6 py-3 bg-or text-bleu-nuit rounded-lg font-semibold hover:bg-gold-light transition disabled:opacity-50 disabled:cursor-not-allowed shadow-glow"
+              className="w-full px-6 py-4 bg-gradient-to-r from-orient-purple to-orient-blue text-white rounded-xl font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Connexion..." : "Se connecter"}
             </button>
@@ -147,11 +151,11 @@ export default function Login() {
 
           {/* Lien inscription */}
           <div className="mt-6 text-center">
-            <p className="text-sable text-sm">
+            <p className="text-gray-500 text-sm">
               Pas encore de compte ?{" "}
               <Link
                 to="/register"
-                className="text-or hover:text-gold-light font-semibold"
+                className="text-orient-purple hover:text-orient-blue font-bold"
               >
                 Créer un compte
               </Link>
@@ -161,7 +165,7 @@ export default function Login() {
 
         {/* Lien retour */}
         <div className="mt-6 text-center">
-          <Link to="/" className="text-sable hover:text-or text-sm transition">
+          <Link to="/" className="text-orient-text/60 hover:text-orient-purple text-sm font-medium transition">
             ← Retour à l'accueil
           </Link>
         </div>
