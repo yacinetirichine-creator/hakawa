@@ -2,10 +2,13 @@
 Hakawa API - Main application
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from app.config import settings
 from app.api import auth, projects, chapters, generation, images, exports
+from app.utils.security import SECURITY_HEADERS, check_rate_limit
+import time
 
 # Create FastAPI app
 app = FastAPI(
@@ -18,11 +21,43 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.frontend_url, "http://localhost:3000"],
+    allow_origins=[
+        settings.frontend_url,
+        "http://localhost:3000",
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Trusted Host Middleware (protection contre Host Header Injection)
+app.add_middleware(
+    TrustedHostMiddleware, allowed_hosts=["localhost", "127.0.0.1", "*.hakawa.com"]
+)
+
+
+# Middleware de sécurité global
+@app.middleware("http")
+async def security_middleware(request: Request, call_next):
+    """Ajoute les headers de sécurité et vérifie le rate limiting"""
+
+    # Rate limiting
+    await check_rate_limit(request)
+
+    # Process request
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+
+    # Ajouter headers de sécurité
+    for header, value in SECURITY_HEADERS.items():
+        response.headers[header] = value
+
+    # Ajouter temps de traitement
+    response.headers["X-Process-Time"] = str(process_time)
+
+    return response
 
 
 @app.get("/")

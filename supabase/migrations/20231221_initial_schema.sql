@@ -17,6 +17,8 @@ CREATE TABLE public.profiles (
     subscription_expires_at TIMESTAMPTZ,
     credits_illustrations INTEGER DEFAULT 0,
     is_child_mode BOOLEAN DEFAULT FALSE,
+    is_admin BOOLEAN DEFAULT FALSE,
+    last_login TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
