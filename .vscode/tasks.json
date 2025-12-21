@@ -1,0 +1,99 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🌙 Hakawa - Installer Backend",
+      "type": "shell",
+      "command": "cd backend && python -m venv venv && .\\venv\\Scripts\\activate && pip install -r requirements.txt",
+      "windows": {
+        "command": "cd backend && python -m venv venv && .\\venv\\Scripts\\activate && pip install -r requirements.txt"
+      },
+      "linux": {
+        "command": "cd backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
+      },
+      "osx": {
+        "command": "cd backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🔥 Hakawa - Démarrer Backend",
+      "type": "shell",
+      "command": "cd backend && .\\venv\\Scripts\\activate && uvicorn app.main:app --reload --port 8000",
+      "windows": {
+        "command": "cd backend && .\\venv\\Scripts\\activate && uvicorn app.main:app --reload --port 8000"
+      },
+      "linux": {
+        "command": "cd backend && source venv/bin/activate && uvicorn app.main:app --reload --port 8000"
+      },
+      "osx": {
+        "command": "cd backend && source venv/bin/activate && uvicorn app.main:app --reload --port 8000"
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "📦 Hakawa - Installer Frontend",
+      "type": "shell",
+      "command": "cd frontend && npm install",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "⚡ Hakawa - Démarrer Frontend",
+      "type": "shell",
+      "command": "cd frontend && npm run dev",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "🌙 HAKAWA - TOUT INSTALLER",
+      "dependsOn": [
+        "🌙 Hakawa - Installer Backend",
+        "📦 Hakawa - Installer Frontend"
+      ],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "✨ HAKAWA - TOUT DÉMARRER",
+      "dependsOn": [
+        "🔥 Hakawa - Démarrer Backend",
+        "⚡ Hakawa - Démarrer Frontend"
+      ],
+      "dependsOrder": "parallel",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📖 Hakawa - Ouvrir Documentation",
+      "type": "shell",
+      "command": "code docs/BRAND_BOOK.md docs/UI_UX_GUIDE.md docs/BUSINESS_PLAN.md docs/TECH_SPECS.md",
+      "group": "none",
+      "presentation": {
+        "reveal": "silent"
+      }
+    }
+  ]
+}

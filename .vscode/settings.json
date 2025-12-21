@@ -1,0 +1,57 @@
+{
+  // ════════════════════════════════════════════════════
+  // HAKAWA - VS CODE SETTINGS
+  // ════════════════════════════════════════════════════
+
+  // Editor
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false,
+  
+  // Python
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+  
+  // Files
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/venv": true
+  },
+  "files.associations": {
+    "*.jsx": "javascriptreact"
+  },
+  
+  // Tailwind CSS
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "javascriptreact": "javascriptreact"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  
+  // Emmet
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  
+  // Terminal
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  
+  // Theme suggestion (optionnel)
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#0F1B2E",
+    "titleBar.activeBackground": "#0F1B2E",
+    "titleBar.activeForeground": "#D4A853"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "recommendations": [
+    // Python
+    "ms-python.python",
+    "ms-python.black-formatter",
+    "ms-python.debugpy",
+    
+    // JavaScript/React
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "dsznajder.es7-react-js-snippets",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+    
+    // Git
+    "eamodio.gitlens",
+    
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    
+    // REST API
+    "humao.rest-client",
+    
+    // Icons
+    "vscode-icons-team.vscode-icons",
+    
+    // Supabase
+    "supabase.supabase-sql"
+  ]
+}

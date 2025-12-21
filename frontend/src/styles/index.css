@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Philosopher:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
+@layer base {
+  body {
+    @apply bg-bleu-nuit text-parchemin font-body;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(212, 168, 83, 0.5);
+  }
+
+  .border-glow {
+    box-shadow: 0 0 15px rgba(212, 168, 83, 0.3);
+  }
+}
