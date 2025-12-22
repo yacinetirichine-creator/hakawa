@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Button } from "../components/ui/Button";
 import { LanguageSwitcher } from "../components/ui/LanguageSwitcher";
+import { DemoModal } from "../components/ui/DemoModal";
 import {
   Moon,
   Sparkles,
@@ -16,9 +17,12 @@ import {
 
 export default function Landing() {
   const { t } = useTranslation();
+  const [showDemo, setShowDemo] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-orient font-body text-orient-text overflow-hidden">
+      <DemoModal isOpen={showDemo} onClose={() => setShowDemo(false)} />
+
       {/* Décoration Nuages Flottants */}
       <motion.div
         animate={{ x: [0, 20, 0], y: [0, -10, 0] }}
@@ -96,7 +100,10 @@ export default function Landing() {
               </button>
             </Link>
 
-            <button className="px-10 py-5 bg-white text-orient-dark rounded-full font-bold text-xl shadow-md hover:shadow-lg border-2 border-orient-sand hover:border-orient-gold transition flex items-center gap-3">
+            <button
+              onClick={() => setShowDemo(true)}
+              className="px-10 py-5 bg-white text-orient-dark rounded-full font-bold text-xl shadow-md hover:shadow-lg border-2 border-orient-sand hover:border-orient-gold transition flex items-center gap-3"
+            >
               <BookOpen className="w-6 h-6 text-orient-gold" />
               {t("landing.cta_demo")}
             </button>
