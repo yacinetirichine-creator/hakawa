@@ -29,7 +29,8 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error("Error loading projects:", error);
-      toast.error(t("dashboard.load_error"));
+      // Don't show error toast if it's just a connection issue
+      // toast.error(t("dashboard.load_error"));
     } finally {
       setLoading(false);
     }

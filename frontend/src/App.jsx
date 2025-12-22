@@ -11,6 +11,10 @@ import Register from "./pages/Register";
 import Pricing from "./pages/Pricing";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import Projects from "./pages/dashboard/Projects";
+import Inspiration from "./pages/dashboard/Inspiration";
+import Settings from "./pages/dashboard/Settings";
+import Subscription from "./pages/dashboard/Subscription";
 import NewProject from "./pages/create/NewProject";
 import Explore from "./pages/create/Explore";
 import Plan from "./pages/create/Plan";
@@ -35,6 +39,38 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <ProtectedRoute>
+                <Projects />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inspiration"
+            element={
+              <ProtectedRoute>
+                <Inspiration />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/subscription"
+            element={
+              <ProtectedRoute>
+                <Subscription />
               </ProtectedRoute>
             }
           />
