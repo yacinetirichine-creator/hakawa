@@ -4,7 +4,7 @@ import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { Badge } from "../components/ui/Badge";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 
 export default function Pricing() {
@@ -13,10 +13,21 @@ export default function Pricing() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const planParam = searchParams.get("plan");
 
   useEffect(() => {
     fetchPricing();
   }, []);
+
+  useEffect(() => {
+    if (plans.length > 0 && planParam && user) {
+      const selectedPlan = plans.find((p) => p.id === planParam);
+      if (selectedPlan) {
+        handleSubscribe(selectedPlan);
+      }
+    }
+  }, [plans, planParam, user]);
 
   const fetchPricing = async () => {
     try {

@@ -9,6 +9,7 @@ import { ValueProposition } from "../components/ui/ValueProposition";
 import { StorySection } from "../components/ui/StorySection";
 import { HowItWorks } from "../components/ui/HowItWorks";
 import { UseCasesSection } from "../components/ui/UseCasesSection";
+import { PricingSection } from "../components/ui/PricingSection";
 import {
   Moon,
   Sparkles,
@@ -106,14 +107,6 @@ export default function Landing() {
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               </button>
             </Link>
-
-            <button
-              onClick={() => setShowDemo(true)}
-              className="px-10 py-5 bg-white text-orient-dark rounded-full font-bold text-xl shadow-md hover:shadow-lg border-2 border-orient-sand hover:border-orient-gold transition flex items-center gap-3"
-            >
-              <BookOpen className="w-6 h-6 text-orient-gold" />
-              {t("landing.cta_demo")}
-            </button>
           </div>
 
           {/* Features Cards */}
@@ -168,6 +161,9 @@ export default function Landing() {
 
       {/* Use Cases Section */}
       <UseCasesSection />
+
+      {/* Pricing Section */}
+      <PricingSection />
 
       {/* Footer Décoratif */}
       <div className="relative mt-20">

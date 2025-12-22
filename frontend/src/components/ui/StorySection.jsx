@@ -4,9 +4,9 @@ import { Scroll, Moon, Star, Sparkles } from "lucide-react";
 
 export const StorySection = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-orient-dark text-white">
+    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#0f0c29] via-[#302b63] to-[#24243e] text-white">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern

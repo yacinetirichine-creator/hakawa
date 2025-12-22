@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import {
@@ -20,6 +20,8 @@ import { motion } from "framer-motion";
 export default function Register() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const plan = searchParams.get("plan");
   const { signUp, signInWithGoogle } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -99,7 +101,11 @@ export default function Register() {
       setLoading(false);
       // Rediriger après 2 secondes
       setTimeout(() => {
-        navigate("/dashboard");
+        if (plan) {
+          navigate(`/pricing?plan=${plan}`);
+        } else {
+          navigate("/dashboard");
+        }
       }, 2000);
     }
   };
@@ -108,7 +114,11 @@ export default function Register() {
     setError("");
     setLoading(true);
 
-    const { error } = await signInWithGoogle();
+    const redirectTo = plan
+      ? `${window.location.origin}/pricing?plan=${plan}`
+      : `${window.location.origin}/dashboard`;
+
+    const { error } = await signInWithGoogle(redirectTo);
 
     if (error) {
       setError(error.message || t("auth.error_google"));
