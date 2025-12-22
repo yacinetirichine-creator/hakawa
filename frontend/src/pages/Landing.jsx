@@ -7,6 +7,7 @@ import { LanguageSwitcher } from "../components/ui/LanguageSwitcher";
 import { DemoModal } from "../components/ui/DemoModal";
 import { ValueProposition } from "../components/ui/ValueProposition";
 import { StorySection } from "../components/ui/StorySection";
+import { HowItWorks } from "../components/ui/HowItWorks";
 import {
   Moon,
   Sparkles,
@@ -73,6 +74,9 @@ export default function Landing() {
           </div>
         </div>
       </header>
+
+      {/* Story Section (First) */}
+      <StorySection />
 
       {/* Hero */}
       <main className="container mx-auto px-4 py-12 md:py-20 relative z-10">
@@ -158,8 +162,8 @@ export default function Landing() {
       {/* Value Proposition Section */}
       <ValueProposition />
 
-      {/* Story Section */}
-      <StorySection />
+      {/* How It Works Section */}
+      <HowItWorks />
 
       {/* Footer Décoratif */}
       <div className="relative mt-20">
