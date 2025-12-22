@@ -1,11 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { Layout } from "../../components/layout/Layout";
 import { Button } from "../../components/ui/Button";
+import { Loader } from "../../components/ui/Loader";
+import { ProjectList } from "../../components/project/ProjectList";
+import { projectsService } from "../../services/projects";
 import { Plus, BookOpen, Calendar, Star } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Projects() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadProjects();
+  }, [user]);
+
+  const loadProjects = async () => {
+    try {
+      if (user) {
+        const data = await projectsService.getAll(user.id);
+        setProjects(data || []);
+      }
+    } catch (error) {
+      console.error("Error loading projects:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
+      try {
+        await projectsService.delete(projectId, user.id);
+        setProjects(projects.filter((p) => p.id !== projectId));
+        toast.success("Projet supprimé avec succès");
+      } catch (error) {
+        toast.error("Erreur lors de la suppression du projet");
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center py-20">
+          <Loader size="lg" />
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -26,62 +73,66 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Empty State */}
-      <div className="flex flex-col items-center justify-center py-20 px-4">
-        <div className="bg-orient-cloud/30 p-8 rounded-full mb-6">
-          <BookOpen className="w-20 h-20 text-orient-purple" />
-        </div>
-        <h2 className="text-2xl font-display font-bold text-orient-dark mb-3">
-          Aucun projet pour le moment
-        </h2>
-        <p className="text-gray-600 text-center max-w-md mb-8">
-          Commencez votre première histoire magique en créant un nouveau projet.
-          L'IA vous accompagnera à chaque étape !
-        </p>
-        <Button
-          onClick={() => navigate("/create/new")}
-          size="lg"
-          className="bg-gradient-to-r from-orient-purple to-orient-blue"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Créer mon premier projet
-        </Button>
+      {projects.length > 0 ? (
+        <ProjectList projects={projects} onDelete={handleDeleteProject} />
+      ) : (
+        /* Empty State */
+        <div className="flex flex-col items-center justify-center py-20 px-4">
+          <div className="bg-orient-cloud/30 p-8 rounded-full mb-6">
+            <BookOpen className="w-20 h-20 text-orient-purple" />
+          </div>
+          <h2 className="text-2xl font-display font-bold text-orient-dark mb-3">
+            Aucun projet pour le moment
+          </h2>
+          <p className="text-gray-600 text-center max-w-md mb-8">
+            Commencez votre première histoire magique en créant un nouveau
+            projet. L'IA vous accompagnera à chaque étape !
+          </p>
+          <Button
+            onClick={() => navigate("/create/new")}
+            size="lg"
+            className="bg-gradient-to-r from-orient-purple to-orient-blue"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            Créer mon premier projet
+          </Button>
 
-        {/* Features Preview */}
-        <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl">
-          <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-            <div className="bg-orient-sky/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Star className="w-6 h-6 text-orient-blue" />
+          {/* Features Preview */}
+          <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl">
+            <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
+              <div className="bg-orient-sky/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Star className="w-6 h-6 text-orient-blue" />
+              </div>
+              <h3 className="font-bold text-orient-dark mb-2">IA Créative</h3>
+              <p className="text-sm text-gray-600">
+                Générez du contenu unique adapté à votre style
+              </p>
             </div>
-            <h3 className="font-bold text-orient-dark mb-2">IA Créative</h3>
-            <p className="text-sm text-gray-600">
-              Générez du contenu unique adapté à votre style
-            </p>
-          </div>
-          <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-            <div className="bg-orient-cloud/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="w-6 h-6 text-orient-purple" />
+            <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
+              <div className="bg-orient-cloud/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-6 h-6 text-orient-purple" />
+              </div>
+              <h3 className="font-bold text-orient-dark mb-2">
+                Chapitres illimités
+              </h3>
+              <p className="text-sm text-gray-600">
+                Organisez votre histoire en chapitres structurés
+              </p>
             </div>
-            <h3 className="font-bold text-orient-dark mb-2">
-              Chapitres illimités
-            </h3>
-            <p className="text-sm text-gray-600">
-              Organisez votre histoire en chapitres structurés
-            </p>
-          </div>
-          <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-            <div className="bg-orient-sand/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-6 h-6 text-orient-gold" />
+            <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
+              <div className="bg-orient-sand/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-6 h-6 text-orient-gold" />
+              </div>
+              <h3 className="font-bold text-orient-dark mb-2">
+                Suivi de progression
+              </h3>
+              <p className="text-sm text-gray-600">
+                Suivez l'avancement de chaque projet facilement
+              </p>
             </div>
-            <h3 className="font-bold text-orient-dark mb-2">
-              Suivi de progression
-            </h3>
-            <p className="text-sm text-gray-600">
-              Suivez l'avancement de chaque projet facilement
-            </p>
           </div>
         </div>
-      </div>
+      )}
     </Layout>
   );
 }
