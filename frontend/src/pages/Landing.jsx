@@ -6,6 +6,7 @@ import { Button } from "../components/ui/Button";
 import { LanguageSwitcher } from "../components/ui/LanguageSwitcher";
 import { DemoModal } from "../components/ui/DemoModal";
 import { ValueProposition } from "../components/ui/ValueProposition";
+import { StorySection } from "../components/ui/StorySection";
 import {
   Moon,
   Sparkles,
@@ -156,6 +157,9 @@ export default function Landing() {
 
       {/* Value Proposition Section */}
       <ValueProposition />
+
+      {/* Story Section */}
+      <StorySection />
 
       {/* Footer Décoratif */}
       <div className="relative mt-20">
