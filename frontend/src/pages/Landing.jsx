@@ -107,6 +107,12 @@ export default function Landing() {
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               </button>
             </Link>
+
+            <Link to="/pricing">
+              <Button variant="outline" size="lg" className="rounded-full">
+                Voir les plans
+              </Button>
+            </Link>
           </div>
 
           {/* Features Cards */}

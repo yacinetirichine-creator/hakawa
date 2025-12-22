@@ -1,10 +1,20 @@
 import axios from "axios";
 import { supabase } from "./supabase";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const stripTrailingSlash = (value) => (value ? value.replace(/\/+$/, "") : "");
+
+// We expect backend routes to live under `/api/*` (Vercel rewrite → Railway).
+// - In prod, prefer same-origin `/api`.
+// - In dev, default to local backend `http://localhost:8000/api`.
+const API_ORIGIN = stripTrailingSlash(import.meta.env.VITE_API_URL);
+const API_BASE_URL = API_ORIGIN
+  ? `${API_ORIGIN}/api`
+  : import.meta.env.DEV
+  ? "http://localhost:8000/api"
+  : "/api";
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

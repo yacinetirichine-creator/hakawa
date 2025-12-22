@@ -4,30 +4,32 @@ import { Scroll, Moon, Star, Sparkles } from "lucide-react";
 
 export const StorySection = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#0f0c29] via-[#302b63] to-[#24243e] text-white">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="arabesque"
-              x="0"
-              y="0"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M20 0L40 20L20 40L0 20Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-              />
-              <circle cx="20" cy="20" r="5" fill="currentColor" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#arabesque)" />
-        </svg>
+    <section className="py-24 relative overflow-hidden bg-bleu-nuit text-white">
+      {/* Background (storytelling night) */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-orient-purple/25 via-transparent to-black/40" />
+        <div className="absolute -top-40 -left-40 w-[520px] h-[520px] bg-orient-gold/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-48 -right-48 w-[620px] h-[620px] bg-orient-blue/15 rounded-full blur-3xl" />
+        <div className="absolute inset-0 opacity-25">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="story-stars"
+                x="0"
+                y="0"
+                width="64"
+                height="64"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="10" cy="12" r="1" fill="currentColor" />
+                <circle cx="42" cy="18" r="1.2" fill="currentColor" />
+                <circle cx="30" cy="44" r="1" fill="currentColor" />
+                <circle cx="56" cy="52" r="0.9" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#story-stars)" />
+          </svg>
+        </div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -90,6 +92,83 @@ export const StorySection = () => {
               </div>
 
               <div className="space-y-8">
+                {/* Illustration: conteur assis */}
+                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                  <svg
+                    viewBox="0 0 320 220"
+                    className="w-full h-auto"
+                    role="img"
+                    aria-label="Un conteur assis qui raconte une histoire"
+                  >
+                    <g
+                      className="text-orient-gold"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M34 178 C78 140, 118 140, 156 178" />
+                      <path d="M166 178 C198 145, 236 145, 286 178" />
+                      <path
+                        d="M68 160 C92 138, 118 134, 138 150"
+                        opacity="0.65"
+                      />
+                      <path
+                        d="M206 152 C230 132, 254 132, 276 150"
+                        opacity="0.65"
+                      />
+                    </g>
+
+                    <g
+                      className="text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {/* Head */}
+                      <circle cx="160" cy="78" r="18" />
+                      {/* Body */}
+                      <path d="M160 96 L160 136" />
+                      <path d="M144 118 L176 118" />
+                      {/* Arms holding a book */}
+                      <path d="M144 118 C132 126, 126 136, 120 146" />
+                      <path d="M176 118 C188 126, 194 136, 200 146" />
+                      <path d="M120 146 L150 150" />
+                      <path d="M200 146 L170 150" />
+
+                      {/* Book */}
+                      <path d="M150 150 L150 172" />
+                      <path d="M170 150 L170 172" />
+                      <path d="M150 150 C156 146, 164 146, 170 150" />
+                      <path d="M150 172 C156 168, 164 168, 170 172" />
+
+                      {/* Seated legs */}
+                      <path d="M160 136 C146 148, 138 160, 132 174" />
+                      <path d="M160 136 C174 148, 182 160, 188 174" />
+                      <path d="M132 174 C146 178, 158 178, 170 174" />
+                      <path d="M188 174 C174 182, 156 184, 140 180" />
+                    </g>
+
+                    {/* Sparkles */}
+                    <g
+                      className="text-orient-blue"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      opacity="0.9"
+                    >
+                      <path d="M52 64 L58 70 L52 76 L46 70 Z" />
+                      <path d="M276 62 L282 68 L276 74 L270 68 Z" />
+                      <path d="M246 34 L250 38 L246 42 L242 38 Z" />
+                    </g>
+                  </svg>
+                </div>
+
                 <div className="flex items-start gap-4">
                   <div className="bg-orient-purple/20 p-3 rounded-xl">
                     <Star className="text-orient-purple w-6 h-6" />

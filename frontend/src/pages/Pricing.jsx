@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import { Check, Sparkles, Book, Building2 } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import { Badge } from "../components/ui/Badge";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 
 export default function Pricing() {
-  const [billingPeriod, setBillingPeriod] = useState("monthly");
+  const [searchParams] = useSearchParams();
+  const [billingPeriod, setBillingPeriod] = useState(() => {
+    const billing = searchParams.get("billing");
+    return billing === "annual" ? "annual" : "monthly";
+  });
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const planParam = searchParams.get("plan");
 
   useEffect(() => {
@@ -42,7 +44,11 @@ export default function Pricing() {
 
   const handleSubscribe = async (plan) => {
     if (!user) {
-      navigate("/login?redirect=/pricing");
+      navigate(
+        `/register?plan=${encodeURIComponent(
+          plan.id
+        )}&billing=${encodeURIComponent(billingPeriod)}`
+      );
       return;
     }
 
@@ -137,95 +143,202 @@ export default function Pricing() {
         </div>
 
         {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {plans.map((plan) => {
-            const savings = getSavings(plan);
-            const price =
-              billingPeriod === "monthly"
-                ? plan.price_monthly
-                : plan.price_annual;
-            const pricePerMonth =
-              billingPeriod === "annual"
-                ? (plan.price_annual / 12).toFixed(2)
-                : price;
-
-            return (
-              <Card
-                key={plan.id}
-                className={`relative overflow-hidden ${
-                  plan.popular
-                    ? "border-2 border-purple-500 shadow-xl scale-105"
-                    : "border border-gray-200 dark:border-gray-700"
-                }`}
+        {plans.length === 0 ? (
+          <div className="max-w-xl mx-auto mb-12">
+            <Card className="p-8 border border-gray-200 dark:border-gray-700 text-center">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Plans indisponibles
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Impossible de charger les plans pour le moment. Réessayez.
+              </p>
+              <Button
+                onClick={fetchPricing}
+                className="bg-purple-600 hover:bg-purple-700 text-white"
               >
-                {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
-                    ⭐ Populaire
-                  </div>
-                )}
+                Réessayer
+              </Button>
+            </Card>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {plans.map((plan) => {
+              const savings = getSavings(plan);
+              const price =
+                billingPeriod === "monthly"
+                  ? plan.price_monthly
+                  : plan.price_annual;
+              const pricePerMonth =
+                billingPeriod === "annual"
+                  ? (plan.price_annual / 12).toFixed(2)
+                  : price;
 
-                <div className="p-6">
-                  {/* Plan Header */}
-                  <div className="mb-6">
-                    <div className="text-4xl mb-2">{getPlanIcon(plan.id)}</div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                      {plan.name}
-                    </h3>
-
-                    {/* Price */}
-                    <div className="mb-4">
-                      {price === 0 ? (
-                        <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                          Gratuit
-                        </div>
-                      ) : (
-                        <>
-                          <div className="flex items-baseline">
-                            <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                              {price}€
-                            </span>
-                            <span className="text-gray-600 dark:text-gray-400 ml-2">
-                              /{billingPeriod === "monthly" ? "mois" : "an"}
-                            </span>
-                          </div>
-                          {billingPeriod === "annual" && savings && (
-                            <div className="text-sm text-green-600 dark:text-green-400 mt-1">
-                              Économisez {savings.amount}€ ({savings.percentage}
-                              %)
-                            </div>
-                          )}
-                        </>
-                      )}
+              return (
+                <Card
+                  key={plan.id}
+                  className={`relative overflow-hidden ${
+                    plan.popular
+                      ? "border-2 border-purple-500 shadow-xl scale-105"
+                      : "border border-gray-200 dark:border-gray-700"
+                  }`}
+                >
+                  {plan.popular && (
+                    <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
+                      ⭐ Populaire
                     </div>
+                  )}
+
+                  <div className="p-6">
+                    {/* Plan Header */}
+                    <div className="mb-6">
+                      <div className="text-4xl mb-2">
+                        {getPlanIcon(plan.id)}
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                        {plan.name}
+                      </h3>
+
+                      {/* Price */}
+                      <div className="mb-4">
+                        {price === 0 ? (
+                          <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                            Gratuit
+                          </div>
+                        ) : (
+                          <>
+                            <div className="flex items-baseline">
+                              <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                                {price}€
+                              </span>
+                              <span className="text-gray-600 dark:text-gray-400 ml-2">
+                                /{billingPeriod === "monthly" ? "mois" : "an"}
+                              </span>
+                            </div>
+                            {billingPeriod === "annual" && savings && (
+                              <div className="text-sm text-green-600 dark:text-green-400 mt-1">
+                                Économisez {savings.amount}€ (
+                                {savings.percentage}
+                                %)
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Features */}
+                    <ul className="space-y-3 mb-6">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-start">
+                          <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                          <span className="text-sm text-gray-700 dark:text-gray-300">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA Button */}
+                    <Button
+                      onClick={() => handleSubscribe(plan)}
+                      className={`w-full ${
+                        plan.popular
+                          ? "bg-purple-600 hover:bg-purple-700 text-white"
+                          : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white"
+                      }`}
+                    >
+                      {plan.id === "free" ? "Commencer" : "Essayer 7 jours"}
+                    </Button>
                   </div>
+                </Card>
+              );
+            })}
+          </div>
+        )}
 
-                  {/* Features */}
-                  <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-700 dark:text-gray-300">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+        {/* Avantages vs concurrence */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-12">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+            Pourquoi Hakawa
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-8 text-center">
+            Pensé pour la création d'histoires jeunesse, de l'idée jusqu'à
+            l'export.
+          </p>
 
-                  {/* CTA Button */}
-                  <Button
-                    onClick={() => handleSubscribe(plan)}
-                    className={`w-full ${
-                      plan.popular
-                        ? "bg-purple-600 hover:bg-purple-700 text-white"
-                        : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white"
-                    }`}
-                  >
-                    {plan.id === "free" ? "Commencer" : "Essayer 7 jours"}
-                  </Button>
-                </div>
-              </Card>
-            );
-          })}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="p-6 border border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                Hakawa
+              </h3>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Parcours guidé: idée → chapitres → illustrations → export
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Exports prêts pour l'édition (PDF / EPUB / KDP)
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700 dark:text-gray-300">
+                    IA calibrée pour les enfants (ton, vocabulaire, structure)
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Un style graphique cohérent d'une illustration à l'autre
+                  </span>
+                </li>
+              </ul>
+            </Card>
+
+            <Card className="p-6 border border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                Solutions génériques
+              </h3>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start">
+                  <span className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-gray-400">
+                    •
+                  </span>
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Outils séparés: écriture d'un côté, images de l'autre
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-gray-400">
+                    •
+                  </span>
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Exports souvent manuels (mise en page, formats, packaging)
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-gray-400">
+                    •
+                  </span>
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Peu optimisé pour la jeunesse (niveau, rythme, sécurité)
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-gray-400">
+                    •
+                  </span>
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Styles d'images difficiles à garder cohérents
+                  </span>
+                </li>
+              </ul>
+            </Card>
+          </div>
         </div>
 
         {/* Features Comparison */}

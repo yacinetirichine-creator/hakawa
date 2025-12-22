@@ -22,6 +22,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const plan = searchParams.get("plan");
+  const billing = searchParams.get("billing");
   const { signUp, signInWithGoogle } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -102,7 +103,10 @@ export default function Register() {
       // Rediriger après 2 secondes
       setTimeout(() => {
         if (plan) {
-          navigate(`/pricing?plan=${plan}`);
+          const params = new URLSearchParams();
+          params.set("plan", plan);
+          if (billing === "annual") params.set("billing", "annual");
+          navigate(`/pricing?${params.toString()}`);
         } else {
           navigate("/dashboard");
         }
@@ -114,9 +118,13 @@ export default function Register() {
     setError("");
     setLoading(true);
 
-    const redirectTo = plan
-      ? `${window.location.origin}/pricing?plan=${plan}`
-      : `${window.location.origin}/dashboard`;
+    const redirectTo = (() => {
+      if (!plan) return `${window.location.origin}/dashboard`;
+      const params = new URLSearchParams();
+      params.set("plan", plan);
+      if (billing === "annual") params.set("billing", "annual");
+      return `${window.location.origin}/pricing?${params.toString()}`;
+    })();
 
     const { error } = await signInWithGoogle(redirectTo);
 

@@ -31,7 +31,11 @@ export const PricingSection = () => {
   const handleSubscribe = async (plan) => {
     if (!user) {
       // Redirect to register with plan param
-      navigate(`/register?plan=${plan.id}`);
+      navigate(
+        `/register?plan=${encodeURIComponent(
+          plan.id
+        )}&billing=${encodeURIComponent(billingPeriod)}`
+      );
       return;
     }
 

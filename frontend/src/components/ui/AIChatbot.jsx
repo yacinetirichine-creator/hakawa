@@ -36,7 +36,7 @@ export function AIChatbot() {
 
     try {
       // Call backend chatbot API
-      const response = await api.post("/api/chatbot", {
+      const response = await api.post("/chatbot", {
         message: userMessage,
         context: "hakawa_assistant",
       });
