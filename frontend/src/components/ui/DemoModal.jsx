@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, BookOpen } from "lucide-react";
 
 export const DemoModal = ({ isOpen, onClose }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -41,33 +43,47 @@ export const DemoModal = ({ isOpen, onClose }) => {
                 </button>
               </div>
 
-              {/* Content - Video Placeholder */}
-              <div className="relative aspect-video bg-gray-900 flex items-center justify-center group cursor-pointer overflow-hidden">
-                {/* Abstract Background Animation */}
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-                  <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-                  <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-                </div>
+              {/* Content - Video Player */}
+              <div className="relative aspect-video bg-gray-900 flex items-center justify-center group overflow-hidden">
+                {!isPlaying ? (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                    onClick={() => setIsPlaying(true)}
+                  >
+                    {/* Abstract Background Animation */}
+                    <div className="absolute inset-0 opacity-30">
+                      <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                      <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                    </div>
 
-                {/* Play Button */}
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="relative z-10 w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 shadow-2xl group-hover:bg-white/20 transition-all"
-                >
-                  <Play size={32} className="text-white ml-1 fill-white" />
-                </motion.div>
+                    {/* Play Button */}
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="relative z-10 w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 shadow-2xl group-hover:bg-white/20 transition-all"
+                    >
+                      <Play size={32} className="text-white ml-1 fill-white" />
+                    </motion.div>
 
-                <div className="absolute bottom-8 left-8 right-8 text-center">
-                  <p className="text-white/80 text-lg font-medium">
-                    La vidéo de démonstration sera bientôt disponible.
-                  </p>
-                  <p className="text-white/60 text-sm mt-2">
-                    En attendant, créez un compte gratuitement pour explorer la
-                    magie !
-                  </p>
-                </div>
+                    <div className="absolute bottom-8 left-8 right-8 text-center">
+                      <p className="text-white/80 text-lg font-medium">
+                        Lancer la démonstration
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                    title="Hakawa Demo"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0"
+                  ></iframe>
+                )}
               </div>
 
               {/* Footer */}
