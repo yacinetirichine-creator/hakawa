@@ -11,7 +11,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Application settings"""
 
-    model_config = SettingsConfigDict(case_sensitive=False)
+    model_config = SettingsConfigDict(
+        case_sensitive=False,
+        env_file=".env",
+        env_file_encoding="utf-8",
+    )
 
     # Application
     app_name: str = "Hakawa API"
