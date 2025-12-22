@@ -4,10 +4,12 @@ Chatbot API endpoints
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from app.services.ai_service import generate_text
+from app.services.ai_service import AIService
 from typing import Optional
 
 router = APIRouter(prefix="/api/chatbot", tags=["chatbot"])
+
+ai_service = AIService()
 
 
 class ChatMessage(BaseModel):
@@ -57,11 +59,8 @@ async def chat(message: ChatMessage):
             f"{system_prompt}\n\nUtilisateur : {message.message}\n\nAssistant :"
         )
 
-        response = await generate_text(
-            prompt=full_prompt, max_tokens=300, temperature=0.7
-        )
-
-        return ChatResponse(response=response)
+        result = await ai_service.generate_text(prompt=full_prompt, max_tokens=300)
+        return ChatResponse(response=result.text)
 
     except Exception as e:
         raise HTTPException(

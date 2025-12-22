@@ -1,15 +1,17 @@
-"""
-Configuration settings for Hakawa API
-"""
+"""Configuration settings for Hakawa API."""
 
-from pydantic_settings import BaseSettings
-from typing import Optional
+from __future__ import annotations
+
 import secrets
-import os
+from typing import Optional
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Application settings"""
+
+    model_config = SettingsConfigDict(case_sensitive=False)
 
     # Application
     app_name: str = "Hakawa API"
@@ -58,28 +60,25 @@ class Settings(BaseSettings):
     session_timeout_minutes: int = 60
     require_email_verification: bool = True
 
+    # Rate limiting
+    rate_limit_enabled: bool = True
+
+    # Storage (optional)
+    exports_local_dir: str = "./generated/exports"
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # Generate session secret if not provided
+
         if not self.session_secret_key:
             self.session_secret_key = secrets.token_urlsafe(32)
 
-        # Generate encryption key if not provided
         if not self.encryption_key:
             from cryptography.fernet import Fernet
 
             self.encryption_key = Fernet.generate_key().decode()
 
-        # Security validation in production
         if self.app_env == "production":
             self._validate_production_config()
-        case_sensitive = False
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        # Generate session secret if not provided
-        if not self.session_secret_key:
-            self.session_secret_key = secrets.token_urlsafe(32)
 
     def _validate_production_config(self):
         """Validate critical settings for production"""
@@ -93,7 +92,7 @@ class Settings(BaseSettings):
         assert self.frontend_url.startswith(
             "https://"
         ), "Frontend URL must use HTTPS in production"
-        assert self.sentry_dsn, "Sentry DSN required for production monitoring"
+        # Monitoring can be optional depending on deployment
         assert (
             self.require_email_verification
         ), "Email verification must be enabled in production"

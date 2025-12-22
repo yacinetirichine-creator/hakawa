@@ -2,16 +2,19 @@
 Text generation routes
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from app.models.schemas import GenerationRequest, GenerationResponse
 from app.services.ai_service import AIService
+from app.utils.admin import get_user_profile
 
 router = APIRouter()
 ai_service = AIService()
 
 
 @router.post("/text", response_model=GenerationResponse)
-async def generate_text(request: GenerationRequest):
+async def generate_text(
+    request: GenerationRequest, profile: dict = Depends(get_user_profile)
+):
     """Generate text using Claude AI"""
     try:
         result = await ai_service.generate_text(
@@ -25,7 +28,9 @@ async def generate_text(request: GenerationRequest):
 
 
 @router.post("/continue")
-async def continue_writing(text: str, max_tokens: int = 500):
+async def continue_writing(
+    text: str, max_tokens: int = 500, profile: dict = Depends(get_user_profile)
+):
     """Continue writing from existing text"""
     try:
         result = await ai_service.continue_text(text, max_tokens)
@@ -35,7 +40,11 @@ async def continue_writing(text: str, max_tokens: int = 500):
 
 
 @router.post("/improve")
-async def improve_text(text: str, instruction: str = "Améliore ce texte"):
+async def improve_text(
+    text: str,
+    instruction: str = "Améliore ce texte",
+    profile: dict = Depends(get_user_profile),
+):
     """Improve existing text"""
     try:
         result = await ai_service.improve_text(text, instruction)

@@ -2,8 +2,8 @@
 Image generation routes
 """
 
-from fastapi import APIRouter, HTTPException
-from typing import List
+from fastapi import APIRouter, HTTPException, Depends
+from typing import List, Optional
 from app.models.schemas import (
     ImageGenerationRequest,
     ImageGenerationResponse,
@@ -13,13 +13,20 @@ from app.models.schemas import (
 )
 from app.services.image_service import ImageService
 from app.utils.supabase import supabase
+from app.utils.admin import (
+    get_user_profile,
+    assert_project_access,
+    assert_illustration_access,
+)
 
 router = APIRouter()
 image_service = ImageService()
 
 
 @router.post("/generate", response_model=ImageGenerationResponse)
-async def generate_image(request: ImageGenerationRequest):
+async def generate_image(
+    request: ImageGenerationRequest, profile: dict = Depends(get_user_profile)
+):
     """Generate an image using Replicate"""
     try:
         result = await image_service.generate_image(
@@ -33,9 +40,14 @@ async def generate_image(request: ImageGenerationRequest):
 
 
 @router.get("/{project_id}/illustrations", response_model=List[Illustration])
-async def get_project_illustrations(project_id: str, user_id: str):
+async def get_project_illustrations(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Get all illustrations for a project"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("illustrations")
             .select("*")
@@ -50,10 +62,14 @@ async def get_project_illustrations(project_id: str, user_id: str):
 
 @router.post("/{project_id}/illustrations", response_model=Illustration)
 async def create_illustration(
-    project_id: str, illustration: IllustrationCreate, user_id: str
+    project_id: str,
+    illustration: IllustrationCreate,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
 ):
     """Create/Generate a new illustration"""
     try:
+        assert_project_access(profile, project_id)
         # Generate image
         image_result = await image_service.generate_image(
             prompt=illustration.prompt,
@@ -81,10 +97,14 @@ async def create_illustration(
 
 @router.put("/illustrations/{illustration_id}", response_model=Illustration)
 async def update_illustration(
-    illustration_id: str, illustration: IllustrationUpdate, user_id: str
+    illustration_id: str,
+    illustration: IllustrationUpdate,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
 ):
     """Update illustration metadata"""
     try:
+        assert_illustration_access(profile, illustration_id)
         update_data = illustration.model_dump(exclude_unset=True)
 
         result = (
@@ -105,9 +125,14 @@ async def update_illustration(
 
 
 @router.delete("/illustrations/{illustration_id}")
-async def delete_illustration(illustration_id: str, user_id: str):
+async def delete_illustration(
+    illustration_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Delete an illustration"""
     try:
+        assert_illustration_access(profile, illustration_id)
         result = (
             supabase.table("illustrations").delete().eq("id", illustration_id).execute()
         )
@@ -122,10 +147,15 @@ async def delete_illustration(illustration_id: str, user_id: str):
 
 @router.put("/{project_id}/cover/{position}")
 async def set_cover_image(
-    project_id: str, position: str, illustration_id: str, user_id: str
+    project_id: str,
+    position: str,
+    illustration_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
 ):
     """Set an illustration as cover (front or back)"""
     try:
+        assert_project_access(profile, project_id)
         if position not in ["front", "back"]:
             raise HTTPException(
                 status_code=400, detail="Position must be 'front' or 'back'"
@@ -134,13 +164,16 @@ async def set_cover_image(
         # Get illustration
         illustration = (
             supabase.table("illustrations")
-            .select("image_url")
+            .select("image_url,project_id")
             .eq("id", illustration_id)
             .execute()
         )
 
         if not illustration.data:
             raise HTTPException(status_code=404, detail="Illustration not found")
+
+        if illustration.data[0].get("project_id") != project_id:
+            raise HTTPException(status_code=400, detail="Illustration not in project")
 
         # Update project
         field_name = f"cover_{position}_url"

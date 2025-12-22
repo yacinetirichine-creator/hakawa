@@ -12,15 +12,21 @@ from app.models.schemas import (
 )
 from app.utils.supabase import supabase
 from app.services.ai_service import AIService
+from app.utils.admin import get_user_profile, assert_project_access
 
 router = APIRouter()
 ai_service = AIService()
 
 
 @router.get("/{project_id}", response_model=Conversation)
-async def get_conversation(project_id: str, user_id: str):
+async def get_conversation(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Get conversation for a project"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("conversations")
             .select("*")
@@ -49,9 +55,15 @@ async def get_conversation(project_id: str, user_id: str):
 
 
 @router.post("/{project_id}/message")
-async def send_message(project_id: str, message: MessageCreate, user_id: str):
+async def send_message(
+    project_id: str,
+    message: MessageCreate,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Send a message and get AI response"""
     try:
+        assert_project_access(profile, project_id)
         # Get current conversation
         conv_result = (
             supabase.table("conversations")
@@ -105,9 +117,15 @@ async def send_message(project_id: str, message: MessageCreate, user_id: str):
 
 
 @router.put("/{project_id}/phase")
-async def update_phase(project_id: str, phase: str, user_id: str):
+async def update_phase(
+    project_id: str,
+    phase: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Update conversation phase"""
     try:
+        assert_project_access(profile, project_id)
         valid_phases = ["exploration", "planning", "writing", "illustration"]
         if phase not in valid_phases:
             raise HTTPException(
@@ -132,9 +150,14 @@ async def update_phase(project_id: str, phase: str, user_id: str):
 
 
 @router.delete("/{project_id}")
-async def clear_conversation(project_id: str, user_id: str):
+async def clear_conversation(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Clear conversation messages"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("conversations")
             .update({"messages": []})

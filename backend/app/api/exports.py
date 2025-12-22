@@ -2,21 +2,32 @@
 Export routes - PDF/EPUB generation
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import FileResponse
-from typing import List
+from typing import List, Optional
+import os
 from app.models.schemas import ExportCreate, Export
 from app.utils.supabase import supabase
 from app.services.export_service import ExportService
+from app.utils.admin import (
+    get_user_profile,
+    assert_project_access,
+    assert_export_access,
+)
 
 router = APIRouter()
 export_service = ExportService()
 
 
 @router.get("/{project_id}", response_model=List[Export])
-async def get_project_exports(project_id: str, user_id: str):
+async def get_project_exports(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Get all exports for a project"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("exports")
             .select("*")
@@ -30,9 +41,14 @@ async def get_project_exports(project_id: str, user_id: str):
 
 
 @router.post("/pdf/{project_id}")
-async def export_pdf(project_id: str, user_id: str):
+async def export_pdf(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Generate PDF export"""
     try:
+        assert_project_access(profile, project_id)
         # Create export record
         export_data = {
             "project_id": project_id,
@@ -64,9 +80,14 @@ async def export_pdf(project_id: str, user_id: str):
 
 
 @router.post("/epub/{project_id}")
-async def export_epub(project_id: str, user_id: str):
+async def export_epub(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Generate EPUB export"""
     try:
+        assert_project_access(profile, project_id)
         # Create export record
         export_data = {
             "project_id": project_id,
@@ -98,14 +119,15 @@ async def export_epub(project_id: str, user_id: str):
 
 
 @router.get("/status/{export_id}", response_model=Export)
-async def get_export_status(export_id: str, user_id: str):
+async def get_export_status(
+    export_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Get export status"""
     try:
-        result = supabase.table("exports").select("*").eq("id", export_id).execute()
-
-        if not result.data:
-            raise HTTPException(status_code=404, detail="Export not found")
-
+        export = assert_export_access(profile, export_id)
+        result = supabase.table("exports").select("*").eq("id", export["id"]).execute()
         return result.data[0]
     except HTTPException:
         raise
@@ -114,16 +136,14 @@ async def get_export_status(export_id: str, user_id: str):
 
 
 @router.get("/download/{export_id}")
-async def download_export(export_id: str, user_id: str):
+async def download_export(
+    export_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Download export file"""
     try:
-        # Get export record
-        result = supabase.table("exports").select("*").eq("id", export_id).execute()
-
-        if not result.data:
-            raise HTTPException(status_code=404, detail="Export not found")
-
-        export = result.data[0]
+        export = assert_export_access(profile, export_id)
 
         if export["status"] != "completed":
             raise HTTPException(
@@ -133,8 +153,19 @@ async def download_export(export_id: str, user_id: str):
         if not export.get("file_url"):
             raise HTTPException(status_code=404, detail="File not found")
 
-        # In production, redirect to Supabase Storage URL or serve file
-        return {"download_url": export["file_url"]}
+        file_url = export["file_url"]
+        # If it's a local path, serve it
+        if file_url.startswith("/") or file_url.startswith("./"):
+            file_path = file_url
+            if file_url.startswith("./"):
+                file_path = os.path.join(os.getcwd(), file_url[2:])
+            if not os.path.exists(file_path):
+                raise HTTPException(status_code=404, detail="File not found")
+            filename = os.path.basename(file_path)
+            return FileResponse(path=file_path, filename=filename)
+
+        # Otherwise return URL (e.g., Supabase Storage public URL)
+        return {"download_url": file_url}
 
     except HTTPException:
         raise
@@ -143,9 +174,14 @@ async def download_export(export_id: str, user_id: str):
 
 
 @router.post("/kdp-package/{project_id}")
-async def export_kdp_package(project_id: str, user_id: str):
+async def export_kdp_package(
+    project_id: str,
+    user_id: Optional[str] = None,
+    profile: dict = Depends(get_user_profile),
+):
     """Generate complete KDP package (interior + cover PDFs)"""
     try:
+        assert_project_access(profile, project_id)
         # Create export record
         export_data = {
             "project_id": project_id,

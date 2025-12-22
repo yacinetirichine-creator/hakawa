@@ -88,6 +88,64 @@ def is_admin_user(profile: dict) -> bool:
     return profile.get("is_admin", False) == True
 
 
+def assert_project_access(profile: dict, project_id: str) -> None:
+    """Ensure the authenticated user can access a project."""
+    try:
+        query = supabase.table("projects").select("id,user_id").eq("id", project_id)
+        if not is_admin_user(profile):
+            query = query.eq("user_id", profile.get("id"))
+
+        result = query.execute()
+        if not result.data:
+            raise HTTPException(status_code=404, detail="Project not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Project access check failed: {e}")
+
+
+def assert_illustration_access(profile: dict, illustration_id: str) -> dict:
+    """Ensure the user can access an illustration and return it."""
+    try:
+        illustration = (
+            supabase.table("illustrations")
+            .select("id,project_id")
+            .eq("id", illustration_id)
+            .execute()
+        )
+        if not illustration.data:
+            raise HTTPException(status_code=404, detail="Illustration not found")
+
+        project_id = illustration.data[0]["project_id"]
+        assert_project_access(profile, project_id)
+        return illustration.data[0]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Illustration access check failed: {e}"
+        )
+
+
+def assert_export_access(profile: dict, export_id: str) -> dict:
+    """Ensure the user can access an export and return it."""
+    try:
+        export = (
+            supabase.table("exports")
+            .select("id,project_id,status,file_url,format")
+            .eq("id", export_id)
+            .execute()
+        )
+        if not export.data:
+            raise HTTPException(status_code=404, detail="Export not found")
+        assert_project_access(profile, export.data[0]["project_id"])
+        return export.data[0]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Export access check failed: {e}")
+
+
 def has_unlimited_access(profile: dict) -> bool:
     """
     Vérifie si un utilisateur a un accès illimité

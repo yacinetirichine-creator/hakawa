@@ -50,18 +50,22 @@ export default function Export() {
     setExporting(true);
     try {
       // Trigger export generation
-      const result = await exportsService.create(projectId, format, user.id);
+      const result = await exportsService.create(projectId, format);
 
-      // In a real app, we would wait for the file to be ready or get a URL directly
-      // Here we simulate a download link or just success
-      toast.success(
-        `${t("project.export_success")} ${format.toUpperCase()} ${t(
-          "project.export_success"
-        )}`
-      );
+      if (result?.export_id) {
+        const response = await exportsService.download(result.export_id);
+        const blob = new Blob([response.data]);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${project?.title || "hakawa"}.${format}`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      }
 
-      // Simulate download
-      // window.open(result.download_url, '_blank');
+      toast.success(`${t("project.export_success")} ${format.toUpperCase()}`);
     } catch (error) {
       console.error(error);
       toast.error(t("project.export_error"));

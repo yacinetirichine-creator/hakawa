@@ -1,19 +1,19 @@
-"""
-Chapters routes
-"""
+"""Chapters routes."""
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from typing import List
 from app.models.schemas import Chapter, ChapterCreate, ChapterUpdate
 from app.utils.supabase import supabase
+from app.utils.admin import get_user_profile, assert_project_access
 
 router = APIRouter()
 
 
 @router.get("/", response_model=List[Chapter])
-async def get_chapters(project_id: str):
+async def get_chapters(project_id: str, profile: dict = Depends(get_user_profile)):
     """Get all chapters for a project"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("chapters")
             .select("*")
@@ -27,9 +27,12 @@ async def get_chapters(project_id: str):
 
 
 @router.post("/", response_model=Chapter)
-async def create_chapter(project_id: str, chapter: ChapterCreate):
+async def create_chapter(
+    project_id: str, chapter: ChapterCreate, profile: dict = Depends(get_user_profile)
+):
     """Create a new chapter"""
     try:
+        assert_project_access(profile, project_id)
         # Get the next chapter number
         chapters = (
             supabase.table("chapters")
@@ -50,9 +53,12 @@ async def create_chapter(project_id: str, chapter: ChapterCreate):
 
 
 @router.get("/{chapter_number}", response_model=Chapter)
-async def get_chapter(project_id: str, chapter_number: int):
+async def get_chapter(
+    project_id: str, chapter_number: int, profile: dict = Depends(get_user_profile)
+):
     """Get a specific chapter"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("chapters")
             .select("*")
@@ -70,9 +76,15 @@ async def get_chapter(project_id: str, chapter_number: int):
 
 
 @router.put("/{chapter_number}", response_model=Chapter)
-async def update_chapter(project_id: str, chapter_number: int, chapter: ChapterUpdate):
+async def update_chapter(
+    project_id: str,
+    chapter_number: int,
+    chapter: ChapterUpdate,
+    profile: dict = Depends(get_user_profile),
+):
     """Update a chapter"""
     try:
+        assert_project_access(profile, project_id)
         chapter_data = chapter.model_dump(exclude_unset=True)
 
         # Update word count if content is provided
@@ -96,9 +108,12 @@ async def update_chapter(project_id: str, chapter_number: int, chapter: ChapterU
 
 
 @router.delete("/{chapter_number}")
-async def delete_chapter(project_id: str, chapter_number: int):
+async def delete_chapter(
+    project_id: str, chapter_number: int, profile: dict = Depends(get_user_profile)
+):
     """Delete a chapter"""
     try:
+        assert_project_access(profile, project_id)
         result = (
             supabase.table("chapters")
             .delete()
