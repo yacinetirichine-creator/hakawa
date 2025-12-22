@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://hakawa.onrender.com/api/:path*"
+      "destination": "https://hakawa-backend.onrender.com/api/:path*"
     },
     {
       "source": "/:path*",
