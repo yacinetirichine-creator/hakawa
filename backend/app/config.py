@@ -30,12 +30,20 @@ class Settings(BaseSettings):
     anthropic_api_key: str
     replicate_api_token: str
 
-    # Stripe (optional for now)
+    # Stripe
     stripe_secret_key: Optional[str] = None
+    stripe_publishable_key: Optional[str] = None
     stripe_webhook_secret: Optional[str] = None
-    stripe_price_conteur: Optional[str] = None
-    stripe_price_pro: Optional[str] = None
-    stripe_price_studio: Optional[str] = None
+
+    # Stripe Price IDs (monthly)
+    stripe_price_conteur_monthly: Optional[str] = None
+    stripe_price_auteur_monthly: Optional[str] = None
+    stripe_price_studio_monthly: Optional[str] = None
+
+    # Stripe Price IDs (annual)
+    stripe_price_conteur_annual: Optional[str] = None
+    stripe_price_auteur_annual: Optional[str] = None
+    stripe_price_studio_annual: Optional[str] = None
 
     # Monitoring (optional)
     sentry_dsn: Optional[str] = None

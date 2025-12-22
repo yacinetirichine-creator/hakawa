@@ -16,6 +16,7 @@ from app.api import (
     conversations,
     profiles,
     chatbot,
+    stripe as stripe_routes,
 )
 from app.utils.security import SECURITY_HEADERS, check_rate_limit
 import time
@@ -113,6 +114,7 @@ app.include_router(generation.router, prefix="/api/generation", tags=["generatio
 app.include_router(images.router, prefix="/api/images", tags=["images"])
 app.include_router(chatbot.router)
 app.include_router(exports.router, prefix="/api/exports", tags=["exports"])
+app.include_router(stripe_routes.router, prefix="/api/stripe", tags=["stripe"])
 
 
 if __name__ == "__main__":
