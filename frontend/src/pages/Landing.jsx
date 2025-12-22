@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "../components/ui/Button";
 import { LanguageSwitcher } from "../components/ui/LanguageSwitcher";
 import { DemoModal } from "../components/ui/DemoModal";
+import { ValueProposition } from "../components/ui/ValueProposition";
 import {
   Moon,
   Sparkles,
@@ -152,6 +153,9 @@ export default function Landing() {
           </div>
         </div>
       </main>
+
+      {/* Value Proposition Section */}
+      <ValueProposition />
 
       {/* Footer Décoratif */}
       <div className="relative mt-20">
