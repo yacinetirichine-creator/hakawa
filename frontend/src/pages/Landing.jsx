@@ -8,6 +8,7 @@ import { DemoModal } from "../components/ui/DemoModal";
 import { ValueProposition } from "../components/ui/ValueProposition";
 import { StorySection } from "../components/ui/StorySection";
 import { HowItWorks } from "../components/ui/HowItWorks";
+import { UseCasesSection } from "../components/ui/UseCasesSection";
 import {
   Moon,
   Sparkles,
@@ -164,6 +165,9 @@ export default function Landing() {
 
       {/* How It Works Section */}
       <HowItWorks />
+
+      {/* Use Cases Section */}
+      <UseCasesSection />
 
       {/* Footer Décoratif */}
       <div className="relative mt-20">
