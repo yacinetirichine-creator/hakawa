@@ -7,9 +7,78 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 export const PricingSection = () => {
+  const DEFAULT_PLANS = [
+    {
+      id: "free",
+      name: "🌙 Gratuit",
+      price_monthly: 0,
+      price_annual: 0,
+      features: [
+        "1 projet",
+        "3 chapitres",
+        "5 générations IA/jour",
+        "2 illustrations",
+        "1 style d'illustration",
+        "Export PDF avec watermark",
+        "Mode enfant",
+      ],
+      popular: false,
+    },
+    {
+      id: "conteur",
+      name: "✨ Conteur",
+      price_monthly: 19,
+      price_annual: 149,
+      features: [
+        "5 projets",
+        "Chapitres illimités",
+        "50 générations IA/jour",
+        "20 illustrations/mois",
+        "3 styles d'illustration",
+        "Export PDF + EPUB",
+        "Export KDP basique",
+        "Mode enfant",
+        "Support email",
+      ],
+      popular: false,
+    },
+    {
+      id: "auteur",
+      name: "📚 Auteur",
+      price_monthly: 39,
+      price_annual: 319,
+      features: [
+        "Projets illimités",
+        "Générations IA illimitées",
+        "80 illustrations/mois",
+        "Tous les styles",
+        "Export KDP complet",
+        "Couverture IA",
+        "Priorité de génération",
+        "Support prioritaire",
+      ],
+      popular: true,
+    },
+    {
+      id: "studio",
+      name: "🏢 Studio",
+      price_monthly: 99,
+      price_annual: 799,
+      features: [
+        "Tout du plan Auteur",
+        "200 illustrations/mois",
+        "Accès API",
+        "White-label",
+        "Support dédié",
+        "Formation 1-to-1",
+      ],
+      popular: false,
+    },
+  ];
+
   const [billingPeriod, setBillingPeriod] = useState("monthly");
-  const [plans, setPlans] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [plans, setPlans] = useState(DEFAULT_PLANS);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -20,11 +89,18 @@ export const PricingSection = () => {
   const fetchPricing = async () => {
     try {
       const response = await api.get("/stripe/pricing");
-      setPlans(response.data.plans);
+      if (
+        response.data &&
+        response.data.plans &&
+        response.data.plans.length > 0
+      ) {
+        setPlans(response.data.plans);
+      }
     } catch (error) {
-      console.error("Erreur lors du chargement des prix:", error);
-    } finally {
-      setLoading(false);
+      console.error(
+        "Erreur lors du chargement des prix (utilisation des valeurs par défaut):",
+        error
+      );
     }
   };
 
