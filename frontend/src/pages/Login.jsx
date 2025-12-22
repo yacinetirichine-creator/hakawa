@@ -86,7 +86,7 @@ export default function Login() {
               placeholder="ton@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              icon={<Mail className="w-5 h-5" />}
+              icon={Mail}
               required
             />
 
@@ -96,7 +96,7 @@ export default function Login() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              icon={<Lock className="w-5 h-5" />}
+              icon={Lock}
               required
             />
 

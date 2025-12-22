@@ -158,7 +158,7 @@ export default function Register() {
               placeholder="Jean Dupont"
               value={formData.fullName}
               onChange={handleChange}
-              icon={<User className="w-5 h-5" />}
+              icon={User}
               disabled={loading || success}
               required
             />
@@ -170,7 +170,7 @@ export default function Register() {
               placeholder="ton@email.com"
               value={formData.email}
               onChange={handleChange}
-              icon={<Mail className="w-5 h-5" />}
+              icon={Mail}
               disabled={loading || success}
               required
             />
@@ -182,7 +182,7 @@ export default function Register() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleChange}
-              icon={<Lock className="w-5 h-5" />}
+              icon={Lock}
               disabled={loading || success}
               required
             />
@@ -194,7 +194,7 @@ export default function Register() {
               placeholder="••••••••"
               value={formData.confirmPassword}
               onChange={handleChange}
-              icon={<Lock className="w-5 h-5" />}
+              icon={Lock}
               disabled={loading || success}
               required
             />
