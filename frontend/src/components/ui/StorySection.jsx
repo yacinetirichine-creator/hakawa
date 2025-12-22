@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Scroll, Moon, Star, Sparkles } from "lucide-react";
+import Storyteller3D from "./Storyteller3D";
 
 export const StorySection = () => {
   return (
@@ -93,80 +94,8 @@ export const StorySection = () => {
 
               <div className="space-y-8">
                 {/* Illustration: conteur assis */}
-                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
-                  <svg
-                    viewBox="0 0 320 220"
-                    className="w-full h-auto"
-                    role="img"
-                    aria-label="Un conteur assis qui raconte une histoire"
-                  >
-                    <g
-                      className="text-orient-gold"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M34 178 C78 140, 118 140, 156 178" />
-                      <path d="M166 178 C198 145, 236 145, 286 178" />
-                      <path
-                        d="M68 160 C92 138, 118 134, 138 150"
-                        opacity="0.65"
-                      />
-                      <path
-                        d="M206 152 C230 132, 254 132, 276 150"
-                        opacity="0.65"
-                      />
-                    </g>
-
-                    <g
-                      className="text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {/* Head */}
-                      <circle cx="160" cy="78" r="18" />
-                      {/* Body */}
-                      <path d="M160 96 L160 136" />
-                      <path d="M144 118 L176 118" />
-                      {/* Arms holding a book */}
-                      <path d="M144 118 C132 126, 126 136, 120 146" />
-                      <path d="M176 118 C188 126, 194 136, 200 146" />
-                      <path d="M120 146 L150 150" />
-                      <path d="M200 146 L170 150" />
-
-                      {/* Book */}
-                      <path d="M150 150 L150 172" />
-                      <path d="M170 150 L170 172" />
-                      <path d="M150 150 C156 146, 164 146, 170 150" />
-                      <path d="M150 172 C156 168, 164 168, 170 172" />
-
-                      {/* Seated legs */}
-                      <path d="M160 136 C146 148, 138 160, 132 174" />
-                      <path d="M160 136 C174 148, 182 160, 188 174" />
-                      <path d="M132 174 C146 178, 158 178, 170 174" />
-                      <path d="M188 174 C174 182, 156 184, 140 180" />
-                    </g>
-
-                    {/* Sparkles */}
-                    <g
-                      className="text-orient-blue"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      opacity="0.9"
-                    >
-                      <path d="M52 64 L58 70 L52 76 L46 70 Z" />
-                      <path d="M276 62 L282 68 L276 74 L270 68 Z" />
-                      <path d="M246 34 L250 38 L246 42 L242 38 Z" />
-                    </g>
-                  </svg>
+                <div className="rounded-2xl bg-white/5 border border-white/10 p-1 overflow-hidden">
+                  <Storyteller3D />
                 </div>
 
                 <div className="flex items-start gap-4">
