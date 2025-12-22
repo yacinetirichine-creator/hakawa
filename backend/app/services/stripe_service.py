@@ -324,9 +324,9 @@ class StripeService:
                     "stripe_price_id_annual": None,
                     "features": [
                         "1 projet",
-                        "3 chapitres",
+                        "3 chapitres par projet",
                         "5 générations IA/jour",
-                        "2 illustrations",
+                        "2 illustrations/mois",
                         "1 style d'illustration",
                         "Export PDF avec watermark",
                         "Mode enfant",
