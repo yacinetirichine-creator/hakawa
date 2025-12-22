@@ -45,7 +45,7 @@ export default function Landing() {
       </motion.div>
 
       {/* Header */}
-      <header className="container mx-auto px-4 py-6 relative z-10">
+      <header className="container mx-auto px-4 py-6 relative z-50">
         <div className="flex items-center justify-between bg-white/30 backdrop-blur-md p-4 rounded-full shadow-sm border border-white/50">
           <div className="flex items-center gap-3 pl-4">
             <div className="bg-orient-gold p-2 rounded-full text-white shadow-md">
