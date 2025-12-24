@@ -1,0 +1,53 @@
+{
+  "name": "Hakawa - Créateur de Livres IA",
+  "short_name": "Hakawa",
+  "description": "Créez des livres extraordinaires avec l'IA. De l'idée à la publication sur Amazon KDP.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#8B5CF6",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "dir": "ltr",
+  "scope": "/",
+  "categories": ["productivity", "books", "writing", "creativity"],
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "label": "Hakawa - Interface principale"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nouveau Projet",
+      "short_name": "Nouveau",
+      "description": "Créer un nouveau livre",
+      "url": "/create",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Mes Projets",
+      "short_name": "Projets",
+      "description": "Voir mes projets",
+      "url": "/dashboard",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

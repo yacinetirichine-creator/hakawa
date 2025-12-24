@@ -1,0 +1,38 @@
+# Hakawa - Robots.txt
+# Optimisé pour SEO et indexation Google
+
+# Autoriser tous les bots
+User-agent: *
+Allow: /
+
+# Pages importantes à crawler en priorité
+Allow: /
+Allow: /register
+Allow: /login
+Allow: /pricing
+Allow: /legal/privacy
+Allow: /legal/terms
+
+# Bloquer les pages privées/admin
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /api
+Disallow: /create
+
+# Fichiers à ne pas indexer
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /src/
+
+# Optimisation pour Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Optimisation pour Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Sitemap
+Sitemap: https://hakawa.app/sitemap.xml

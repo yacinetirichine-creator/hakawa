@@ -10,6 +10,7 @@ import { StorySection } from "../components/ui/StorySection";
 import { HowItWorks } from "../components/ui/HowItWorks";
 import { UseCasesSection } from "../components/ui/UseCasesSection";
 import { PricingSection } from "../components/ui/PricingSection";
+import SEO from "../components/ui/SEO";
 import {
   Moon,
   Sparkles,
@@ -26,6 +27,15 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-gradient-orient font-body text-orient-text overflow-hidden">
+      {/* SEO Optimization */}
+      <SEO
+        title={t("landing.hero_title")}
+        description={t("landing.hero_subtitle")}
+        keywords="création livre ia, auto-édition, amazon kdp, illustration ia, storytelling, écriture assistée par ia, générateur de livre, hakawa"
+        url="https://hakawa.app"
+        type="website"
+      />
+
       <DemoModal isOpen={showDemo} onClose={() => setShowDemo(false)} />
 
       {/* Décoration Nuages Flottants */}

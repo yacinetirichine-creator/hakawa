@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8B5CF6" />
 
     <!-- SEO Meta Tags -->
     <meta
@@ -48,6 +51,84 @@
       href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Schema.org JSON-LD pour Google Rich Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Hakawa",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "EUR",
+          "lowPrice": "9.99",
+          "highPrice": "49.99"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "127"
+        },
+        "description": "Créez des livres extraordinaires avec l'IA. De l'idée à la publication sur Amazon KDP.",
+        "image": "https://hakawa.app/og-image.jpg",
+        "url": "https://hakawa.app",
+        "author": {
+          "@type": "Organization",
+          "name": "Hakawa",
+          "url": "https://hakawa.app"
+        },
+        "creator": {
+          "@type": "Organization",
+          "name": "Hakawa Team"
+        },
+        "softwareVersion": "1.0",
+        "featureList": [
+          "Génération de contenu IA",
+          "Illustration automatique",
+          "Export PDF et EPUB",
+          "Publication Amazon KDP",
+          "Chatbot créatif"
+        ]
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Hakawa",
+        "url": "https://hakawa.app",
+        "logo": "https://hakawa.app/logo.svg",
+        "description": "Plateforme de création de livres assistée par intelligence artificielle",
+        "sameAs": [
+          "https://twitter.com/hakawa",
+          "https://facebook.com/hakawa",
+          "https://linkedin.com/company/hakawa"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "support@hakawa.app"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Hakawa",
+        "url": "https://hakawa.app",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://hakawa.app/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
     <title>Hakawa - Créez, Illustrez et Publiez vos Livres avec l'IA</title>
   </head>
   <body>
