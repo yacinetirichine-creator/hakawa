@@ -15,7 +15,7 @@ SECURITY DEFINER
 AS $$
 DECLARE
     admin_user_id UUID;
-    admin_email TEXT := 'yacine.tirichine@gmail.com';
+    admin_email TEXT := 'contact@hakawa.app';
 BEGIN
     -- Chercher l'utilisateur dans auth.users
     SELECT id INTO admin_user_id

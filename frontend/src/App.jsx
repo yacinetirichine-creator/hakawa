@@ -11,10 +11,12 @@ import Register from "./pages/Register";
 import Pricing from "./pages/Pricing";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import EnhancedAdminDashboard from "./pages/admin/EnhancedAdminDashboard";
 import Projects from "./pages/dashboard/Projects";
 import Inspiration from "./pages/dashboard/Inspiration";
 import Settings from "./pages/dashboard/Settings";
 import Subscription from "./pages/dashboard/Subscription";
+import AccountSettings from "./pages/dashboard/AccountSettings";
 import NewProject from "./pages/create/NewProject";
 import Explore from "./pages/create/Explore";
 import Plan from "./pages/create/Plan";
@@ -118,7 +120,15 @@ function App() {
             path="/admin"
             element={
               <ProtectedRoute adminOnly={true}>
-                <AdminDashboard />
+                <EnhancedAdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <ProtectedRoute>
+                <AccountSettings />
               </ProtectedRoute>
             }
           />

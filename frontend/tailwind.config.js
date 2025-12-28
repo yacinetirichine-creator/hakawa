@@ -29,6 +29,8 @@ export default {
         float: "float 6s ease-in-out infinite",
         wiggle: "wiggle 1s ease-in-out infinite",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        shimmer: "shimmer 2s linear infinite",
+        "spin-slow": "spin 8s linear infinite",
       },
       keyframes: {
         float: {
@@ -39,6 +41,21 @@ export default {
           "0%, 100%": { transform: "rotate(-3deg)" },
           "50%": { transform: "rotate(3deg)" },
         },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
+      perspective: {
+        1000: "1000px",
+        2000: "2000px",
+      },
+      boxShadow: {
+        "3d": "0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.15)",
+        "3d-lg":
+          "0 20px 40px rgba(0, 0, 0, 0.3), 0 10px 15px rgba(0, 0, 0, 0.2)",
+        glow: "0 0 20px rgba(212, 168, 83, 0.5)",
+        "glow-lg": "0 0 40px rgba(212, 168, 83, 0.7)",
       },
       backgroundImage: {
         "gradient-orient": "linear-gradient(to bottom, #E0F7FA, #F3E5F5)",

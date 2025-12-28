@@ -13,8 +13,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-ADMIN_EMAIL = "yacine.tirichine@gmail.com"
-ADMIN_NAME = "Yacine Tirichine"
+ADMIN_EMAIL = "contact@hakawa.app"
+ADMIN_NAME = "Hakawa Admin"
 
 
 def initialize_admin():
