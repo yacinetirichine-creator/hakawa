@@ -19,6 +19,11 @@ import {
   Star,
   Wand2,
   Rocket,
+  Shield,
+  Lock,
+  Award,
+  Mail,
+  MapPin,
 } from "lucide-react";
 
 export default function Landing() {
@@ -187,19 +192,179 @@ export default function Landing() {
             d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           ></path>
         </svg>
+
         <footer className="bg-white pb-10 pt-4">
-          <div className="container mx-auto px-4 text-center">
-            <div className="flex justify-center gap-4 mb-6">
-              <Star className="text-orient-gold w-6 h-6 animate-pulse" />
-              <Star className="text-orient-purple w-6 h-6 animate-pulse delay-100" />
-              <Star className="text-orient-blue w-6 h-6 animate-pulse delay-200" />
+          <div className="container mx-auto px-4">
+            {/* Badges de confiance */}
+            <div className="flex flex-wrap justify-center gap-6 mb-12">
+              <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full border border-green-200">
+                <Shield className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-semibold text-green-900">
+                  RGPD Conforme
+                </span>
+              </div>
+              <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full border border-blue-200">
+                <Lock className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-semibold text-blue-900">
+                  Paiement Sécurisé SSL
+                </span>
+              </div>
+              <div className="flex items-center gap-2 bg-purple-50 px-4 py-2 rounded-full border border-purple-200">
+                <Award className="w-5 h-5 text-purple-600" />
+                <span className="text-sm font-semibold text-purple-900">
+                  Données Chiffrées
+                </span>
+              </div>
             </div>
-            <p className="font-display text-2xl text-orient-dark mb-2">
-              الحكواتي
-            </p>
-            <p className="text-orient-text">
-              © 2025 {t("app.name")} - {t("footer.tagline")}
-            </p>
+
+            {/* Sections du footer */}
+            <div className="grid md:grid-cols-4 gap-8 mb-12 max-w-6xl mx-auto">
+              {/* Colonne 1 - À propos */}
+              <div>
+                <h4 className="font-display font-bold text-lg mb-4 text-orient-dark">
+                  {t("app.name")}
+                </h4>
+                <p className="text-sm text-gray-600 mb-4">
+                  Créez des livres extraordinaires avec l'intelligence
+                  artificielle.
+                </p>
+                <div className="flex items-center gap-2 text-orient-purple">
+                  <Moon className="w-5 h-5 fill-current" />
+                  <span className="font-display text-xl">الحكواتي</span>
+                </div>
+              </div>
+
+              {/* Colonne 2 - Produit */}
+              <div>
+                <h4 className="font-bold text-orient-dark mb-4">Produit</h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>
+                    <Link
+                      to="/pricing"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Tarifs
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      href="#features"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Fonctionnalités
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#how-it-works"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Comment ça marche
+                    </a>
+                  </li>
+                  <li>
+                    <Link
+                      to="/register"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Créer un compte
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Colonne 3 - Légal */}
+              <div>
+                <h4 className="font-bold text-orient-dark mb-4">Légal</h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>
+                    <Link
+                      to="/legal/cgu"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Conditions d'Utilisation
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/legal/cgv"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Conditions de Vente
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/legal/privacy"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Confidentialité (RGPD)
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/legal/terms"
+                      className="hover:text-orient-purple transition"
+                    >
+                      Mentions Légales
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Colonne 4 - Contact */}
+              <div>
+                <h4 className="font-bold text-orient-dark mb-4">Contact</h4>
+                <ul className="space-y-3 text-sm text-gray-600">
+                  <li className="flex items-start gap-2">
+                    <Mail className="w-4 h-4 mt-0.5 text-orient-purple flex-shrink-0" />
+                    <a
+                      href="mailto:contact@hakawa.app"
+                      className="hover:text-orient-purple transition"
+                    >
+                      contact@hakawa.app
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 mt-0.5 text-orient-purple flex-shrink-0" />
+                    <span className="text-xs leading-relaxed">
+                      22 Rue du Docteur Louis Marçon
+                      <br />
+                      34070 MONTPELLIER, France
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Mentions légales entreprise */}
+            <div className="border-t border-gray-200 pt-8 pb-4">
+              <div className="text-center space-y-3">
+                <div className="flex justify-center gap-4 mb-6">
+                  <Star className="text-orient-gold w-6 h-6 animate-pulse" />
+                  <Star className="text-orient-purple w-6 h-6 animate-pulse delay-100" />
+                  <Star className="text-orient-blue w-6 h-6 animate-pulse delay-200" />
+                </div>
+
+                <p className="text-sm text-gray-700 font-semibold">
+                  JARVIS - Société par actions simplifiée (SAS)
+                </p>
+                <p className="text-xs text-gray-600">
+                  Capital social: 1 000,00 EUR • SIREN: 984 594 565 • TVA: FR XX
+                  984594565
+                </p>
+                <p className="text-xs text-gray-600">
+                  Siège social: 22 Rue du Docteur Louis Marçon, 34070
+                  MONTPELLIER
+                </p>
+
+                <div className="pt-4">
+                  <p className="text-sm text-gray-600">
+                    © 2024-2025 {t("app.name")} - {t("footer.tagline")}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </footer>
       </div>

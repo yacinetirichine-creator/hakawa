@@ -19,6 +19,8 @@ from app.api import (
     stripe as stripe_routes,
     admin,
     account,
+    manuscripts,
+    user_images,
 )
 from app.utils.security import SECURITY_HEADERS, check_rate_limit
 import time
@@ -119,6 +121,8 @@ app.include_router(exports.router, prefix="/api/exports", tags=["exports"])
 app.include_router(stripe_routes.router, prefix="/api/stripe", tags=["stripe"])
 app.include_router(admin.router)  # Admin routes
 app.include_router(account.router)  # Account management routes
+app.include_router(manuscripts.router)  # Manuscript upload and improvement
+app.include_router(user_images.router)  # User image uploads
 
 
 if __name__ == "__main__":

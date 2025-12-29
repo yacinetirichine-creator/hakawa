@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ArrowLeft, Shield } from "lucide-react";
 
 export default function Privacy() {
   return (
@@ -8,18 +9,34 @@ export default function Privacy() {
         <div className="mb-8">
           <Link
             to="/"
-            className="text-orient-purple hover:text-orient-blue font-medium text-sm"
+            className="inline-flex items-center gap-2 text-orient-purple hover:text-orient-blue font-medium text-sm transition"
           >
-            ← Retour à l'accueil
+            <ArrowLeft className="w-4 h-4" />
+            Retour à l'accueil
           </Link>
         </div>
 
-        <h1 className="text-4xl font-display font-bold text-gray-900 mb-4">
-          🔒 Politique de Confidentialité
-        </h1>
-        <p className="text-gray-600 mb-8">
-          Dernière mise à jour : 21 décembre 2025
-        </p>
+        <div className="flex items-center gap-4 mb-6">
+          <div className="bg-green-500/10 p-3 rounded-lg">
+            <Shield className="w-8 h-8 text-green-600" />
+          </div>
+          <div>
+            <h1 className="text-4xl font-display font-bold text-gray-900">
+              Politique de Confidentialité
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Dernière mise à jour : 29 décembre 2024
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8">
+          <p className="text-sm text-blue-900">
+            <strong>Version juridique complète :</strong> Ce document est un
+            résumé simplifié. Pour la version juridique complète, consultez{" "}
+            <code>/docs/POLITIQUE_CONFIDENTIALITE.md</code>
+          </p>
+        </div>
 
         <div className="prose prose-lg max-w-none">
           <h2>1. Introduction</h2>
@@ -30,11 +47,41 @@ export default function Privacy() {
           </p>
 
           <h2>2. Responsable du traitement</h2>
-          <p>
-            <strong>Hakawa</strong>
-            <br />
-            Contact : privacy@hakawa.com
-          </p>
+          <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <p className="font-semibold mb-2">
+              Responsable du traitement des données :
+            </p>
+            <ul className="space-y-1 text-gray-700">
+              <li>
+                <strong>Raison sociale :</strong> JARVIS SAS
+              </li>
+              <li>
+                <strong>SIREN :</strong> 984 594 565
+              </li>
+              <li>
+                <strong>Siège social :</strong> 22 Rue du Docteur Louis Marçon,
+                34070 MONTPELLIER
+              </li>
+              <li>
+                <strong>DPO (Délégué à la Protection des Données) :</strong>{" "}
+                <a
+                  href="mailto:dpo@hakawa.app"
+                  className="text-orient-purple hover:underline"
+                >
+                  dpo@hakawa.app
+                </a>
+              </li>
+              <li>
+                <strong>Contact Privacy :</strong>{" "}
+                <a
+                  href="mailto:privacy@hakawa.app"
+                  className="text-orient-purple hover:underline"
+                >
+                  privacy@hakawa.app
+                </a>
+              </li>
+            </ul>
+          </div>
 
           <h2>3. Données collectées</h2>
 

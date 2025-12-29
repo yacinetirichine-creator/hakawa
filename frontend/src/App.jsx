@@ -24,6 +24,9 @@ import Write from "./pages/create/Write";
 import Export from "./pages/create/Export";
 import Privacy from "./pages/legal/Privacy";
 import Terms from "./pages/legal/Terms";
+import CGU from "./pages/legal/CGU";
+import CGV from "./pages/legal/CGV";
+import Mentions from "./pages/legal/Mentions";
 
 function App() {
   return (
@@ -36,6 +39,11 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/legal/cgu" element={<CGU />} />
+          <Route path="/legal/cgv" element={<CGV />} />
+          <Route path="/legal/privacy" element={<Privacy />} />
+          <Route path="/legal/terms" element={<Terms />} />
+          <Route path="/legal/mentions" element={<Mentions />} />
           <Route
             path="/dashboard"
             element={
