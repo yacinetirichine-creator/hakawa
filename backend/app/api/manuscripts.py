@@ -13,7 +13,7 @@ import io
 
 from app.utils.supabase import supabase
 from app.services.ai_service import AIService
-from app.api.auth import get_user_profile
+from app.utils.admin import get_user_profile
 
 router = APIRouter(prefix="/api/manuscripts", tags=["manuscripts"])
 ai_service = AIService()

@@ -11,7 +11,7 @@ from PIL import Image
 import io
 
 from app.utils.supabase import supabase
-from app.api.auth import get_user_profile
+from app.utils.admin import get_user_profile
 
 router = APIRouter(prefix="/api/user-images", tags=["user-images"])
 
