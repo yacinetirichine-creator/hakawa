@@ -11,7 +11,7 @@ import {
   Share2,
   AlertCircle,
 } from "lucide-react";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../services/supabase";
 
 export default function SharedProject() {
   const { shareToken } = useParams();

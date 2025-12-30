@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Share2, Copy, Check, Lock, Unlock, Eye, X, Globe } from "lucide-react";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../../services/supabase";
 
 export default function ShareProjectModal({ project, onClose }) {
   const [isPublic, setIsPublic] = useState(project?.is_public || false);
