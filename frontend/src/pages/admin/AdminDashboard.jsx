@@ -16,6 +16,8 @@ import {
   FileDown,
   Bell,
   X,
+  Moon,
+  Sun,
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -37,7 +39,28 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [alerts, setAlerts] = useState([]);
   const [historicalData, setHistoricalData] = useState([]);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("adminDarkMode") === "true";
+  });
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
+  const [totalUsers, setTotalUsers] = useState(0);
+
+  // Filtres
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterTier, setFilterTier] = useState("");
+  const [filterDateFrom, setFilterDateFrom] = useState("");
+  const [filterDateTo, setFilterDateTo] = useState("");
+  const [filterCreditsMin, setFilterCreditsMin] = useState("");
+
+  // Debounce timer
+  const [searchDebounce, setSearchDebounce] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("adminDarkMode", darkMode);
+  }, [darkMode]);
   useEffect(() => {
     fetchAdminData();
 
@@ -71,6 +94,67 @@ export default function AdminDashboard() {
       subscription.unsubscribe();
     };
   }, []);
+
+  // Debounce pour la recherche
+  useEffect(() => {
+    if (searchDebounce) {
+      clearTimeout(searchDebounce);
+    }
+    const timer = setTimeout(() => {
+      setCurrentPage(1);
+      fetchUsers();
+    }, 500);
+    setSearchDebounce(timer);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [searchTerm, filterTier, filterDateFrom, filterDateTo, filterCreditsMin]);
+
+  // Rechargement lors du changement de page
+  useEffect(() => {
+    fetchUsers();
+  }, [currentPage]);
+
+  const fetchUsers = async () => {
+    try {
+      let query = supabase.from("profiles").select("*", { count: "exact" });
+
+      // Filtres
+      if (searchTerm) {
+        query = query.or(
+          `email.ilike.%${searchTerm}%,full_name.ilike.%${searchTerm}%`
+        );
+      }
+      if (filterTier) {
+        query = query.eq("subscription_tier", filterTier);
+      }
+      if (filterDateFrom) {
+        query = query.gte("created_at", filterDateFrom);
+      }
+      if (filterDateTo) {
+        query = query.lte("created_at", filterDateTo);
+      }
+      if (filterCreditsMin) {
+        query = query.gte("credits_illustrations", parseInt(filterCreditsMin));
+      }
+
+      // Pagination
+      const from = (currentPage - 1) * usersPerPage;
+      const to = from + usersPerPage - 1;
+
+      const { data, count, error } = await query
+        .order("created_at", { ascending: false })
+        .range(from, to);
+
+      if (error) throw error;
+
+      setUsers(data || []);
+      setTotalUsers(count || 0);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const fetchAdminData = async () => {
     try {
@@ -135,14 +219,8 @@ export default function AdminDashboard() {
         marginPercent,
       });
 
-      // Récupérer les derniers utilisateurs avec tri optimisé
-      const { data: usersData } = await supabase
-        .from("profiles")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(10);
-
-      setUsers(usersData || []);
+      // Les utilisateurs sont chargés séparément via fetchUsers()
+      await fetchUsers();
 
       // Récupérer les derniers projets
       const { data: projectsData } = await supabase
@@ -345,27 +423,69 @@ export default function AdminDashboard() {
     setAlerts((prev) => prev.filter((alert) => alert.id !== alertId));
   };
 
+  const resetFilters = () => {
+    setSearchTerm("");
+    setFilterTier("");
+    setFilterDateFrom("");
+    setFilterDateTo("");
+    setFilterCreditsMin("");
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(totalUsers / usersPerPage);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-bleu-nuit flex items-center justify-center">
-        <div className="text-or text-xl">Chargement des données admin...</div>
+        <SkeletonLoader />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-bleu-nuit to-nuit-dark p-8">
+    <div
+      className={`min-h-screen p-8 transition-colors duration-300 ${
+        darkMode
+          ? "bg-gradient-to-b from-gray-900 to-black"
+          : "bg-gradient-to-b from-bleu-nuit to-nuit-dark"
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
-              <Shield className="w-8 h-8 text-or" />
-              <h1 className="text-4xl font-display font-bold text-or">
+              <Shield
+                className={`w-8 h-8 ${
+                  darkMode ? "text-purple-400" : "text-or"
+                }`}
+              />
+              <h1
+                className={`text-4xl font-display font-bold ${
+                  darkMode ? "text-purple-400" : "text-or"
+                }`}
+              >
                 Admin Dashboard
               </h1>
             </div>
             <div className="flex gap-3">
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                  darkMode
+                    ? "bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border-purple-500/30"
+                    : "bg-or/10 hover:bg-or/20 text-or border-or/30"
+                }`}
+                title="Toggle Dark Mode"
+              >
+                {darkMode ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+                {darkMode ? "Light" : "Dark"}
+              </button>
               <button
                 onClick={exportToCSV}
                 className="flex items-center gap-2 px-4 py-2 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg border border-green-500/30 transition-colors"
@@ -382,7 +502,7 @@ export default function AdminDashboard() {
               </button>
             </div>
           </div>
-          <p className="text-sable">
+          <p className={darkMode ? "text-gray-400" : "text-sable"}>
             Bienvenue, {profile?.full_name || "Admin"}
           </p>
         </div>
@@ -489,36 +609,82 @@ export default function AdminDashboard() {
                 </p>
               </div>
             </div>
-            <div className="h-64 flex items-end justify-between gap-1">
-              {historicalData.slice(-10).map((data, index) => {
-                const maxRevenue = Math.max(
-                  ...historicalData.map((d) => d.revenue)
-                );
-                const height =
-                  maxRevenue > 0 ? (data.revenue / maxRevenue) * 100 : 0;
-                return (
-                  <div
-                    key={index}
-                    className="flex-1 flex flex-col items-center gap-2"
-                  >
+
+            {/* Graphique interactif amélioré */}
+            <div className="relative">
+              <div className="h-80 flex items-end justify-between gap-2 p-4 bg-bleu-nuit/30 rounded-lg">
+                {historicalData.slice(-10).map((data, index) => {
+                  const maxRevenue = Math.max(
+                    ...historicalData.map((d) => d.revenue),
+                    1
+                  );
+                  const revenueHeight =
+                    maxRevenue > 0 ? (data.revenue / maxRevenue) * 100 : 0;
+                  const maxCosts = Math.max(
+                    ...historicalData.map((d) => d.costs),
+                    1
+                  );
+                  const costsHeight =
+                    maxCosts > 0 ? (data.costs / maxRevenue) * 100 : 0;
+
+                  return (
                     <div
-                      className="w-full bg-green-500/20 rounded-t"
-                      style={{ height: `${height}%` }}
+                      key={index}
+                      className="flex-1 flex flex-col items-center gap-2 group relative"
                     >
-                      <div
-                        className="w-full bg-green-500 rounded-t"
-                        style={{ height: "20%" }}
-                      />
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full mb-2 hidden group-hover:block bg-bleu-nuit border border-or/30 rounded-lg p-3 shadow-xl z-10 whitespace-nowrap">
+                        <p className="text-xs text-sable mb-1">
+                          {new Date(data.date).toLocaleDateString("fr-FR")}
+                        </p>
+                        <p className="text-sm font-semibold text-green-400">
+                          CA: {data.revenue.toFixed(2)}€
+                        </p>
+                        <p className="text-sm font-semibold text-orange-400">
+                          Coûts: {data.costs.toFixed(2)}€
+                        </p>
+                        <p className="text-sm font-semibold text-blue-400">
+                          Marge: {data.margin.toFixed(2)}€
+                        </p>
+                      </div>
+
+                      {/* Barres */}
+                      <div className="w-full flex gap-1 items-end h-full">
+                        {/* Barre Revenue */}
+                        <div
+                          className="flex-1 bg-gradient-to-t from-green-500 to-green-400 rounded-t hover:from-green-400 hover:to-green-300 transition-all cursor-pointer shadow-lg"
+                          style={{ height: `${revenueHeight}%` }}
+                        />
+                        {/* Barre Costs */}
+                        <div
+                          className="flex-1 bg-gradient-to-t from-orange-500 to-orange-400 rounded-t hover:from-orange-400 hover:to-orange-300 transition-all cursor-pointer shadow-lg"
+                          style={{ height: `${costsHeight}%` }}
+                        />
+                      </div>
+
+                      {/* Date */}
+                      <span className="text-xs text-sable rotate-45 origin-left mt-2">
+                        {new Date(data.date).toLocaleDateString("fr-FR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                        })}
+                      </span>
                     </div>
-                    <span className="text-xs text-sable rotate-45 origin-left">
-                      {new Date(data.date).toLocaleDateString("fr-FR", {
-                        day: "2-digit",
-                        month: "2-digit",
-                      })}
-                    </span>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Légende */}
+              <div className="flex items-center justify-center gap-6 mt-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-gradient-to-t from-green-500 to-green-400 rounded"></div>
+                  <span className="text-sm text-sable">Chiffre d'Affaires</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-gradient-to-t from-orange-500 to-orange-400 rounded"></div>
+                  <span className="text-sm text-sable">Coûts</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -563,10 +729,62 @@ export default function AdminDashboard() {
 
         {/* Derniers utilisateurs */}
         <div className="bg-nuit-light rounded-xl p-6 border border-or/20 mb-8">
-          <h2 className="text-2xl font-display font-bold text-or mb-4 flex items-center gap-2">
-            <Users className="w-6 h-6" />
-            Derniers utilisateurs
-          </h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-display font-bold text-or flex items-center gap-2">
+              <Users className="w-6 h-6" />
+              Gestion des utilisateurs ({totalUsers})
+            </h2>
+            <button
+              onClick={resetFilters}
+              className="text-sm text-sable hover:text-or transition-colors"
+            >
+              Réinitialiser filtres
+            </button>
+          </div>
+
+          {/* Filtres */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+            <input
+              type="text"
+              placeholder="🔍 Rechercher nom/email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-bleu-nuit text-parchemin border border-or/30 rounded-lg px-4 py-2 text-sm focus:border-or focus:outline-none transition-colors"
+            />
+            <select
+              value={filterTier}
+              onChange={(e) => setFilterTier(e.target.value)}
+              className="bg-bleu-nuit text-parchemin border border-or/30 rounded-lg px-4 py-2 text-sm focus:border-or focus:outline-none transition-colors"
+            >
+              <option value="">Tous les plans</option>
+              <option value="free">Free</option>
+              <option value="conteur">Conteur</option>
+              <option value="pro">Pro</option>
+              <option value="studio">Studio</option>
+            </select>
+            <input
+              type="date"
+              placeholder="Date début"
+              value={filterDateFrom}
+              onChange={(e) => setFilterDateFrom(e.target.value)}
+              className="bg-bleu-nuit text-parchemin border border-or/30 rounded-lg px-4 py-2 text-sm focus:border-or focus:outline-none transition-colors"
+            />
+            <input
+              type="date"
+              placeholder="Date fin"
+              value={filterDateTo}
+              onChange={(e) => setFilterDateTo(e.target.value)}
+              className="bg-bleu-nuit text-parchemin border border-or/30 rounded-lg px-4 py-2 text-sm focus:border-or focus:outline-none transition-colors"
+            />
+            <input
+              type="number"
+              placeholder="Crédits min..."
+              value={filterCreditsMin}
+              onChange={(e) => setFilterCreditsMin(e.target.value)}
+              className="bg-bleu-nuit text-parchemin border border-or/30 rounded-lg px-4 py-2 text-sm focus:border-or focus:outline-none transition-colors"
+            />
+          </div>
+
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -589,50 +807,115 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr
-                    key={user.id}
-                    className="border-b border-or/10 hover:bg-bleu-nuit/30 transition-colors"
-                  >
-                    <td className="py-3 px-4 text-parchemin">
-                      {user.full_name || "N/A"}
-                    </td>
-                    <td className="py-3 px-4 text-parchemin">{user.email}</td>
-                    <td className="py-3 px-4">
-                      <select
-                        value={user.subscription_tier}
-                        onChange={(e) =>
-                          updateUserTier(user.id, e.target.value)
-                        }
-                        className="bg-bleu-nuit text-parchemin border border-or/30 rounded px-3 py-1.5 text-sm hover:border-or/50 focus:border-or focus:outline-none transition-colors cursor-pointer"
-                      >
-                        <option value="free">Free (0€)</option>
-                        <option value="conteur">Conteur (9.99€)</option>
-                        <option value="pro">Pro (29.99€)</option>
-                        <option value="studio">Studio (99.99€)</option>
-                      </select>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span
-                        className={`font-semibold ${
-                          user.credits_illustrations > 50
-                            ? "text-green-400"
-                            : user.credits_illustrations > 10
-                            ? "text-yellow-400"
-                            : "text-red-400"
-                        }`}
-                      >
-                        {user.credits_illustrations}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 text-sable text-sm">
-                      {new Date(user.created_at).toLocaleDateString("fr-FR")}
+                {users.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="py-8 text-center text-sable">
+                      Aucun utilisateur trouvé
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  users.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="border-b border-or/10 hover:bg-bleu-nuit/30 transition-colors"
+                    >
+                      <td className="py-3 px-4 text-parchemin">
+                        {user.full_name || "N/A"}
+                      </td>
+                      <td className="py-3 px-4 text-parchemin">{user.email}</td>
+                      <td className="py-3 px-4">
+                        <select
+                          value={user.subscription_tier}
+                          onChange={(e) =>
+                            updateUserTier(user.id, e.target.value)
+                          }
+                          className="bg-bleu-nuit text-parchemin border border-or/30 rounded px-3 py-1.5 text-sm hover:border-or/50 focus:border-or focus:outline-none transition-colors cursor-pointer"
+                        >
+                          <option value="free">Free (0€)</option>
+                          <option value="conteur">Conteur (9.99€)</option>
+                          <option value="pro">Pro (29.99€)</option>
+                          <option value="studio">Studio (99.99€)</option>
+                        </select>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span
+                          className={`font-semibold ${
+                            user.credits_illustrations > 50
+                              ? "text-green-400"
+                              : user.credits_illustrations > 10
+                              ? "text-yellow-400"
+                              : "text-red-400"
+                          }`}
+                        >
+                          {user.credits_illustrations}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-sable text-sm">
+                        {new Date(user.created_at).toLocaleDateString("fr-FR")}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-6">
+              <div className="text-sm text-sable">
+                Page {currentPage} sur {totalPages} • {totalUsers} utilisateur
+                {totalUsers > 1 ? "s" : ""}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 bg-bleu-nuit text-parchemin border border-or/30 rounded-lg hover:bg-or/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  ← Précédent
+                </button>
+                <div className="flex gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`px-4 py-2 rounded-lg transition-colors ${
+                          currentPage === pageNum
+                            ? "bg-or text-bleu-nuit font-bold"
+                            : "bg-bleu-nuit text-parchemin border border-or/30 hover:bg-or/10"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                </div>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 bg-bleu-nuit text-parchemin border border-or/30 rounded-lg hover:bg-or/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Suivant →
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Derniers projets */}
@@ -745,6 +1028,80 @@ const FinancialCard = ({ icon, title, value, trend, trendUp, subtitle }) => {
       <h3 className="text-sable text-sm mb-2">{title}</h3>
       <p className="text-2xl font-bold text-parchemin mb-1">{value}</p>
       {subtitle && <p className="text-xs text-sable">{subtitle}</p>}
+    </div>
+  );
+};
+
+// Skeleton Loader Component
+const SkeletonLoader = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-bleu-nuit to-nuit-dark p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Skeleton */}
+        <div className="mb-8 animate-pulse">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-8 h-8 bg-or/20 rounded"></div>
+            <div className="h-10 bg-or/20 rounded w-64"></div>
+          </div>
+          <div className="h-4 bg-sable/20 rounded w-48 mt-2"></div>
+        </div>
+
+        {/* Stats Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="bg-nuit-light rounded-xl p-6 border border-or/20 animate-pulse"
+            >
+              <div className="w-12 h-12 bg-or/20 rounded-lg mb-4"></div>
+              <div className="h-3 bg-sable/20 rounded w-20 mb-2"></div>
+              <div className="h-8 bg-parchemin/20 rounded w-16"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Chart Skeleton */}
+        <div className="bg-nuit-light rounded-xl p-6 border border-or/20 mb-8 animate-pulse">
+          <div className="h-6 bg-or/20 rounded w-48 mb-4"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-bleu-nuit/50 rounded-lg p-4">
+                <div className="h-3 bg-sable/20 rounded w-24 mb-2"></div>
+                <div className="h-8 bg-green-400/20 rounded w-32"></div>
+              </div>
+            ))}
+          </div>
+          <div className="h-64 bg-bleu-nuit/30 rounded"></div>
+        </div>
+
+        {/* Financial Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="bg-gradient-to-br from-nuit-light to-bleu-nuit rounded-xl p-6 border border-or/20 animate-pulse"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 bg-green-500/10 rounded-lg"></div>
+                <div className="h-6 bg-green-500/10 rounded w-16"></div>
+              </div>
+              <div className="h-3 bg-sable/20 rounded w-32 mb-2"></div>
+              <div className="h-7 bg-parchemin/20 rounded w-28 mb-1"></div>
+              <div className="h-3 bg-sable/20 rounded w-20"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Table Skeleton */}
+        <div className="bg-nuit-light rounded-xl p-6 border border-or/20 animate-pulse">
+          <div className="h-6 bg-or/20 rounded w-48 mb-6"></div>
+          <div className="space-y-3">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="h-16 bg-bleu-nuit/30 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
