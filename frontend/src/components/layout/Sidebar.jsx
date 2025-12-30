@@ -10,6 +10,7 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  Shield,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { cn } from "../../lib/utils";
@@ -19,7 +20,7 @@ export function Sidebar() {
   const { t } = useTranslation();
   const [collapsed, setCollapsed] = React.useState(false);
   const location = useLocation();
-  const { signOut } = useAuth();
+  const { signOut, isAdmin } = useAuth();
 
   const menuItems = [
     { icon: LayoutDashboard, label: t("nav.dashboard"), path: "/dashboard" },
@@ -28,6 +29,15 @@ export function Sidebar() {
     { icon: Sparkles, label: t("nav.inspiration"), path: "/inspiration" },
     { icon: Settings, label: t("nav.settings"), path: "/settings" },
   ];
+
+  // Ajouter le lien admin si l'utilisateur est admin
+  if (isAdmin()) {
+    menuItems.push({
+      icon: Shield,
+      label: "Admin",
+      path: "/admin",
+    });
+  }
 
   return (
     <motion.aside

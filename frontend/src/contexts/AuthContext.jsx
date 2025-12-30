@@ -122,7 +122,9 @@ export const AuthProvider = ({ children }) => {
 
   const isAdmin = () => {
     return (
-      profile?.email?.endsWith("@hakawa.com") || profile?.is_admin === true
+      profile?.email?.endsWith("@hakawa.app") ||
+      profile?.email?.endsWith("@hakawa.com") ||
+      profile?.is_admin === true
     );
   };
 
