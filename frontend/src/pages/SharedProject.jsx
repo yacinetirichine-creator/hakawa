@@ -34,7 +34,7 @@ export default function SharedProject() {
 
       // Fetch project by share token
       const { data: projectData, error: projectError } = await supabase
-        .from("manuscripts")
+        .from("projects")
         .select("*")
         .eq("share_token", shareToken)
         .eq("is_public", true)
@@ -65,7 +65,7 @@ export default function SharedProject() {
   const loadProjectData = async (projectData) => {
     // Increment view count
     await supabase
-      .from("manuscripts")
+      .from("projects")
       .update({
         share_views: (projectData.share_views || 0) + 1,
         last_viewed_at: new Date().toISOString(),
@@ -76,7 +76,7 @@ export default function SharedProject() {
 
     // Fetch author info
     const { data: userData } = await supabase
-      .from("users")
+      .from("profiles")
       .select("id, email, full_name, author_bio, author_avatar")
       .eq("id", projectData.user_id)
       .single();

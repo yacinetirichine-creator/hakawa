@@ -29,7 +29,7 @@ export default function ShareProjectModal({ project, onClose }) {
       }
 
       const { error } = await supabase
-        .from("manuscripts")
+        .from("projects")
         .update({
           is_public: !isPublic,
           share_token: shareToken,
@@ -54,7 +54,7 @@ export default function ShareProjectModal({ project, onClose }) {
       setLoading(true);
       try {
         const { error } = await supabase
-          .from("manuscripts")
+          .from("projects")
           .update({
             share_password: null,
             updated_at: new Date().toISOString(),
@@ -82,7 +82,7 @@ export default function ShareProjectModal({ project, onClose }) {
     setLoading(true);
     try {
       const { error } = await supabase
-        .from("manuscripts")
+        .from("projects")
         .update({
           share_password: password,
           updated_at: new Date().toISOString(),
