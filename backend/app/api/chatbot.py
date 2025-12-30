@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from app.services.ai_service import AIService
 from typing import Optional
 
-router = APIRouter(prefix="/api/chatbot", tags=["chatbot"])
+router = APIRouter(prefix="/chatbot", tags=["chatbot"])
 
 ai_service = AIService()
 
