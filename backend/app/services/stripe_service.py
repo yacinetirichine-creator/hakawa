@@ -151,10 +151,29 @@ class StripeService:
         Args:
             session: Objet session Stripe
         """
+        import logging
+
+        logger = logging.getLogger(__name__)
+
         try:
             user_id = session["metadata"]["user_id"]
             subscription_id = session["subscription"]
             customer_id = session["customer"]
+
+            # IDEMPOTENCE: Vérifier si déjà traité
+            existing = (
+                supabase.table("profiles")
+                .select("stripe_subscription_id")
+                .eq("id", user_id)
+                .execute()
+            )
+
+            if (
+                existing.data
+                and existing.data[0].get("stripe_subscription_id") == subscription_id
+            ):
+                logger.info(f"Checkout déjà traité pour {user_id}")
+                return
 
             # Récupérer les détails de l'abonnement
             subscription = stripe.Subscription.retrieve(subscription_id)
@@ -284,6 +303,67 @@ class StripeService:
             raise
 
     @staticmethod
+    def handle_payment_failed(invoice: Dict[str, Any]) -> None:
+        """
+        Gère un échec de paiement
+
+        Args:
+            invoice: Objet invoice Stripe
+        """
+        import logging
+
+        logger = logging.getLogger(__name__)
+
+        try:
+            customer_id = invoice["customer"]
+            attempt_count = invoice.get("attempt_count", 1)
+
+            # Trouver l'utilisateur
+            profile = (
+                supabase.table("profiles")
+                .select("id, email, full_name")
+                .eq("stripe_customer_id", customer_id)
+                .execute()
+            )
+
+            if not profile.data:
+                logger.warning(
+                    f"⚠️  Utilisateur introuvable pour customer {customer_id}"
+                )
+                return
+
+            user = profile.data[0]
+
+            # Enregistrer l'échec dans payment_history
+            supabase.table("payment_history").insert(
+                {
+                    "user_id": user["id"],
+                    "stripe_invoice_id": invoice["id"],
+                    "amount": invoice["amount_due"],
+                    "currency": invoice["currency"],
+                    "status": "failed",
+                    "payment_type": "subscription",
+                    "metadata": {
+                        "attempt_count": attempt_count,
+                        "failure_reason": invoice.get(
+                            "last_finalization_error", {}
+                        ).get("message"),
+                    },
+                }
+            ).execute()
+
+            logger.warning(
+                f"❌ Paiement échoué pour {user['email']} (tentative {attempt_count})"
+            )
+
+            # TODO: Envoyer email à l'utilisateur
+            # TODO: Si attempt_count >= 3, suspendre le compte
+
+        except Exception as e:
+            logger.error(f"❌ Erreur handle_payment_failed: {str(e)}")
+            raise
+
+    @staticmethod
     def _get_tier_from_price_id(price_id: str) -> str:
         """
         Détermine le tier à partir du price_id
@@ -293,6 +373,9 @@ class StripeService:
 
         Returns:
             Nom du tier (conteur, auteur, studio)
+
+        Raises:
+            ValueError: Si price_id inconnu
         """
         price_mapping = {
             settings.stripe_price_conteur_monthly: "conteur",
@@ -303,7 +386,10 @@ class StripeService:
             settings.stripe_price_studio_annual: "studio",
         }
 
-        return price_mapping.get(price_id, "free")
+        tier = price_mapping.get(price_id)
+        if not tier:
+            raise ValueError(f"Price ID inconnu: {price_id}")
+        return tier
 
     @staticmethod
     def get_pricing_info() -> Dict[str, Any]:

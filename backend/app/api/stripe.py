@@ -118,6 +118,10 @@ async def stripe_webhook(
     event_type = event["type"]
     event_data = event["data"]["object"]
 
+    import logging
+
+    logger = logging.getLogger(__name__)
+
     try:
         if event_type == "checkout.session.completed":
             # Paiement initial réussi
@@ -133,21 +137,22 @@ async def stripe_webhook(
 
         elif event_type == "invoice.payment_succeeded":
             # Paiement récurrent réussi
-            print(f"✅ Paiement réussi: {event_data['id']}")
+            logger.info(f"✅ Paiement réussi: {event_data['id']}")
 
         elif event_type == "invoice.payment_failed":
             # Paiement échoué
-            print(f"❌ Paiement échoué: {event_data['id']}")
-            # TODO: Envoyer un email à l'utilisateur
+            logger.warning(f"❌ Paiement échoué: {event_data['id']}")
+            stripe_service.handle_payment_failed(event_data)
 
         else:
-            print(f"ℹ️  Événement non géré: {event_type}")
+            logger.info(f"ℹ️  Événement non géré: {event_type}")
 
         return {"status": "success", "event_type": event_type}
 
     except Exception as e:
-        print(f"❌ Erreur lors du traitement du webhook: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"❌ Erreur webhook: {str(e)}", exc_info=True)
+        # Retourner 200 pour éviter retry Stripe en boucle
+        return {"status": "error", "error": str(e), "event_type": event_type}
 
 
 @router.get("/subscription/status")
