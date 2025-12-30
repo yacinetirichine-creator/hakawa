@@ -153,12 +153,78 @@ async def get_admin_metrics(
             "get_top_users_by_projects", {"limit_count": 10}
         ).execute()
 
-        # 7. Revenus (si Stripe est configuré)
+        # 7. Calculs financiers
+        # Prix des plans (€/mois)
+        tier_prices = {
+            "free": 0,
+            "creator": 12.99,
+            "author": 29.99,
+            "studio": 99.99,
+        }
+
+        # Coûts approximatifs par opération (€)
+        costs = {
+            "illustration_generation": 0.015,  # Coût OpenAI DALL-E
+            "text_generation": 0.002,  # Coût GPT-4
+            "storage_per_project": 0.01,  # Stockage Supabase
+        }
+
+        # Calcul du CA (Chiffre d'Affaires mensuel)
+        mrr = sum(
+            users_by_tier.get(tier, 0) * price for tier, price in tier_prices.items()
+        )
+
+        # Calcul des coûts de production
+        illustration_costs = (illustrations_total.count or 0) * costs[
+            "illustration_generation"
+        ]
+        project_costs = (projects_total.count or 0) * costs["storage_per_project"]
+        total_costs = illustration_costs + project_costs
+
+        # Calcul de la marge
+        margin = mrr - total_costs
+        margin_percentage = (margin / mrr * 100) if mrr > 0 else 0
+
+        # Calcul du LTV (Lifetime Value) moyen
+        avg_lifetime_months = 12  # Estimation moyenne de rétention
+        avg_ltv = (
+            mrr
+            / max(
+                users_by_tier.get("creator", 1)
+                + users_by_tier.get("author", 1)
+                + users_by_tier.get("studio", 1),
+                1,
+            )
+            * avg_lifetime_months
+        )
+
         revenue_data = {
-            "total_mrr": 0,  # Monthly Recurring Revenue
+            "mrr": round(mrr, 2),  # Monthly Recurring Revenue
+            "arr": round(mrr * 12, 2),  # Annual Recurring Revenue
             "subscriptions_active": users_by_tier.get("creator", 0)
             + users_by_tier.get("author", 0)
             + users_by_tier.get("studio", 0),
+            "costs": {
+                "illustrations": round(illustration_costs, 2),
+                "storage": round(project_costs, 2),
+                "total": round(total_costs, 2),
+            },
+            "margin": {
+                "amount": round(margin, 2),
+                "percentage": round(margin_percentage, 2),
+            },
+            "metrics": {
+                "avg_revenue_per_user": round(mrr / max(users_total.count or 1, 1), 2),
+                "avg_ltv": round(avg_ltv, 2),
+                "cost_per_illustration": costs["illustration_generation"],
+            },
+            "by_tier": {
+                tier: {
+                    "count": users_by_tier.get(tier, 0),
+                    "revenue": round(users_by_tier.get(tier, 0) * price, 2),
+                }
+                for tier, price in tier_prices.items()
+            },
         }
 
         return {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
@@ -19,8 +19,13 @@ import {
   Download,
   Search,
   Filter,
+  Euro,
+  TrendingDown,
+  Percent,
+  Zap,
+  RefreshCw,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -33,12 +38,25 @@ export default function EnhancedAdminDashboard() {
   const [timeRange, setTimeRange] = useState(30);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTier, setFilterTier] = useState("");
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [lastUpdate, setLastUpdate] = useState(new Date());
 
   useEffect(() => {
     fetchAdminData();
   }, [timeRange]);
 
-  const fetchAdminData = async () => {
+  // Auto-refresh every 30 seconds
+  useEffect(() => {
+    if (!autoRefresh) return;
+
+    const interval = setInterval(() => {
+      fetchAdminData();
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [autoRefresh, timeRange]);
+
+  const fetchAdminData = useCallback(async () => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
 
@@ -51,17 +69,18 @@ export default function EnhancedAdminDashboard() {
 
       // Fetch users
       const usersRes = await axios.get(
-        `${API_URL}/api/admin/users?limit=50&offset=0`,
+        `${API_URL}/api/admin/users?limit=100&offset=0`,
         { headers }
       );
       setUsers(usersRes.data.users || []);
 
       setLoading(false);
+      setLastUpdate(new Date());
     } catch (error) {
       console.error("Error fetching admin data:", error);
       setLoading(false);
     }
-  };
+  }, [token, timeRange]);
 
   const updateUserTier = async (userId, newTier) => {
     try {
@@ -136,14 +155,27 @@ export default function EnhancedAdminDashboard() {
             <div className="bg-gradient-to-br from-orient-gold to-amber-600 p-3 rounded-2xl shadow-glow">
               <Shield className="w-8 h-8 text-white" />
             </div>
-            <div>
+            <div className="flex-1">
               <h1 className="text-4xl md:text-5xl font-display font-bold text-white">
                 Admin Dashboard
               </h1>
               <p className="text-white/70 mt-1">
-                Bienvenue, {profile?.full_name || "Admin"}
+                Bienvenue, {profile?.full_name || "Admin"} • Mise à jour: {lastUpdate.toLocaleTimeString('fr-FR')}
               </p>
             </div>
+            
+            {/* Auto-refresh toggle */}
+            <button
+              onClick={() => setAutoRefresh(!autoRefresh)}
+              className={`px-4 py-2 rounded-xl flex items-center gap-2 transition ${
+                autoRefresh 
+                  ? 'bg-green-500 text-white' 
+                  : 'bg-gray-500 text-white'
+              }`}
+            >
+              <RefreshCw className={`w-4 h-4 ${autoRefresh ? 'animate-spin' : ''}`} />
+              {autoRefresh ? 'Auto' : 'Manuel'}
+            </button>
           </div>
 
           {/* Time Range Selector */}
