@@ -16,7 +16,11 @@
     "logout": "Cerrar sesión",
     "login": "Iniciar sesión",
     "register": "Registrarse",
-    "admin": "Admin"
+    "admin": "Admin",
+    "new_project": "Nouveau Projet",
+    "my_books": "Mes Livres",
+    "inspiration": "Inspiration",
+    "settings": "Paramètres"
   },
   "landing": {
     "hero_title": "Crea tus propias historias mágicas",
@@ -131,7 +135,6 @@
       "iframe_title": "Demo de Hakawa"
     }
   },
-
   "onboarding": {
     "steps": {
       "welcome": {
@@ -171,7 +174,6 @@
     },
     "progress": "Paso {{current}} de {{total}}"
   },
-
   "prompts": {
     "title": "Biblioteca de prompts de ilustración",
     "search_placeholder": "Busca un estilo, una escena…",
@@ -199,22 +201,27 @@
       "3": "Mansión gótica abandonada, ventanas rotas, niebla inquietante, luna llena"
     }
   },
-
   "footer": {
-    "tagline": "El arte de contar, reinventado",
-    "about_text": "Crea libros extraordinarios con inteligencia artificial.",
+    "tagline": "Transforma tu imaginación en historias mágicas",
     "product": "Producto",
     "features": "Características",
     "pricing": "Precios",
-    "how_it_works": "Cómo funciona",
+    "faq": "FAQ",
+    "company": "Empresa",
+    "about": "Acerca de",
+    "blog": "Blog",
+    "careers": "Carreras",
     "legal": "Legal",
     "privacy": "Privacidad",
-    "terms": "Términos de uso",
-    "sales_terms": "Términos de venta",
-    "mentions": "Aviso legal",
-    "contact": "Contacto"
+    "terms": "Términos",
+    "cookies": "Cookies",
+    "rights": "Todos los derechos reservados",
+    "about_text": "Créez des livres extraordinaires avec l'intelligence artificielle.",
+    "how_it_works": "Comment ça marche",
+    "sales_terms": "CGV",
+    "mentions": "Mentions Légales",
+    "contact": "Contact"
   },
-
   "pricing": {
     "title": "Elige tu plan",
     "subtitle": "Crea historias extraordinarias con IA",
@@ -243,8 +250,14 @@
         "name": "Narrador",
         "description": "Para apasionados de las historias"
       },
-      "auteur": { "name": "Autor", "description": "Para creadores ambiciosos" },
-      "studio": { "name": "Estudio", "description": "Para profesionales" }
+      "auteur": {
+        "name": "Autor",
+        "description": "Para creadores ambiciosos"
+      },
+      "studio": {
+        "name": "Estudio",
+        "description": "Para profesionales"
+      }
     },
     "features": {
       "projects_1": "1 proyecto",
@@ -350,7 +363,48 @@
     "create": "Crear mi proyecto",
     "created_success": "¡Proyecto creado con éxito!",
     "create_error": "Error al crear el proyecto",
-    "fill_required": "Por favor, rellena todos los campos obligatorios"
+    "fill_required": "Por favor, rellena todos los campos obligatorios",
+    "explore_title": "Exploration",
+    "explore_subtitle": "Discute avec l'IA pour développer tes idées",
+    "next_plan": "Passer au Plan",
+    "chat_placeholder": "Parle-moi de ton héros, de l'univers, ou de l'intrigue...",
+    "plan_title": "Plan du livre",
+    "plan_subtitle": "Structure ton histoire chapitre par chapitre.",
+    "generate_plan": "Générer avec l'IA",
+    "next_write": "Passer à la Rédaction",
+    "add_chapter": "Ajouter un chapitre",
+    "delete_chapter_confirm": "Supprimer ce chapitre ?",
+    "chapter_deleted": "Chapitre supprimé",
+    "chapter_delete_error": "Erreur lors de la suppression",
+    "write_chapters": "Chapitres",
+    "write_edit": "Éditer",
+    "write_preview": "Aperçu",
+    "write_continue": "Continuer l'histoire",
+    "write_save": "Sauvegarder",
+    "write_saved": "Sauvegardé",
+    "write_save_error": "Erreur de sauvegarde",
+    "write_finish": "Terminer",
+    "write_placeholder": "Il était une fois...",
+    "write_generated": "Contenu généré !",
+    "write_generate_error": "Erreur de génération",
+    "export_congrats": "Félicitations !",
+    "your_book": "Ton livre",
+    "export_ready": "est prêt. Il est temps de le partager avec le monde.",
+    "export_pdf_title": "Format PDF",
+    "export_pdf_desc": "Idéal pour l'impression et la lecture sur ordinateur. Mise en page professionnelle incluse.",
+    "export_epub_title": "Format EPUB",
+    "export_epub_desc": "Parfait pour les liseuses (Kindle, Kobo) et les applications de lecture mobile.",
+    "export_download_pdf": "Télécharger PDF",
+    "export_download_epub": "Télécharger EPUB",
+    "export_success": "généré avec succès !",
+    "export_error": "Erreur lors de l'export",
+    "back_dashboard": "Retour au tableau de bord",
+    "loading": "Chargement...",
+    "load_error": "Erreur lors du chargement",
+    "plan_success": "Plan généré avec succès !",
+    "plan_error": "Erreur lors de la génération du plan",
+    "chapter_create_error": "Impossible de créer le chapitre",
+    "chapter_save_error": "Erreur lors de la sauvegarde"
   },
   "genres": {
     "fantasy": "Fantasía",
@@ -402,20 +456,94 @@
       "¿Cómo exporto a KDP?"
     ]
   },
-  "footer": {
-    "tagline": "Transforma tu imaginación en historias mágicas",
-    "product": "Producto",
-    "features": "Características",
-    "pricing": "Precios",
-    "faq": "FAQ",
-    "company": "Empresa",
-    "about": "Acerca de",
-    "blog": "Blog",
-    "careers": "Carreras",
-    "legal": "Legal",
-    "privacy": "Privacidad",
-    "terms": "Términos",
-    "cookies": "Cookies",
-    "rights": "Todos los derechos reservados"
+  "status": {
+    "draft": "Brouillon",
+    "exploring": "Exploration",
+    "planning": "Planification",
+    "writing": "Écriture",
+    "illustrating": "Illustration",
+    "published": "Publié"
+  },
+  "project_card": {
+    "no_description": "Aucune description pour le moment..."
+  },
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "welcome": "Bienvenue",
+    "metrics": "Métriques",
+    "loading": "Chargement des données admin...",
+    "users": "Utilisateurs",
+    "projects": "Projets",
+    "illustrations": "Illustrations",
+    "exports": "Exports",
+    "new": "nouveaux",
+    "activity_24h": "Activité des dernières 24h",
+    "new_users": "Nouveaux utilisateurs",
+    "new_projects": "Nouveaux projets",
+    "illustrations_generated": "Illustrations générées",
+    "exports_created": "Exports créés",
+    "user_distribution": "Répartition des utilisateurs",
+    "user_management": "Gestion des utilisateurs",
+    "search": "Rechercher...",
+    "all_tiers": "Tous les tiers",
+    "user": "Utilisateur",
+    "email": "Email",
+    "subscription": "Abonnement",
+    "credits": "Crédits",
+    "registration": "Inscription",
+    "actions": "Actions",
+    "delete": "Supprimer",
+    "no_users_found": "Aucun utilisateur trouvé",
+    "admin_access": "Accès administrateur sensible",
+    "gdpr_warning": "Vous avez accès aux données de tous les utilisateurs. Respectez la confidentialité et les réglementations RGPD.",
+    "admin_badge": "Admin",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.",
+    "delete_success": "Utilisateur supprimé avec succès",
+    "delete_error": "Erreur lors de la suppression",
+    "update_error": "Erreur lors de la mise à jour",
+    "days": "jours"
+  },
+  "account": {
+    "my_account": "Mon Compte",
+    "manage_info": "Gérez vos informations et votre abonnement",
+    "loading": "Chargement...",
+    "personal_info": "Informations personnelles",
+    "your_profile": "Votre profil Hakawa",
+    "full_name": "Nom complet",
+    "not_provided": "Non renseigné",
+    "email": "Email",
+    "member_since": "Membre depuis",
+    "admin_account": "Compte Administrateur",
+    "subscription": "Abonnement",
+    "current_plan": "Votre plan actuel",
+    "plan": "Plan",
+    "status": "Statut",
+    "active": "Actif",
+    "inactive": "Inactif",
+    "expires_on": "Expire le",
+    "cancel_subscription": "Annuler l'abonnement",
+    "usage": "Utilisation",
+    "projects": "Projets",
+    "illustrations": "Illustrations",
+    "exports": "Exports",
+    "credits_remaining": "Crédits restants",
+    "export_data": "Exporter mes données",
+    "export_description": "Téléchargez toutes vos données (RGPD)",
+    "export_button": "Exporter",
+    "export_success": "Vos données ont été exportées avec succès !",
+    "export_error": "Erreur lors de l'export des données",
+    "danger_zone": "Zone dangereuse",
+    "delete_account": "Supprimer mon compte",
+    "delete_warning": "La suppression de votre compte est définitive et irréversible. Toutes vos données seront perdues.",
+    "delete_confirm_title": "Êtes-vous absolument sûr ? Cette action est irréversible.",
+    "delete_reason_label": "Pourquoi partez-vous ? (optionnel)",
+    "delete_reason_placeholder": "Dites-nous pourquoi...",
+    "confirm_deletion": "Confirmer la suppression",
+    "cancel": "Annuler",
+    "cancel_confirm": "Êtes-vous sûr de vouloir annuler votre abonnement ? Vous passerez au plan gratuit.",
+    "cancel_success": "Abonnement annulé. Vous êtes maintenant sur le plan gratuit.",
+    "cancel_error": "Erreur lors de l'annulation",
+    "delete_account_success": "Votre compte a été supprimé. Nous sommes désolés de vous voir partir.",
+    "delete_account_error": "Erreur lors de la suppression du compte"
   }
 }

@@ -16,7 +16,11 @@
     "logout": "Logout",
     "login": "Login",
     "register": "Sign up",
-    "admin": "Admin"
+    "admin": "Admin",
+    "new_project": "Nouveau Projet",
+    "my_books": "Mes Livres",
+    "inspiration": "Inspiration",
+    "settings": "Paramètres"
   },
   "landing": {
     "hero_title": "Create your own magical stories",
@@ -336,7 +340,48 @@
     "create": "Create my project",
     "created_success": "Project created successfully!",
     "create_error": "Error creating project",
-    "fill_required": "Please fill in all required fields"
+    "fill_required": "Please fill in all required fields",
+    "explore_title": "Exploration",
+    "explore_subtitle": "Discute avec l'IA pour développer tes idées",
+    "next_plan": "Passer au Plan",
+    "chat_placeholder": "Parle-moi de ton héros, de l'univers, ou de l'intrigue...",
+    "plan_title": "Plan du livre",
+    "plan_subtitle": "Structure ton histoire chapitre par chapitre.",
+    "generate_plan": "Générer avec l'IA",
+    "next_write": "Passer à la Rédaction",
+    "add_chapter": "Ajouter un chapitre",
+    "delete_chapter_confirm": "Supprimer ce chapitre ?",
+    "chapter_deleted": "Chapitre supprimé",
+    "chapter_delete_error": "Erreur lors de la suppression",
+    "write_chapters": "Chapitres",
+    "write_edit": "Éditer",
+    "write_preview": "Aperçu",
+    "write_continue": "Continuer l'histoire",
+    "write_save": "Sauvegarder",
+    "write_saved": "Sauvegardé",
+    "write_save_error": "Erreur de sauvegarde",
+    "write_finish": "Terminer",
+    "write_placeholder": "Il était une fois...",
+    "write_generated": "Contenu généré !",
+    "write_generate_error": "Erreur de génération",
+    "export_congrats": "Félicitations !",
+    "your_book": "Ton livre",
+    "export_ready": "est prêt. Il est temps de le partager avec le monde.",
+    "export_pdf_title": "Format PDF",
+    "export_pdf_desc": "Idéal pour l'impression et la lecture sur ordinateur. Mise en page professionnelle incluse.",
+    "export_epub_title": "Format EPUB",
+    "export_epub_desc": "Parfait pour les liseuses (Kindle, Kobo) et les applications de lecture mobile.",
+    "export_download_pdf": "Télécharger PDF",
+    "export_download_epub": "Télécharger EPUB",
+    "export_success": "généré avec succès !",
+    "export_error": "Erreur lors de l'export",
+    "back_dashboard": "Retour au tableau de bord",
+    "loading": "Chargement...",
+    "load_error": "Erreur lors du chargement",
+    "plan_success": "Plan généré avec succès !",
+    "plan_error": "Erreur lors de la génération du plan",
+    "chapter_create_error": "Impossible de créer le chapitre",
+    "chapter_save_error": "Erreur lors de la sauvegarde"
   },
   "genres": {
     "fantasy": "Fantasy",
@@ -489,5 +534,16 @@
     "contact": "Contact",
     "cookies": "Cookies",
     "rights": "All rights reserved"
+  },
+  "status": {
+    "draft": "Brouillon",
+    "exploring": "Exploration",
+    "planning": "Planification",
+    "writing": "Écriture",
+    "illustrating": "Illustration",
+    "published": "Publié"
+  },
+  "project_card": {
+    "no_description": "Aucune description pour le moment..."
   }
 }
