@@ -3,6 +3,10 @@
     "name": "Hakawa",
     "tagline": "Crée tes histoires magiques"
   },
+  "common": {
+    "close": "Fermer",
+    "change_language": "Changer de langue"
+  },
   "nav": {
     "home": "Accueil",
     "dashboard": "Tableau de bord",
@@ -15,7 +19,8 @@
     "new_project": "Nouveau Projet",
     "my_books": "Mes Livres",
     "inspiration": "Inspiration",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "admin": "Admin"
   },
   "landing": {
     "hero_title": "Crée tes propres histoires magiques",
@@ -32,6 +37,168 @@
       "gdpr": "RGPD Conforme",
       "ssl": "Paiement Sécurisé SSL",
       "encrypted": "Données Chiffrées"
+    },
+    "experience": {
+      "badge": "L'EXPÉRIENCE HAKAWA",
+      "title_prefix": "Plus qu'une IA, votre",
+      "title_highlight": "Compagnon Créatif",
+      "subtitle": "Nous ne remplaçons pas votre créativité, nous lui donnons des ailes. Découvrez comment Hakawa transforme vos idées en chefs-d'œuvre.",
+      "cards": {
+        "co_creation": {
+          "title": "Co-Création Magique",
+          "description": "L'IA n'écrit pas à votre place, elle écrit AVEC vous. En panne d'inspiration ? Elle suggère. Une idée folle ? Elle la sublime. Vous gardez le contrôle total de votre récit."
+        },
+        "illustrator": {
+          "title": "Illustrateur Personnel",
+          "description": "Donnez vie à vos personnages instantanément. Notre moteur graphique génère des illustrations cohérentes et époustouflantes pour chaque page, dans le style de votre choix."
+        },
+        "editor": {
+          "title": "Éditeur de Poche",
+          "description": "De l'écriture à la publication en un clic. Mise en page automatique, formatage professionnel, export prêt pour Amazon KDP ou l'impression maison."
+        }
+      }
+    },
+    "how_it_works": {
+      "badge": "Simple comme bonjour",
+      "title_prefix": "De l'idée au livre en",
+      "title_highlight": "3 étapes",
+      "steps": {
+        "1": {
+          "title": "Racontez votre idée",
+          "description": "Décrivez votre histoire en quelques phrases, ou laissez l'IA vous proposer des thèmes magiques."
+        },
+        "2": {
+          "title": "L'IA tisse la magie",
+          "description": "Hakawa rédige les chapitres et génère des illustrations uniques pour chaque page."
+        },
+        "3": {
+          "title": "Publiez et Partagez",
+          "description": "Exportez votre œuvre en PDF ou publiez-la directement sur Amazon KDP pour le monde entier."
+        }
+      }
+    },
+    "use_cases": {
+      "badge": "Des possibilités infinies",
+      "title_prefix": "Quel livre allez-vous",
+      "title_highlight": "écrire ?",
+      "subtitle": "Hakawa s'adapte à tous vos projets, du plus intime au plus ambitieux.",
+      "cards": {
+        "therapy": {
+          "title": "Thérapie par l'écriture",
+          "description": "Utilisez l'écriture comme un outil de guérison. L'IA vous guide avec bienveillance pour mettre des mots sur vos émotions et transformer vos expériences en récits libérateurs."
+        },
+        "kids": {
+          "title": "Histoires pour Enfants",
+          "description": "Devenez le héros de vos enfants en créant des contes personnalisés où ils sont les protagonistes. Illustrez leurs aventures et créez des souvenirs inoubliables."
+        },
+        "memoirs": {
+          "title": "Mémoires & Biographies",
+          "description": "Votre vie est un roman qui mérite d'être lu. Structurez vos souvenirs, racontez votre parcours et transmettez votre héritage aux générations futures."
+        },
+        "imagination": {
+          "title": "Imagination Pure",
+          "description": "Science-fiction, Fantasy, Thriller... Laissez libre cours à votre créativité. Hakawa vous aide à construire des mondes cohérents et des intrigues captivantes."
+        }
+      },
+      "publication": {
+        "badge": "Publication Professionnelle",
+        "title": "Votre livre, prêt pour le monde",
+        "description": "Notre plus grande force ? Nous ne faisons pas que générer du texte. Hakawa formate et exporte votre œuvre aux standards professionnels de l'édition. Fini les casse-têtes de mise en page !",
+        "format_title": "Format Universel",
+        "format_subtitle": "PDF Haute Définition • ePub • Mobi",
+        "format_footer": "Export compatible à 100%"
+      }
+    },
+    "story": {
+      "badge": "NOTRE HÉRITAGE",
+      "title_prefix": "L'Âme du",
+      "title_highlight": "Hakawati",
+      "p1": "Hakawa puise son nom de l'arabe Al-Hakawati (الحكواتي), le Conteur.",
+      "p2": "Dans les ruelles parfumées de Bagdad et de Damas, sous les étoiles du désert, le Hakawati s'asseyait au centre du café. Pendant des heures, il tissait des récits de djinns, de sultans et d'amours impossibles, captivant les cœurs et les esprits.",
+      "p3": "Inspirés par la légende de Shéhérazade qui sauva sa vie par la force de ses récits, nous croyons que chaque histoire mérite d'être racontée.",
+      "quote": "\"L'histoire sauve la vie. Le récit transforme le monde.\"",
+      "blocks": {
+        "tradition": {
+          "title": "Tradition Millénaire",
+          "description": "Un héritage remontant à l'âge d'or de la civilisation, où la parole était reine."
+        },
+        "modern": {
+          "title": "Magie Moderne",
+          "description": "Aujourd'hui, l'IA devient votre nouveau Hakawati, vous aidant à tisser vos propres légendes."
+        }
+      }
+    },
+    "demo": {
+      "title": "Découvrir Hakawa",
+      "play": "Lancer la démonstration",
+      "cta": "Commencer l'aventure",
+      "iframe_title": "Démo Hakawa"
+    }
+  },
+  "onboarding": {
+    "steps": {
+      "welcome": {
+        "title": "Bienvenue sur Hakawa ! 🌙",
+        "description": "Votre plateforme d'écriture assistée par IA. Laissez-nous vous faire découvrir les fonctionnalités principales."
+      },
+      "dashboard": {
+        "title": "Votre Dashboard",
+        "description": "Retrouvez ici un aperçu de vos projets en cours, vos statistiques et vos dernières créations."
+      },
+      "new_project": {
+        "title": "Créer un Projet",
+        "description": "Cliquez ici pour commencer un nouveau livre. Notre IA vous guidera tout au long du processus créatif."
+      },
+      "projects": {
+        "title": "Mes Projets",
+        "description": "Accédez à tous vos manuscrits, brouillons et livres terminés. Organisez-les par genre ou statut."
+      },
+      "inspiration": {
+        "title": "Centre d'Inspiration",
+        "description": "Besoin d'idées ? Notre IA génère des prompts, des personnages et des rebondissements pour débloquer votre créativité."
+      },
+      "settings": {
+        "title": "Paramètres",
+        "description": "Personnalisez votre expérience : préférences d'écriture, style d'illustrations, et bien plus."
+      },
+      "complete": {
+        "title": "Vous êtes prêt ! ✨",
+        "description": "Explorez Hakawa à votre rythme. Notre équipe est là si vous avez besoin d'aide. Bonne écriture !"
+      }
+    },
+    "actions": {
+      "skip": "Passer le tour",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "finish": "Terminer"
+    },
+    "progress": "Étape {{current}} sur {{total}}"
+  },
+  "prompts": {
+    "title": "Bibliothèque de Prompts d'Illustrations",
+    "search_placeholder": "Rechercher un style, une scène...",
+    "all_categories": "Toutes les catégories",
+    "popular_title": "Prompts populaires",
+    "very_used": "Très utilisé",
+    "count": "{{count}} prompt",
+    "count_plural": "{{count}} prompts",
+    "favorites_count": "{{count}} favori",
+    "favorites_count_plural": "{{count}} favoris",
+    "use": "Utiliser",
+    "empty": "Aucun prompt trouvé pour cette recherche",
+    "tips_title": "Conseils pour de meilleurs prompts",
+    "tips": {
+      "0": "Soyez précis sur le style artistique (anime, réaliste, cartoon...)",
+      "1": "Décrivez l'ambiance et les couleurs dominantes",
+      "2": "Mentionnez l'éclairage (coucher de soleil, néons, clair de lune...)",
+      "3": "Ajoutez des détails uniques pour personnaliser",
+      "4": "Utilisez des termes techniques (composition, perspective...)"
+    },
+    "popular": {
+      "0": "Château de cristal flottant dans les nuages, coucher de soleil rose et or, style anime détaillé",
+      "1": "Cyborg féminin avec implants lumineux, cheveux holographiques, style cyberpunk",
+      "2": "Couple s'embrassant sous cerisiers en fleurs, pétales roses dans le vent, coucher de soleil",
+      "3": "Manoir abandonné gothique, fenêtres cassées, brume inquiétante, pleine lune"
     }
   },
   "auth": {
@@ -61,7 +228,11 @@
     "error_login": "Email ou mot de passe incorrect",
     "error_register": "Une erreur est survenue lors de l'inscription",
     "error_google": "Erreur lors de la connexion avec Google",
-    "fill_all_fields": "Veuillez remplir tous les champs"
+    "fill_all_fields": "Veuillez remplir tous les champs",
+    "password_requirements_title": "Le mot de passe doit contenir :",
+    "password_requirements_min": "Au moins 8 caractères",
+    "password_requirements_case": "Une majuscule et une minuscule",
+    "password_requirements_number": "Au moins un chiffre"
   },
   "dashboard": {
     "welcome": "Bonjour, {{name}} ! 👋",

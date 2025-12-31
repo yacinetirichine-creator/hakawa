@@ -219,12 +219,12 @@ export default function Register() {
 
             <div className="text-xs text-gray-500 bg-gray-50 rounded-lg p-3">
               <p className="font-medium mb-1">
-                Le mot de passe doit contenir :
+                {t("auth.password_requirements_title")}
               </p>
               <ul className="space-y-1 ml-4 list-disc">
-                <li>Au moins 8 caractères</li>
-                <li>Une majuscule et une minuscule</li>
-                <li>Au moins un chiffre</li>
+                <li>{t("auth.password_requirements_min")}</li>
+                <li>{t("auth.password_requirements_case")}</li>
+                <li>{t("auth.password_requirements_number")}</li>
               </ul>
             </div>
 

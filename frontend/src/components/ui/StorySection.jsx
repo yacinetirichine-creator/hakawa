@@ -2,8 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Scroll, Moon, Star, Sparkles } from "lucide-react";
 import Storyteller3D from "./Storyteller3D";
+import { useTranslation } from "react-i18next";
 
 export const StorySection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 relative overflow-hidden bg-bleu-nuit text-white">
       {/* Background (storytelling night) */}
@@ -44,34 +47,25 @@ export const StorySection = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-orient-gold/20 text-orient-gold rounded-full font-bold text-sm mb-6 border border-orient-gold/30">
               <Scroll size={16} />
-              <span>NOTRE HÉRITAGE</span>
+              <span>{t("landing.story.badge")}</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 leading-tight">
-              L'Âme du <span className="text-orient-gold">Hakawati</span>
+              {t("landing.story.title_prefix")}{" "}
+              <span className="text-orient-gold">
+                {t("landing.story.title_highlight")}
+              </span>
             </h2>
 
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
-              <p>
-                <strong className="text-white">Hakawa</strong> puise son nom de
-                l'arabe <em>Al-Hakawati</em> (الحكواتي), le Conteur.
-              </p>
-              <p>
-                Dans les ruelles parfumées de Bagdad et de Damas, sous les
-                étoiles du désert, le Hakawati s'asseyait au centre du café.
-                Pendant des heures, il tissait des récits de djinns, de sultans
-                et d'amours impossibles, captivant les cœurs et les esprits.
-              </p>
-              <p>
-                Inspirés par la légende de <strong>Shéhérazade</strong> qui
-                sauva sa vie par la force de ses récits, nous croyons que chaque
-                histoire mérite d'être racontée.
-              </p>
+              <p>{t("landing.story.p1")}</p>
+              <p>{t("landing.story.p2")}</p>
+              <p>{t("landing.story.p3")}</p>
             </div>
 
             <div className="mt-8 p-6 bg-white/5 rounded-2xl border-l-4 border-orient-gold backdrop-blur-sm">
               <p className="italic text-xl text-white font-display">
-                "L'histoire sauve la vie. Le récit transforme le monde."
+                {t("landing.story.quote")}
               </p>
             </div>
           </motion.div>
@@ -104,11 +98,10 @@ export const StorySection = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">
-                      Tradition Millénaire
+                      {t("landing.story.blocks.tradition.title")}
                     </h3>
                     <p className="text-gray-400">
-                      Un héritage remontant à l'âge d'or de la civilisation, où
-                      la parole était reine.
+                      {t("landing.story.blocks.tradition.description")}
                     </p>
                   </div>
                 </div>
@@ -119,11 +112,10 @@ export const StorySection = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">
-                      Magie Moderne
+                      {t("landing.story.blocks.modern.title")}
                     </h3>
                     <p className="text-gray-400">
-                      Aujourd'hui, l'IA devient votre nouveau Hakawati, vous
-                      aidant à tisser vos propres légendes.
+                      {t("landing.story.blocks.modern.description")}
                     </p>
                   </div>
                 </div>

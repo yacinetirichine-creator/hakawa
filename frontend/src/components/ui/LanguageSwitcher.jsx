@@ -5,7 +5,7 @@ import { Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentLanguage =
@@ -13,9 +13,6 @@ export function LanguageSwitcher() {
 
   const changeLanguage = (code) => {
     i18n.changeLanguage(code);
-    document.documentElement.dir =
-      LANGUAGES.find((l) => l.code === code)?.dir || "ltr";
-    document.documentElement.lang = code;
     setIsOpen(false);
   };
 
@@ -24,7 +21,7 @@ export function LanguageSwitcher() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
-        aria-label="Change language"
+        aria-label={t("common.change_language")}
       >
         <Globe className="w-5 h-5 text-gray-600" />
         <span className="text-sm font-medium text-gray-700">

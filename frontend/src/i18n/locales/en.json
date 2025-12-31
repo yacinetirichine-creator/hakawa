@@ -3,6 +3,10 @@
     "name": "Hakawa",
     "tagline": "Create your magical stories"
   },
+  "common": {
+    "close": "Close",
+    "change_language": "Change language"
+  },
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -11,7 +15,8 @@
     "profile": "Profile",
     "logout": "Logout",
     "login": "Login",
-    "register": "Sign up"
+    "register": "Sign up",
+    "admin": "Admin"
   },
   "landing": {
     "hero_title": "Create your own magical stories",
@@ -28,6 +33,168 @@
       "gdpr": "GDPR compliant",
       "ssl": "Secure SSL payment",
       "encrypted": "Encrypted data"
+    },
+    "experience": {
+      "badge": "THE HAKAWA EXPERIENCE",
+      "title_prefix": "More than AI, your",
+      "title_highlight": "Creative Companion",
+      "subtitle": "We don’t replace your creativity—we give it wings. Discover how Hakawa turns your ideas into masterpieces.",
+      "cards": {
+        "co_creation": {
+          "title": "Magical Co‑Creation",
+          "description": "The AI doesn’t write instead of you—it writes WITH you. Out of inspiration? It suggests. Got a wild idea? It elevates it. You keep full control of your story."
+        },
+        "illustrator": {
+          "title": "Your Personal Illustrator",
+          "description": "Bring your characters to life instantly. Our visual engine generates consistent, stunning illustrations for every page, in the style you choose."
+        },
+        "editor": {
+          "title": "Pocket Publisher",
+          "description": "From writing to publishing in one click. Automatic layout, professional formatting, export ready for Amazon KDP or home printing."
+        }
+      }
+    },
+    "how_it_works": {
+      "badge": "Simple as that",
+      "title_prefix": "From idea to book in",
+      "title_highlight": "3 steps",
+      "steps": {
+        "1": {
+          "title": "Share your idea",
+          "description": "Describe your story in a few sentences, or let the AI suggest magical themes."
+        },
+        "2": {
+          "title": "The AI weaves the magic",
+          "description": "Hakawa writes the chapters and generates unique illustrations for every page."
+        },
+        "3": {
+          "title": "Publish & share",
+          "description": "Export your work as a PDF or publish directly to Amazon KDP for the whole world."
+        }
+      }
+    },
+    "use_cases": {
+      "badge": "Endless possibilities",
+      "title_prefix": "What book will you",
+      "title_highlight": "write?",
+      "subtitle": "Hakawa adapts to every project, from the most personal to the most ambitious.",
+      "cards": {
+        "therapy": {
+          "title": "Writing Therapy",
+          "description": "Use writing as a tool for healing. The AI gently guides you to put words to your emotions and turn your experiences into liberating stories."
+        },
+        "kids": {
+          "title": "Children’s Stories",
+          "description": "Become your children’s hero by creating personalized tales where they are the protagonists. Illustrate their adventures and create unforgettable memories."
+        },
+        "memoirs": {
+          "title": "Memoirs & Biographies",
+          "description": "Your life is a novel worth reading. Structure your memories, tell your journey, and pass on your legacy to future generations."
+        },
+        "imagination": {
+          "title": "Pure Imagination",
+          "description": "Sci‑fi, Fantasy, Thriller… Let your creativity run free. Hakawa helps you build coherent worlds and gripping plots."
+        }
+      },
+      "publication": {
+        "badge": "Professional Publishing",
+        "title": "Your book, ready for the world",
+        "description": "Our biggest strength? We don’t just generate text. Hakawa formats and exports your work to professional publishing standards. No more layout headaches!",
+        "format_title": "Universal Formats",
+        "format_subtitle": "High‑definition PDF • ePub • Mobi",
+        "format_footer": "100% compatible export"
+      }
+    },
+    "story": {
+      "badge": "OUR HERITAGE",
+      "title_prefix": "The Soul of",
+      "title_highlight": "Hakawati",
+      "p1": "Hakawa takes its name from the Arabic Al‑Hakawati (الحكواتي), the Storyteller.",
+      "p2": "In the fragrant alleys of Baghdad and Damascus, under desert stars, the Hakawati would sit at the center of the café. For hours, they wove tales of djinn, sultans, and impossible loves, captivating hearts and minds.",
+      "p3": "Inspired by the legend of Scheherazade, who saved her life through storytelling, we believe every story deserves to be told.",
+      "quote": "\"Stories save lives. Storytelling transforms the world.\"",
+      "blocks": {
+        "tradition": {
+          "title": "A Timeless Tradition",
+          "description": "A heritage rooted in a golden age, where the spoken word reigned supreme."
+        },
+        "modern": {
+          "title": "Modern Magic",
+          "description": "Today, AI becomes your new Hakawati—helping you weave your own legends."
+        }
+      }
+    },
+    "demo": {
+      "title": "Discover Hakawa",
+      "play": "Start the demo",
+      "cta": "Start the adventure",
+      "iframe_title": "Hakawa demo"
+    }
+  },
+  "onboarding": {
+    "steps": {
+      "welcome": {
+        "title": "Welcome to Hakawa! 🌙",
+        "description": "Your AI‑assisted writing platform. Let us show you the main features."
+      },
+      "dashboard": {
+        "title": "Your Dashboard",
+        "description": "See an overview of your ongoing projects, your stats, and your latest creations."
+      },
+      "new_project": {
+        "title": "Create a Project",
+        "description": "Click here to start a new book. Our AI will guide you through the creative process."
+      },
+      "projects": {
+        "title": "My Projects",
+        "description": "Access all your manuscripts, drafts, and finished books. Organize them by genre or status."
+      },
+      "inspiration": {
+        "title": "Inspiration Center",
+        "description": "Need ideas? Our AI generates prompts, characters, and plot twists to unlock your creativity."
+      },
+      "settings": {
+        "title": "Settings",
+        "description": "Customize your experience: writing preferences, illustration style, and more."
+      },
+      "complete": {
+        "title": "You’re all set! ✨",
+        "description": "Explore Hakawa at your own pace. Our team is here if you need help. Happy writing!"
+      }
+    },
+    "actions": {
+      "skip": "Skip tour",
+      "previous": "Previous",
+      "next": "Next",
+      "finish": "Finish"
+    },
+    "progress": "Step {{current}} of {{total}}"
+  },
+  "prompts": {
+    "title": "Illustration Prompt Library",
+    "search_placeholder": "Search for a style, a scene…",
+    "all_categories": "All categories",
+    "popular_title": "Popular prompts",
+    "very_used": "Very popular",
+    "count": "{{count}} prompt",
+    "count_plural": "{{count}} prompts",
+    "favorites_count": "{{count}} favorite",
+    "favorites_count_plural": "{{count}} favorites",
+    "use": "Use",
+    "empty": "No prompt found for this search",
+    "tips_title": "Tips for better prompts",
+    "tips": {
+      "0": "Be specific about the art style (anime, realistic, cartoon…)",
+      "1": "Describe the mood and dominant colors",
+      "2": "Mention the lighting (sunset, neon, moonlight…)",
+      "3": "Add unique details to personalize",
+      "4": "Use technical terms (composition, perspective…)"
+    },
+    "popular": {
+      "0": "Crystal castle floating in the clouds, pink and gold sunset, detailed anime style",
+      "1": "Female cyborg with glowing implants, holographic hair, cyberpunk style",
+      "2": "Couple kissing under cherry blossoms, pink petals in the wind, sunset",
+      "3": "Abandoned gothic manor, broken windows, eerie fog, full moon"
     }
   },
   "auth": {
@@ -57,7 +224,11 @@
     "error_login": "Invalid email or password",
     "error_register": "An error occurred during registration",
     "error_google": "Error signing in with Google",
-    "fill_all_fields": "Please fill in all fields"
+    "fill_all_fields": "Please fill in all fields",
+    "password_requirements_title": "Password must include:",
+    "password_requirements_min": "At least 8 characters",
+    "password_requirements_case": "An uppercase and a lowercase letter",
+    "password_requirements_number": "At least one number"
   },
   "admin": {
     "dashboard": "Admin Dashboard",

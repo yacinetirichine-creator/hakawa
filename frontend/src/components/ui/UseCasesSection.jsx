@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Heart,
   Baby,
@@ -30,6 +31,8 @@ const UseCaseCard = ({ icon: Icon, title, description, color, delay }) => {
 };
 
 export const UseCasesSection = () => {
+  const { t } = useTranslation();
+
   const platforms = [
     "Amazon KDP",
     "Apple Books",
@@ -49,19 +52,20 @@ export const UseCasesSection = () => {
             whileInView={{ opacity: 1 }}
             className="text-orient-gold font-bold tracking-wider uppercase text-sm"
           >
-            Des possibilités infinies
+            {t("landing.use_cases.badge")}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-display font-bold text-orient-dark mt-2 mb-6"
           >
-            Quel livre allez-vous{" "}
-            <span className="text-orient-purple">écrire ?</span>
+            {t("landing.use_cases.title_prefix")}{" "}
+            <span className="text-orient-purple">
+              {t("landing.use_cases.title_highlight")}
+            </span>
           </motion.h2>
           <p className="text-xl text-gray-600">
-            Hakawa s'adapte à tous vos projets, du plus intime au plus
-            ambitieux.
+            {t("landing.use_cases.subtitle")}
           </p>
         </div>
 
@@ -69,29 +73,29 @@ export const UseCasesSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           <UseCaseCard
             icon={Heart}
-            title="Thérapie par l'écriture"
-            description="Utilisez l'écriture comme un outil de guérison. L'IA vous guide avec bienveillance pour mettre des mots sur vos émotions et transformer vos expériences en récits libérateurs."
+            title={t("landing.use_cases.cards.therapy.title")}
+            description={t("landing.use_cases.cards.therapy.description")}
             color="bg-pink-500"
             delay={0.1}
           />
           <UseCaseCard
             icon={Baby}
-            title="Histoires pour Enfants"
-            description="Devenez le héros de vos enfants en créant des contes personnalisés où ils sont les protagonistes. Illustrez leurs aventures et créez des souvenirs inoubliables."
+            title={t("landing.use_cases.cards.kids.title")}
+            description={t("landing.use_cases.cards.kids.description")}
             color="bg-blue-400"
             delay={0.2}
           />
           <UseCaseCard
             icon={BookText}
-            title="Mémoires & Biographies"
-            description="Votre vie est un roman qui mérite d'être lu. Structurez vos souvenirs, racontez votre parcours et transmettez votre héritage aux générations futures."
+            title={t("landing.use_cases.cards.memoirs.title")}
+            description={t("landing.use_cases.cards.memoirs.description")}
             color="bg-amber-600"
             delay={0.3}
           />
           <UseCaseCard
             icon={Lightbulb}
-            title="Imagination Pure"
-            description="Science-fiction, Fantasy, Thriller... Laissez libre cours à votre créativité. Hakawa vous aide à construire des mondes cohérents et des intrigues captivantes."
+            title={t("landing.use_cases.cards.imagination.title")}
+            description={t("landing.use_cases.cards.imagination.description")}
             color="bg-purple-600"
             delay={0.4}
           />
@@ -112,21 +116,14 @@ export const UseCasesSection = () => {
               <div className="flex items-center gap-3 mb-4 text-orient-gold">
                 <UploadCloud size={28} />
                 <span className="font-bold tracking-wide uppercase">
-                  Publication Professionnelle
+                  {t("landing.use_cases.publication.badge")}
                 </span>
               </div>
               <h3 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Votre livre, prêt pour le monde
+                {t("landing.use_cases.publication.title")}
               </h3>
               <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-                Notre plus grande force ? Nous ne faisons pas que générer du
-                texte.
-                <strong>
-                  {" "}
-                  Hakawa formate et exporte votre œuvre aux standards
-                  professionnels
-                </strong>{" "}
-                de l'édition. Fini les casse-têtes de mise en page !
+                {t("landing.use_cases.publication.description")}
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -146,10 +143,10 @@ export const UseCasesSection = () => {
               <div className="aspect-[4/3] bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/10 p-6 flex flex-col justify-center items-center text-center backdrop-blur-sm">
                 <BookText size={64} className="text-white/80 mb-4" />
                 <p className="text-xl font-display font-bold mb-2">
-                  Format Universel
+                  {t("landing.use_cases.publication.format_title")}
                 </p>
                 <p className="text-gray-400 text-sm">
-                  PDF Haute Définition • ePub • Mobi
+                  {t("landing.use_cases.publication.format_subtitle")}
                 </p>
                 <div className="mt-6 w-full h-2 bg-white/10 rounded-full overflow-hidden">
                   <motion.div
@@ -160,7 +157,7 @@ export const UseCasesSection = () => {
                   />
                 </div>
                 <p className="text-xs text-orient-gold mt-2 font-mono">
-                  Export compatible à 100%
+                  {t("landing.use_cases.publication.format_footer")}
                 </p>
               </div>
             </div>

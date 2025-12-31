@@ -19,6 +19,15 @@ const resources = {
   it: { translation: it },
 };
 
+const getDirForLanguage = (languageCode) =>
+  LANGUAGES.find((l) => l.code === languageCode)?.dir || "ltr";
+
+const syncHtmlLangDir = (languageCode) => {
+  if (typeof document === "undefined") return;
+  document.documentElement.lang = languageCode;
+  document.documentElement.dir = getDirForLanguage(languageCode);
+};
+
 i18n
   .use(LanguageDetector) // Détecte la langue du navigateur
   .use(initReactI18next) // Passe i18n à react-i18next
@@ -33,6 +42,10 @@ i18n
       order: ["localStorage", "navigator", "htmlTag", "path", "subdomain"],
       caches: ["localStorage"],
     },
+  })
+  .then(() => {
+    syncHtmlLangDir(i18n.resolvedLanguage || i18n.language || "fr");
+    i18n.on("languageChanged", (lng) => syncHtmlLangDir(lng));
   });
 
 export default i18n;

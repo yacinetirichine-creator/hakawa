@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, BookOpen } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const DemoModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
@@ -32,7 +34,7 @@ export const DemoModal = ({ isOpen, onClose }) => {
                     <BookOpen size={24} />
                   </div>
                   <h3 className="text-2xl font-display font-bold text-orient-dark">
-                    Découvrir Hakawa
+                    {t("landing.demo.title")}
                   </h3>
                 </div>
                 <button
@@ -68,7 +70,7 @@ export const DemoModal = ({ isOpen, onClose }) => {
 
                     <div className="absolute bottom-8 left-8 right-8 text-center">
                       <p className="text-white/80 text-lg font-medium">
-                        Lancer la démonstration
+                        {t("landing.demo.play")}
                       </p>
                     </div>
                   </div>
@@ -77,7 +79,7 @@ export const DemoModal = ({ isOpen, onClose }) => {
                     width="100%"
                     height="100%"
                     src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                    title="Hakawa Demo"
+                    title={t("landing.demo.iframe_title")}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -92,13 +94,13 @@ export const DemoModal = ({ isOpen, onClose }) => {
                   onClick={onClose}
                   className="px-6 py-2 text-gray-600 font-medium hover:text-gray-900 transition-colors"
                 >
-                  Fermer
+                  {t("common.close")}
                 </button>
                 <a
                   href="/register"
                   className="px-6 py-2 bg-orient-purple text-white rounded-xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
                 >
-                  Commencer l'aventure
+                  {t("landing.demo.cta")}
                 </a>
               </div>
             </motion.div>

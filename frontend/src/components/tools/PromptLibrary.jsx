@@ -11,8 +11,10 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { ILLUSTRATION_PROMPTS_LIBRARY } from "../../data/templates";
+import { useTranslation } from "react-i18next";
 
 export default function PromptLibrary({ onSelectPrompt }) {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [copiedIndex, setCopiedIndex] = useState(null);
@@ -43,10 +45,10 @@ export default function PromptLibrary({ onSelectPrompt }) {
   );
 
   const popularPrompts = [
-    "Château de cristal flottant dans les nuages, coucher de soleil rose et or, style anime détaillé",
-    "Cyborg féminin avec implants lumineux, cheveux holographiques, style cyberpunk",
-    "Couple s'embrassant sous cerisiers en fleurs, pétales roses dans le vent, coucher de soleil",
-    "Manoir abandonné gothique, fenêtres cassées, brume inquiétante, pleine lune",
+    t("prompts.popular.0"),
+    t("prompts.popular.1"),
+    t("prompts.popular.2"),
+    t("prompts.popular.3"),
   ];
 
   const handleCopyPrompt = (prompt, index) => {
@@ -70,9 +72,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
       {/* Header */}
       <div className="flex items-center gap-3">
         <Image className="w-6 h-6 text-or" />
-        <h2 className="text-2xl font-bold text-or">
-          Bibliothèque de Prompts d'Illustrations
-        </h2>
+        <h2 className="text-2xl font-bold text-or">{t("prompts.title")}</h2>
       </div>
 
       {/* Search & Filter */}
@@ -83,7 +83,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Rechercher un style, une scène..."
+            placeholder={t("prompts.search_placeholder")}
             className="w-full pl-12 pr-4 py-3 bg-bleu-nuit/50 border border-or/20 rounded-lg text-parchemin placeholder:text-parchemin/30 focus:outline-none focus:border-or"
           />
         </div>
@@ -95,7 +95,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="pl-12 pr-8 py-3 bg-bleu-nuit/50 border border-or/20 rounded-lg text-parchemin focus:outline-none focus:border-or appearance-none"
           >
-            <option value="all">Toutes les catégories</option>
+            <option value="all">{t("prompts.all_categories")}</option>
             {ILLUSTRATION_PROMPTS_LIBRARY.map((cat) => (
               <option key={cat.category} value={cat.category}>
                 {cat.category}
@@ -110,7 +110,9 @@ export default function PromptLibrary({ onSelectPrompt }) {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-5 h-5 text-or" />
-            <h3 className="font-bold text-parchemin">Prompts populaires</h3>
+            <h3 className="font-bold text-parchemin">
+              {t("prompts.popular_title")}
+            </h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {popularPrompts.map((prompt, idx) => (
@@ -123,7 +125,9 @@ export default function PromptLibrary({ onSelectPrompt }) {
                 <p className="text-sm text-parchemin/90">{prompt}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <Sparkles className="w-4 h-4 text-or" />
-                  <span className="text-xs text-or">Très utilisé</span>
+                  <span className="text-xs text-or">
+                    {t("prompts.very_used")}
+                  </span>
                 </div>
               </motion.button>
             ))}
@@ -135,8 +139,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-bold text-parchemin">
-            {filteredPrompts.length} prompt
-            {filteredPrompts.length > 1 ? "s" : ""}
+            {t("prompts.count", { count: filteredPrompts.length })}
           </h3>
           {favorites.size > 0 && (
             <button
@@ -146,7 +149,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
               className="flex items-center gap-2 px-3 py-1 bg-or/20 rounded-lg text-sm text-or hover:bg-or/30 transition-colors"
             >
               <Heart className="w-4 h-4" />
-              {favorites.size} favori{favorites.size > 1 ? "s" : ""}
+              {t("prompts.favorites_count", { count: favorites.size })}
             </button>
           )}
         </div>
@@ -201,7 +204,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
                       onClick={() => onSelectPrompt(item.prompt)}
                       className="px-3 py-2 bg-gradient-to-r from-or to-or/80 text-bleu-nuit text-xs font-bold rounded-lg hover:shadow-lg hover:shadow-or/20 transition-all opacity-0 group-hover:opacity-100"
                     >
-                      Utiliser
+                      {t("prompts.use")}
                     </button>
                   )}
                 </div>
@@ -212,9 +215,7 @@ export default function PromptLibrary({ onSelectPrompt }) {
           {filteredPrompts.length === 0 && (
             <div className="text-center py-12">
               <Image className="w-16 h-16 text-parchemin/30 mx-auto mb-4" />
-              <p className="text-parchemin/70">
-                Aucun prompt trouvé pour cette recherche
-              </p>
+              <p className="text-parchemin/70">{t("prompts.empty")}</p>
             </div>
           )}
         </div>
@@ -226,22 +227,14 @@ export default function PromptLibrary({ onSelectPrompt }) {
           <Sparkles className="w-5 h-5 text-or flex-shrink-0 mt-1" />
           <div>
             <p className="font-bold text-parchemin mb-2">
-              Conseils pour de meilleurs prompts
+              {t("prompts.tips_title")}
             </p>
             <ul className="text-sm text-parchemin/80 space-y-1">
-              <li>
-                • Soyez précis sur le style artistique (anime, réaliste,
-                cartoon...)
-              </li>
-              <li>• Décrivez l'ambiance et les couleurs dominantes</li>
-              <li>
-                • Mentionnez l'éclairage (coucher de soleil, néons, clair de
-                lune...)
-              </li>
-              <li>• Ajoutez des détails uniques pour personnaliser</li>
-              <li>
-                • Utilisez des termes techniques (composition, perspective...)
-              </li>
+              <li>• {t("prompts.tips.0")}</li>
+              <li>• {t("prompts.tips.1")}</li>
+              <li>• {t("prompts.tips.2")}</li>
+              <li>• {t("prompts.tips.3")}</li>
+              <li>• {t("prompts.tips.4")}</li>
             </ul>
           </div>
         </div>

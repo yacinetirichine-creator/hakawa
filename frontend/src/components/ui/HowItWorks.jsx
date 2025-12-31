@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Lightbulb, Wand2, Upload } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const StepCard = ({ number, icon: Icon, title, description, delay }) => {
   return (
@@ -41,6 +42,8 @@ const StepCard = ({ number, icon: Icon, title, description, delay }) => {
 };
 
 export const HowItWorks = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4">
@@ -50,15 +53,17 @@ export const HowItWorks = () => {
             whileInView={{ opacity: 1 }}
             className="text-orient-purple font-bold tracking-wider uppercase text-sm"
           >
-            Simple comme bonjour
+            {t("landing.how_it_works.badge")}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-display font-bold text-orient-dark mt-2 mb-6"
           >
-            De l'idée au livre en{" "}
-            <span className="text-orient-gold">3 étapes</span>
+            {t("landing.how_it_works.title_prefix")}{" "}
+            <span className="text-orient-gold">
+              {t("landing.how_it_works.title_highlight")}
+            </span>
           </motion.h2>
         </div>
 
@@ -66,22 +71,22 @@ export const HowItWorks = () => {
           <StepCard
             number={1}
             icon={Lightbulb}
-            title="Racontez votre idée"
-            description="Décrivez votre histoire en quelques phrases, ou laissez l'IA vous proposer des thèmes magiques."
+            title={t("landing.how_it_works.steps.1.title")}
+            description={t("landing.how_it_works.steps.1.description")}
             delay={0.2}
           />
           <StepCard
             number={2}
             icon={Wand2}
-            title="L'IA tisse la magie"
-            description="Hakawa rédige les chapitres et génère des illustrations uniques pour chaque page."
+            title={t("landing.how_it_works.steps.2.title")}
+            description={t("landing.how_it_works.steps.2.description")}
             delay={0.4}
           />
           <StepCard
             number={3}
             icon={Upload}
-            title="Publiez et Partagez"
-            description="Exportez votre œuvre en PDF ou publiez-la directement sur Amazon KDP pour le monde entier."
+            title={t("landing.how_it_works.steps.3.title")}
+            description={t("landing.how_it_works.steps.3.description")}
             delay={0.6}
           />
         </div>

@@ -1,69 +1,66 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const TOUR_STEPS = [
+const getTourSteps = (t) => [
   {
     id: "welcome",
-    title: "Bienvenue sur Hakawa ! 🌙",
-    description:
-      "Votre plateforme d'écriture assistée par IA. Laissez-nous vous faire découvrir les fonctionnalités principales.",
+    title: t("onboarding.steps.welcome.title"),
+    description: t("onboarding.steps.welcome.description"),
     target: null,
     position: "center",
   },
   {
     id: "dashboard",
-    title: "Votre Dashboard",
-    description:
-      "Retrouvez ici un aperçu de vos projets en cours, vos statistiques et vos dernières créations.",
+    title: t("onboarding.steps.dashboard.title"),
+    description: t("onboarding.steps.dashboard.description"),
     target: ".dashboard-overview",
     position: "bottom",
   },
   {
     id: "new-project",
-    title: "Créer un Projet",
-    description:
-      "Cliquez ici pour commencer un nouveau livre. Notre IA vous guidera tout au long du processus créatif.",
+    title: t("onboarding.steps.new_project.title"),
+    description: t("onboarding.steps.new_project.description"),
     target: ".btn-new-project",
     position: "bottom",
   },
   {
     id: "projects",
-    title: "Mes Projets",
-    description:
-      "Accédez à tous vos manuscrits, brouillons et livres terminés. Organisez-les par genre ou statut.",
+    title: t("onboarding.steps.projects.title"),
+    description: t("onboarding.steps.projects.description"),
     target: ".nav-projects",
     position: "right",
   },
   {
     id: "inspiration",
-    title: "Centre d'Inspiration",
-    description:
-      "Besoin d'idées ? Notre IA génère des prompts, des personnages et des rebondissements pour débloquer votre créativité.",
+    title: t("onboarding.steps.inspiration.title"),
+    description: t("onboarding.steps.inspiration.description"),
     target: ".nav-inspiration",
     position: "right",
   },
   {
     id: "settings",
-    title: "Paramètres",
-    description:
-      "Personnalisez votre expérience : préférences d'écriture, style d'illustrations, et bien plus.",
+    title: t("onboarding.steps.settings.title"),
+    description: t("onboarding.steps.settings.description"),
     target: ".nav-settings",
     position: "right",
   },
   {
     id: "complete",
-    title: "Vous êtes prêt ! ✨",
-    description:
-      "Explorez Hakawa à votre rythme. Notre équipe est là si vous avez besoin d'aide. Bonne écriture !",
+    title: t("onboarding.steps.complete.title"),
+    description: t("onboarding.steps.complete.description"),
     target: null,
     position: "center",
   },
 ];
 
 export function OnboardingTour({ onComplete }) {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+
+  const TOUR_STEPS = React.useMemo(() => getTourSteps(t), [t]);
 
   useEffect(() => {
     // Vérifier si l'utilisateur a déjà vu le tour
@@ -173,7 +170,7 @@ export function OnboardingTour({ onComplete }) {
                 onClick={skipTour}
                 className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
               >
-                Passer le tour
+                {t("onboarding.actions.skip")}
               </button>
 
               <div className="flex gap-2">
@@ -183,7 +180,7 @@ export function OnboardingTour({ onComplete }) {
                     className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" />
-                    Précédent
+                    {t("onboarding.actions.previous")}
                   </button>
                 )}
 
@@ -193,12 +190,12 @@ export function OnboardingTour({ onComplete }) {
                 >
                   {currentStep === TOUR_STEPS.length - 1 ? (
                     <>
-                      Terminer
+                      {t("onboarding.actions.finish")}
                       <Check className="w-4 h-4" />
                     </>
                   ) : (
                     <>
-                      Suivant
+                      {t("onboarding.actions.next")}
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -208,7 +205,10 @@ export function OnboardingTour({ onComplete }) {
 
             {/* Step counter */}
             <div className="text-center mt-4 text-sm text-gray-400">
-              Étape {currentStep + 1} sur {TOUR_STEPS.length}
+              {t("onboarding.progress", {
+                current: currentStep + 1,
+                total: TOUR_STEPS.length,
+              })}
             </div>
           </div>
         </motion.div>

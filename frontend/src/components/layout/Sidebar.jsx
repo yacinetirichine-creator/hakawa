@@ -34,7 +34,7 @@ export function Sidebar() {
   if (isAdmin()) {
     menuItems.push({
       icon: Shield,
-      label: "Admin",
+      label: t("nav.admin"),
       path: "/admin",
     });
   }

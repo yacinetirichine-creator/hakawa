@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   PenTool,
   Image as ImageIcon,
@@ -81,6 +82,8 @@ const FeatureCard = ({ icon: Icon, title, description, delay, color }) => {
 };
 
 export const ValueProposition = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background Elements */}
@@ -96,7 +99,7 @@ export const ValueProposition = () => {
             className="inline-flex items-center gap-2 px-4 py-2 bg-orient-gold/10 text-orient-gold rounded-full font-bold text-sm mb-6"
           >
             <Crown size={16} />
-            <span>L'EXPÉRIENCE HAKAWA</span>
+            <span>{t("landing.experience.badge")}</span>
           </motion.div>
 
           <motion.h2
@@ -105,9 +108,9 @@ export const ValueProposition = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-orient-dark mb-6"
           >
-            Plus qu'une IA, votre{" "}
+            {t("landing.experience.title_prefix")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orient-purple to-orient-blue">
-              Compagnon Créatif
+              {t("landing.experience.title_highlight")}
             </span>
           </motion.h2>
 
@@ -118,8 +121,7 @@ export const ValueProposition = () => {
             transition={{ delay: 0.1 }}
             className="text-xl text-gray-600"
           >
-            Nous ne remplaçons pas votre créativité, nous lui donnons des ailes.
-            Découvrez comment Hakawa transforme vos idées en chefs-d'œuvre.
+            {t("landing.experience.subtitle")}
           </motion.p>
         </div>
 
@@ -127,24 +129,24 @@ export const ValueProposition = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <FeatureCard
             icon={PenTool}
-            title="Co-Création Magique"
-            description="L'IA n'écrit pas à votre place, elle écrit AVEC vous. En panne d'inspiration ? Elle suggère. Une idée folle ? Elle la sublime. Vous gardez le contrôle total de votre récit."
+            title={t("landing.experience.cards.co_creation.title")}
+            description={t("landing.experience.cards.co_creation.description")}
             color="linear-gradient(135deg, #6B46C1 0%, #805AD5 100%)"
             delay={0.2}
           />
 
           <FeatureCard
             icon={ImageIcon}
-            title="Illustrateur Personnel"
-            description="Donnez vie à vos personnages instantanément. Notre moteur graphique génère des illustrations cohérentes et époustouflantes pour chaque page, dans le style de votre choix."
+            title={t("landing.experience.cards.illustrator.title")}
+            description={t("landing.experience.cards.illustrator.description")}
             color="linear-gradient(135deg, #D69E2E 0%, #ECC94B 100%)"
             delay={0.3}
           />
 
           <FeatureCard
             icon={Book}
-            title="Éditeur de Poche"
-            description="De l'écriture à la publication en un clic. Mise en page automatique, formatage professionnel, export prêt pour Amazon KDP ou l'impression maison."
+            title={t("landing.experience.cards.editor.title")}
+            description={t("landing.experience.cards.editor.description")}
             color="linear-gradient(135deg, #3182CE 0%, #4299E1 100%)"
             delay={0.4}
           />

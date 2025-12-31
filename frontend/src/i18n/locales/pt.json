@@ -3,6 +3,10 @@
     "name": "Hakawa",
     "tagline": "Crie as suas histórias mágicas"
   },
+  "common": {
+    "close": "Fechar",
+    "change_language": "Mudar idioma"
+  },
   "nav": {
     "home": "Início",
     "dashboard": "Painel",
@@ -11,7 +15,8 @@
     "profile": "Perfil",
     "logout": "Sair",
     "login": "Entrar",
-    "register": "Registar"
+    "register": "Registar",
+    "admin": "Admin"
   },
   "landing": {
     "hero_title": "Crie as suas próprias histórias mágicas",
@@ -28,6 +33,170 @@
       "gdpr": "Conforme RGPD",
       "ssl": "Pagamento SSL seguro",
       "encrypted": "Dados encriptados"
+    },
+    "experience": {
+      "badge": "A EXPERIÊNCIA HAKAWA",
+      "title_prefix": "Mais do que IA, o seu",
+      "title_highlight": "Companheiro Criativo",
+      "subtitle": "Não substituímos a sua criatividade — damos-lhe asas. Descubra como a Hakawa transforma as suas ideias em obras-primas.",
+      "cards": {
+        "co_creation": {
+          "title": "Cocriação mágica",
+          "description": "A IA não escreve por si — escreve CONSIGO. Sem inspiração? Sugere. Uma ideia louca? Eleva-a. Você mantém o controlo total da sua história."
+        },
+        "illustrator": {
+          "title": "Ilustrador pessoal",
+          "description": "Dê vida às suas personagens num instante. O nosso motor visual gera ilustrações consistentes e incríveis para cada página, no estilo que escolher."
+        },
+        "editor": {
+          "title": "Editor de bolso",
+          "description": "Da escrita à publicação num clique. Paginação automática, formatação profissional e exportação pronta para a Amazon KDP ou impressão em casa."
+        }
+      }
+    },
+    "how_it_works": {
+      "badge": "Simples assim",
+      "title_prefix": "Da ideia ao livro em",
+      "title_highlight": "3 passos",
+      "steps": {
+        "1": {
+          "title": "Conte a sua ideia",
+          "description": "Descreva a sua história em poucas frases, ou deixe a IA sugerir temas mágicos."
+        },
+        "2": {
+          "title": "A IA tece a magia",
+          "description": "A Hakawa escreve os capítulos e gera ilustrações únicas para cada página."
+        },
+        "3": {
+          "title": "Publique e partilhe",
+          "description": "Exporte a sua obra em PDF ou publique diretamente na Amazon KDP para o mundo inteiro."
+        }
+      }
+    },
+    "use_cases": {
+      "badge": "Possibilidades infinitas",
+      "title_prefix": "Que livro vai",
+      "title_highlight": "escrever?",
+      "subtitle": "A Hakawa adapta-se a todos os seus projetos, do mais íntimo ao mais ambicioso.",
+      "cards": {
+        "therapy": {
+          "title": "Terapia através da escrita",
+          "description": "Use a escrita como uma ferramenta de cura. A IA guia-o(a) com cuidado para pôr em palavras as suas emoções e transformar experiências em histórias libertadoras."
+        },
+        "kids": {
+          "title": "Histórias para crianças",
+          "description": "Torne-se o herói dos seus filhos criando contos personalizados onde eles são os protagonistas. Ilustre as suas aventuras e crie memórias inesquecíveis."
+        },
+        "memoirs": {
+          "title": "Memórias e biografias",
+          "description": "A sua vida é um romance que merece ser lido. Estruture as memórias, conte o seu percurso e transmita o seu legado às gerações futuras."
+        },
+        "imagination": {
+          "title": "Imaginação pura",
+          "description": "Ficção científica, fantasia, thriller… Deixe a criatividade voar. A Hakawa ajuda-o(a) a construir mundos coerentes e enredos cativantes."
+        }
+      },
+      "publication": {
+        "badge": "Publicação profissional",
+        "title": "O seu livro, pronto para o mundo",
+        "description": "A nossa maior força? Não geramos apenas texto. A Hakawa formata e exporta a sua obra com padrões profissionais de edição. Acabaram-se as dores de cabeça com a paginação!",
+        "format_title": "Formatos universais",
+        "format_subtitle": "PDF em alta definição • ePub • Mobi",
+        "format_footer": "Exportação 100% compatível"
+      }
+    },
+    "story": {
+      "badge": "O NOSSO LEGADO",
+      "title_prefix": "A alma do",
+      "title_highlight": "Hakawati",
+      "p1": "Hakawa inspira-se no árabe Al‑Hakawati (الحكواتي), o Contador de Histórias.",
+      "p2": "Nas ruelas perfumadas de Bagdade e Damasco, sob as estrelas do deserto, o Hakawati sentava-se no centro do café. Durante horas, tecia relatos de djinns, sultões e amores impossíveis, cativando corações e mentes.",
+      "p3": "Inspirados pela lenda de Xerazade, que salvou a vida graças ao poder das histórias, acreditamos que cada história merece ser contada.",
+      "quote": "\"As histórias salvam vidas. Contar transforma o mundo.\"",
+      "blocks": {
+        "tradition": {
+          "title": "Tradição milenar",
+          "description": "Um legado que vem de uma era de ouro, onde a palavra reinava."
+        },
+        "modern": {
+          "title": "Magia moderna",
+          "description": "Hoje, a IA torna-se o seu novo Hakawati — ajudando-o(a) a tecer as suas próprias lendas."
+        }
+      }
+    },
+    "demo": {
+      "title": "Descubra a Hakawa",
+      "play": "Iniciar a demonstração",
+      "cta": "Começar a aventura",
+      "iframe_title": "Demonstração Hakawa"
+    }
+  },
+
+  "onboarding": {
+    "steps": {
+      "welcome": {
+        "title": "Bem-vindo(a) à Hakawa! 🌙",
+        "description": "A sua plataforma de escrita com IA. Vamos mostrar-lhe as principais funcionalidades."
+      },
+      "dashboard": {
+        "title": "O seu painel",
+        "description": "Veja uma visão geral dos seus projetos em curso, estatísticas e últimas criações."
+      },
+      "new_project": {
+        "title": "Criar um projeto",
+        "description": "Clique aqui para começar um novo livro. A nossa IA vai guiá-lo(a) ao longo do processo criativo."
+      },
+      "projects": {
+        "title": "Os meus projetos",
+        "description": "Aceda a todos os seus manuscritos, rascunhos e livros concluídos. Organize-os por género ou estado."
+      },
+      "inspiration": {
+        "title": "Centro de inspiração",
+        "description": "Precisa de ideias? A nossa IA gera prompts, personagens e reviravoltas para desbloquear a sua criatividade."
+      },
+      "settings": {
+        "title": "Definições",
+        "description": "Personalize a sua experiência: preferências de escrita, estilo de ilustração e muito mais."
+      },
+      "complete": {
+        "title": "Está tudo pronto! ✨",
+        "description": "Explore a Hakawa ao seu ritmo. A nossa equipa está aqui se precisar de ajuda. Boa escrita!"
+      }
+    },
+    "actions": {
+      "skip": "Saltar tour",
+      "previous": "Anterior",
+      "next": "Seguinte",
+      "finish": "Concluir"
+    },
+    "progress": "Passo {{current}} de {{total}}"
+  },
+
+  "prompts": {
+    "title": "Biblioteca de prompts de ilustração",
+    "search_placeholder": "Pesquisar um estilo, uma cena…",
+    "all_categories": "Todas as categorias",
+    "popular_title": "Prompts populares",
+    "very_used": "Muito popular",
+    "count": "{{count}} prompt",
+    "count_plural": "{{count}} prompts",
+    "favorites_count": "{{count}} favorito",
+    "favorites_count_plural": "{{count}} favoritos",
+    "use": "Usar",
+    "empty": "Nenhum prompt encontrado para esta pesquisa",
+    "tips_title": "Dicas para melhores prompts",
+    "tips": {
+      "0": "Seja específico(a) sobre o estilo artístico (anime, realista, cartoon…)",
+      "1": "Descreva o ambiente e as cores dominantes",
+      "2": "Mencione a iluminação (pôr do sol, néon, luz da lua…)",
+      "3": "Adicione detalhes únicos para personalizar",
+      "4": "Use termos técnicos (composição, perspetiva…)"
+    },
+    "popular": {
+      "0": "Castelo de cristal a flutuar nas nuvens, pôr do sol rosa e dourado, estilo anime detalhado",
+      "1": "Ciborgue feminina com implantes brilhantes, cabelo holográfico, estilo cyberpunk",
+      "2": "Casal a beijar-se sob cerejeiras em flor, pétalas rosas ao vento, pôr do sol",
+      "3": "Mansão gótica abandonada, janelas partidas, nevoeiro inquietante, lua cheia"
     }
   },
   "auth": {
