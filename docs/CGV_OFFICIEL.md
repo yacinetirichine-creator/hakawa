@@ -17,7 +17,7 @@ Capital social : 1 000,00 EUR
 SIREN : 938 848 546  
 RCS : 938 848 546 R.C.S. Créteil  
 Siège social : 64 Avenue Marinville, 94100 Saint-Maur-des-Fossés, France  
-Numéro de TVA intracommunautaire : _(à obtenir)_  
+Numéro de TVA intracommunautaire : FR09938848546  
 Email : contact@hakawa.app  
 Téléphone : +33 (0)4 XX XX XX XX _(à compléter)_
 
@@ -496,7 +496,7 @@ Si une clause est déclarée nulle ou inapplicable, les autres clauses restent e
 94100 Saint-Maur-des-Fossés, France
 
 **SIREN :** 938 848 546  
-**TVA :** _(à obtenir)_
+**TVA :** FR09938848546
 
 **Email général :** contact@hakawa.app  
 **Facturation :** billing@hakawa.app  
