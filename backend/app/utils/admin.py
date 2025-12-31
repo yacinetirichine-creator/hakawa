@@ -4,7 +4,7 @@ Middleware et utilitaires pour la gestion des administrateurs
 
 from fastapi import HTTPException, Header, Depends
 from typing import Optional
-from app.utils.supabase import supabase
+from app.utils.supabase import supabase, supabase_admin
 
 
 async def get_current_user(authorization: Optional[str] = Header(None)):
@@ -18,8 +18,8 @@ async def get_current_user(authorization: Optional[str] = Header(None)):
         # Extraire le token du header "Bearer {token}"
         token = authorization.replace("Bearer ", "")
 
-        # Vérifier le token avec Supabase
-        user_response = supabase.auth.get_user(token)
+        # Vérifier le token avec Supabase (utiliser admin client pour valider JWT)
+        user_response = supabase_admin.auth.get_user(token)
 
         if not user_response or not user_response.user:
             raise HTTPException(status_code=401, detail="Token invalide")
