@@ -23,7 +23,6 @@ import {
   Lock,
   Award,
   Mail,
-  MapPin,
 } from "lucide-react";
 
 export default function Landing() {
@@ -200,19 +199,19 @@ export default function Landing() {
               <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full border border-green-200">
                 <Shield className="w-5 h-5 text-green-600" />
                 <span className="text-sm font-semibold text-green-900">
-                  RGPD Conforme
+                  {t("landing.trust_badges.gdpr")}
                 </span>
               </div>
               <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full border border-blue-200">
                 <Lock className="w-5 h-5 text-blue-600" />
                 <span className="text-sm font-semibold text-blue-900">
-                  Paiement Sécurisé SSL
+                  {t("landing.trust_badges.ssl")}
                 </span>
               </div>
               <div className="flex items-center gap-2 bg-purple-50 px-4 py-2 rounded-full border border-purple-200">
                 <Award className="w-5 h-5 text-purple-600" />
                 <span className="text-sm font-semibold text-purple-900">
-                  Données Chiffrées
+                  {t("landing.trust_badges.encrypted")}
                 </span>
               </div>
             </div>
@@ -225,8 +224,7 @@ export default function Landing() {
                   {t("app.name")}
                 </h4>
                 <p className="text-sm text-gray-600 mb-4">
-                  Créez des livres extraordinaires avec l'intelligence
-                  artificielle.
+                  {t("footer.about_text")}
                 </p>
                 <div className="flex items-center gap-2 text-orient-purple">
                   <Moon className="w-5 h-5 fill-current" />
@@ -236,14 +234,16 @@ export default function Landing() {
 
               {/* Colonne 2 - Produit */}
               <div>
-                <h4 className="font-bold text-orient-dark mb-4">Produit</h4>
+                <h4 className="font-bold text-orient-dark mb-4">
+                  {t("footer.product")}
+                </h4>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li>
                     <Link
                       to="/pricing"
                       className="hover:text-orient-purple transition"
                     >
-                      Tarifs
+                      {t("footer.pricing")}
                     </Link>
                   </li>
                   <li>
@@ -251,7 +251,7 @@ export default function Landing() {
                       href="#features"
                       className="hover:text-orient-purple transition"
                     >
-                      Fonctionnalités
+                      {t("footer.features")}
                     </a>
                   </li>
                   <li>
@@ -259,7 +259,7 @@ export default function Landing() {
                       href="#how-it-works"
                       className="hover:text-orient-purple transition"
                     >
-                      Comment ça marche
+                      {t("footer.how_it_works")}
                     </a>
                   </li>
                   <li>
@@ -267,7 +267,7 @@ export default function Landing() {
                       to="/register"
                       className="hover:text-orient-purple transition"
                     >
-                      Créer un compte
+                      {t("nav.register")}
                     </Link>
                   </li>
                 </ul>
@@ -275,14 +275,16 @@ export default function Landing() {
 
               {/* Colonne 3 - Légal */}
               <div>
-                <h4 className="font-bold text-orient-dark mb-4">Légal</h4>
+                <h4 className="font-bold text-orient-dark mb-4">
+                  {t("footer.legal")}
+                </h4>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li>
                     <Link
                       to="/legal/cgu"
                       className="hover:text-orient-purple transition"
                     >
-                      Conditions d'Utilisation
+                      {t("footer.terms")}
                     </Link>
                   </li>
                   <li>
@@ -290,7 +292,7 @@ export default function Landing() {
                       to="/legal/cgv"
                       className="hover:text-orient-purple transition"
                     >
-                      Conditions de Vente
+                      {t("footer.sales_terms")}
                     </Link>
                   </li>
                   <li>
@@ -298,7 +300,7 @@ export default function Landing() {
                       to="/legal/privacy"
                       className="hover:text-orient-purple transition"
                     >
-                      Confidentialité (RGPD)
+                      {t("footer.privacy")}
                     </Link>
                   </li>
                   <li>
@@ -306,7 +308,7 @@ export default function Landing() {
                       to="/legal/terms"
                       className="hover:text-orient-purple transition"
                     >
-                      Mentions Légales
+                      {t("footer.mentions")}
                     </Link>
                   </li>
                 </ul>
@@ -314,7 +316,9 @@ export default function Landing() {
 
               {/* Colonne 4 - Contact */}
               <div>
-                <h4 className="font-bold text-orient-dark mb-4">Contact</h4>
+                <h4 className="font-bold text-orient-dark mb-4">
+                  {t("footer.contact")}
+                </h4>
                 <ul className="space-y-3 text-sm text-gray-600">
                   <li className="flex items-start gap-2">
                     <Mail className="w-4 h-4 mt-0.5 text-orient-purple flex-shrink-0" />
@@ -325,46 +329,12 @@ export default function Landing() {
                       contact@hakawa.app
                     </a>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 mt-0.5 text-orient-purple flex-shrink-0" />
-                    <span className="text-xs leading-relaxed">
-                      22 Rue du Docteur Louis Marçon
-                      <br />
-                      34070 MONTPELLIER, France
-                    </span>
-                  </li>
                 </ul>
               </div>
             </div>
 
             {/* Mentions légales entreprise */}
-            <div className="border-t border-gray-200 pt-8 pb-4">
-              <div className="text-center space-y-3">
-                <div className="flex justify-center gap-4 mb-6">
-                  <Star className="text-orient-gold w-6 h-6 animate-pulse" />
-                  <Star className="text-orient-purple w-6 h-6 animate-pulse delay-100" />
-                  <Star className="text-orient-blue w-6 h-6 animate-pulse delay-200" />
-                </div>
-
-                <p className="text-sm text-gray-700 font-semibold">
-                  JARVIS - Société par actions simplifiée (SAS)
-                </p>
-                <p className="text-xs text-gray-600">
-                  Capital social: 1 000,00 EUR • SIREN: 984 594 565 • TVA: FR XX
-                  984594565
-                </p>
-                <p className="text-xs text-gray-600">
-                  Siège social: 22 Rue du Docteur Louis Marçon, 34070
-                  MONTPELLIER
-                </p>
-
-                <div className="pt-4">
-                  <p className="text-sm text-gray-600">
-                    © 2024-2025 {t("app.name")} - {t("footer.tagline")}
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Infos légales: à renseigner avec les données officielles (Mentions légales) */}
           </div>
         </footer>
       </div>

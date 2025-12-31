@@ -23,7 +23,103 @@
     "feature2_title": "IA Creativa",
     "feature2_desc": "Nuestra IA genera texto e ilustraciones únicas",
     "feature3_title": "Publica fácilmente",
-    "feature3_desc": "Formato listo para Amazon KDP en pocos clics"
+    "feature3_desc": "Formato listo para Amazon KDP en pocos clics",
+    "trust_badges": {
+      "gdpr": "Cumple RGPD",
+      "ssl": "Pago seguro SSL",
+      "encrypted": "Datos cifrados"
+    }
+  },
+
+  "footer": {
+    "tagline": "El arte de contar, reinventado",
+    "about_text": "Crea libros extraordinarios con inteligencia artificial.",
+    "product": "Producto",
+    "features": "Características",
+    "pricing": "Precios",
+    "how_it_works": "Cómo funciona",
+    "legal": "Legal",
+    "privacy": "Privacidad",
+    "terms": "Términos de uso",
+    "sales_terms": "Términos de venta",
+    "mentions": "Aviso legal",
+    "contact": "Contacto"
+  },
+
+  "pricing": {
+    "title": "Elige tu plan",
+    "subtitle": "Crea historias extraordinarias con IA",
+    "per_month": "/mes",
+    "per_year": "/año",
+    "free_label": "Gratis",
+    "popular": "Popular",
+    "price_for_region": "Precio para {{region}}",
+    "save_amount": "Ahorra {{amount}} ({{percent}}%)",
+    "billing": {
+      "monthly": "Mensual",
+      "annual": "Anual"
+    },
+    "region_selector_label": "Región",
+    "region_groups": {
+      "europe": "🇪🇺 Europa",
+      "americas": "🌎 Américas",
+      "africa": "🌍 África"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratis",
+        "description": "Descubre la magia de Hakawa"
+      },
+      "conteur": {
+        "name": "Narrador",
+        "description": "Para apasionados de las historias"
+      },
+      "auteur": { "name": "Autor", "description": "Para creadores ambiciosos" },
+      "studio": { "name": "Estudio", "description": "Para profesionales" }
+    },
+    "features": {
+      "projects_1": "1 proyecto",
+      "projects_5": "5 proyectos",
+      "projects_unlimited": "Proyectos ilimitados",
+      "chapters_3_per_project": "3 capítulos por proyecto",
+      "chapters_unlimited": "Capítulos ilimitados",
+      "ai_generations_5_per_day": "5 generaciones IA/día",
+      "ai_generations_50_per_day": "50 generaciones IA/día",
+      "ai_generations_unlimited": "Generaciones IA ilimitadas",
+      "images_2_per_month": "2 ilustraciones/mes",
+      "images_20_per_month": "20 ilustraciones/mes",
+      "images_80_per_month": "80 ilustraciones/mes",
+      "images_200_per_month": "200 ilustraciones/mes",
+      "styles_1": "1 estilo de ilustración",
+      "styles_3": "3 estilos de ilustración",
+      "styles_all": "Todos los estilos",
+      "export_pdf_watermark": "Exportación PDF con marca de agua",
+      "export_pdf_epub": "Exportación PDF + EPUB",
+      "export_kdp_basic": "Exportación KDP básica",
+      "export_kdp_full": "Exportación KDP completa",
+      "kids_mode": "Modo niños",
+      "email_support": "Soporte por email",
+      "priority_support": "Soporte prioritario",
+      "ai_cover": "Portada con IA",
+      "priority_generation": "Prioridad de generación",
+      "everything_auteur": "Todo del plan Autor",
+      "api_access": "Acceso API",
+      "white_label": "Marca blanca",
+      "dedicated_support": "Soporte dedicado",
+      "training_1to1": "Formación 1 a 1"
+    },
+    "buttons": {
+      "start_free": "Empezar",
+      "try_7_days": "Probar 7 días"
+    },
+    "empty": {
+      "title": "Planes no disponibles",
+      "subtitle": "No se pudieron cargar los planes por el momento. Inténtalo de nuevo.",
+      "retry": "Reintentar"
+    },
+    "errors": {
+      "checkout": "Ocurrió un error. Por favor, inténtalo de nuevo."
+    }
   },
   "auth": {
     "login_title": "¡Bienvenido de nuevo!",

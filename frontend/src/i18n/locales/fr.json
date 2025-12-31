@@ -27,7 +27,12 @@
     "feature2_title": "IA Créative",
     "feature2_desc": "Notre IA génère texte et illustrations uniques",
     "feature3_title": "Publie facilement",
-    "feature3_desc": "Format prêt pour Amazon KDP en quelques clics"
+    "feature3_desc": "Format prêt pour Amazon KDP en quelques clics",
+    "trust_badges": {
+      "gdpr": "RGPD Conforme",
+      "ssl": "Paiement Sécurisé SSL",
+      "encrypted": "Données Chiffrées"
+    }
   },
   "auth": {
     "login_title": "Bon retour !",
@@ -191,9 +196,11 @@
   },
   "footer": {
     "tagline": "Transforme ton imagination en histoires magiques",
+    "about_text": "Créez des livres extraordinaires avec l'intelligence artificielle.",
     "product": "Produit",
     "features": "Fonctionnalités",
     "pricing": "Tarifs",
+    "how_it_works": "Comment ça marche",
     "faq": "FAQ",
     "company": "Entreprise",
     "about": "À propos",
@@ -202,8 +209,90 @@
     "legal": "Légal",
     "privacy": "Confidentialité",
     "terms": "CGU",
+    "sales_terms": "CGV",
+    "mentions": "Mentions Légales",
+    "contact": "Contact",
     "cookies": "Cookies",
     "rights": "Tous droits réservés"
+  },
+
+  "pricing": {
+    "title": "Choisissez votre plan",
+    "subtitle": "Créez des histoires extraordinaires avec l'IA",
+    "per_month": "/mois",
+    "per_year": "/an",
+    "free_label": "Gratuit",
+    "popular": "Populaire",
+    "price_for_region": "Prix pour {{region}}",
+    "save_amount": "Économisez {{amount}} ({{percent}}%)",
+    "billing": {
+      "monthly": "Mensuel",
+      "annual": "Annuel"
+    },
+    "region_selector_label": "Région",
+    "region_groups": {
+      "europe": "🇪🇺 Europe",
+      "americas": "🌎 Amériques",
+      "africa": "🌍 Afrique"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratuit",
+        "description": "Découvrez la magie de Hakawa"
+      },
+      "conteur": {
+        "name": "Conteur",
+        "description": "Pour les passionnés d'histoires"
+      },
+      "auteur": {
+        "name": "Auteur",
+        "description": "Pour les créateurs ambitieux"
+      },
+      "studio": { "name": "Studio", "description": "Pour les professionnels" }
+    },
+    "features": {
+      "projects_1": "1 projet",
+      "projects_5": "5 projets",
+      "projects_unlimited": "Projets illimités",
+      "chapters_3_per_project": "3 chapitres par projet",
+      "chapters_unlimited": "Chapitres illimités",
+      "ai_generations_5_per_day": "5 générations IA/jour",
+      "ai_generations_50_per_day": "50 générations IA/jour",
+      "ai_generations_unlimited": "Générations IA illimitées",
+      "images_2_per_month": "2 illustrations/mois",
+      "images_20_per_month": "20 illustrations/mois",
+      "images_80_per_month": "80 illustrations/mois",
+      "images_200_per_month": "200 illustrations/mois",
+      "styles_1": "1 style d'illustration",
+      "styles_3": "3 styles d'illustration",
+      "styles_all": "Tous les styles",
+      "export_pdf_watermark": "Export PDF avec watermark",
+      "export_pdf_epub": "Export PDF + EPUB",
+      "export_kdp_basic": "Export KDP basique",
+      "export_kdp_full": "Export KDP complet",
+      "kids_mode": "Mode enfant",
+      "email_support": "Support email",
+      "priority_support": "Support prioritaire",
+      "ai_cover": "Couverture IA",
+      "priority_generation": "Priorité de génération",
+      "everything_auteur": "Tout du plan Auteur",
+      "api_access": "Accès API",
+      "white_label": "White-label",
+      "dedicated_support": "Support dédié",
+      "training_1to1": "Formation 1-to-1"
+    },
+    "buttons": {
+      "start_free": "Commencer",
+      "try_7_days": "Essayer 7 jours"
+    },
+    "empty": {
+      "title": "Plans indisponibles",
+      "subtitle": "Impossible de charger les plans pour le moment. Réessayez.",
+      "retry": "Réessayer"
+    },
+    "errors": {
+      "checkout": "Une erreur est survenue. Veuillez réessayer."
+    }
   },
   "admin": {
     "dashboard": "Admin Dashboard",

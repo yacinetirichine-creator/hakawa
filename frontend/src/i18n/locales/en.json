@@ -23,7 +23,12 @@
     "feature2_title": "Creative AI",
     "feature2_desc": "Our AI generates unique text and illustrations",
     "feature3_title": "Publish easily",
-    "feature3_desc": "Format ready for Amazon KDP in a few clicks"
+    "feature3_desc": "Format ready for Amazon KDP in a few clicks",
+    "trust_badges": {
+      "gdpr": "GDPR compliant",
+      "ssl": "Secure SSL payment",
+      "encrypted": "Encrypted data"
+    }
   },
   "auth": {
     "login_title": "Welcome back!",
@@ -212,11 +217,94 @@
       "How do I export to KDP?"
     ]
   },
+  "pricing": {
+    "title": "Choose your plan",
+    "subtitle": "Create extraordinary stories with AI",
+    "per_month": "/month",
+    "per_year": "/year",
+    "free_label": "Free",
+    "popular": "Popular",
+    "price_for_region": "Price for {{region}}",
+    "save_amount": "Save {{amount}} ({{percent}}%)",
+    "billing": {
+      "monthly": "Monthly",
+      "annual": "Yearly"
+    },
+    "region_selector_label": "Region",
+    "region_groups": {
+      "europe": "🇪🇺 Europe",
+      "americas": "🌎 Americas",
+      "africa": "🌍 Africa"
+    },
+    "plans": {
+      "free": {
+        "name": "Free",
+        "description": "Discover Hakawa"
+      },
+      "conteur": {
+        "name": "Storyteller",
+        "description": "For story lovers"
+      },
+      "auteur": {
+        "name": "Author",
+        "description": "For ambitious creators"
+      },
+      "studio": {
+        "name": "Studio",
+        "description": "For professionals"
+      }
+    },
+    "features": {
+      "projects_1": "1 project",
+      "projects_5": "5 projects",
+      "projects_unlimited": "Unlimited projects",
+      "chapters_3_per_project": "3 chapters per project",
+      "chapters_unlimited": "Unlimited chapters",
+      "ai_generations_5_per_day": "5 AI generations/day",
+      "ai_generations_50_per_day": "50 AI generations/day",
+      "ai_generations_unlimited": "Unlimited AI generations",
+      "images_2_per_month": "2 illustrations/month",
+      "images_20_per_month": "20 illustrations/month",
+      "images_80_per_month": "80 illustrations/month",
+      "images_200_per_month": "200 illustrations/month",
+      "styles_1": "1 illustration style",
+      "styles_3": "3 illustration styles",
+      "styles_all": "All styles",
+      "export_pdf_watermark": "PDF export with watermark",
+      "export_pdf_epub": "PDF + EPUB export",
+      "export_kdp_basic": "Basic KDP export",
+      "export_kdp_full": "Full KDP export",
+      "kids_mode": "Kids mode",
+      "email_support": "Email support",
+      "priority_support": "Priority support",
+      "ai_cover": "AI cover",
+      "priority_generation": "Priority generation",
+      "everything_auteur": "Everything in Author",
+      "api_access": "API access",
+      "white_label": "White-label",
+      "dedicated_support": "Dedicated support",
+      "training_1to1": "1-to-1 training"
+    },
+    "buttons": {
+      "start_free": "Get started",
+      "try_7_days": "Try 7 days"
+    },
+    "empty": {
+      "title": "Plans unavailable",
+      "subtitle": "Unable to load plans at the moment. Please try again.",
+      "retry": "Retry"
+    },
+    "errors": {
+      "checkout": "An error occurred. Please try again."
+    }
+  },
   "footer": {
     "tagline": "Transform your imagination into magical stories",
+    "about_text": "Create extraordinary books with artificial intelligence.",
     "product": "Product",
     "features": "Features",
     "pricing": "Pricing",
+    "how_it_works": "How it works",
     "faq": "FAQ",
     "company": "Company",
     "about": "About",
@@ -225,6 +313,9 @@
     "legal": "Legal",
     "privacy": "Privacy",
     "terms": "Terms",
+    "sales_terms": "Sales terms",
+    "mentions": "Legal notice",
+    "contact": "Contact",
     "cookies": "Cookies",
     "rights": "All rights reserved"
   }

@@ -23,7 +23,12 @@
     "feature2_title": "IA Criativa",
     "feature2_desc": "A nossa IA gera texto e ilustrações únicas",
     "feature3_title": "Publique facilmente",
-    "feature3_desc": "Formato pronto para Amazon KDP em poucos cliques"
+    "feature3_desc": "Formato pronto para Amazon KDP em poucos cliques",
+    "trust_badges": {
+      "gdpr": "Conforme RGPD",
+      "ssl": "Pagamento SSL seguro",
+      "encrypted": "Dados encriptados"
+    }
   },
   "auth": {
     "login_title": "Bem-vindo de volta!",
@@ -133,11 +138,94 @@
       "Como exportar para KDP?"
     ]
   },
+  "pricing": {
+    "title": "Escolha o seu plano",
+    "subtitle": "Crie histórias extraordinárias com IA",
+    "per_month": "/mês",
+    "per_year": "/ano",
+    "free_label": "Grátis",
+    "popular": "Popular",
+    "price_for_region": "Preço para {{region}}",
+    "save_amount": "Poupe {{amount}} ({{percent}}%)",
+    "billing": {
+      "monthly": "Mensal",
+      "annual": "Anual"
+    },
+    "region_selector_label": "Região",
+    "region_groups": {
+      "europe": "🇪🇺 Europa",
+      "americas": "🌎 Américas",
+      "africa": "🌍 África"
+    },
+    "plans": {
+      "free": {
+        "name": "Grátis",
+        "description": "Descubra Hakawa"
+      },
+      "conteur": {
+        "name": "Contador",
+        "description": "Para apaixonados por histórias"
+      },
+      "auteur": {
+        "name": "Autor",
+        "description": "Para criadores ambiciosos"
+      },
+      "studio": {
+        "name": "Estúdio",
+        "description": "Para profissionais"
+      }
+    },
+    "features": {
+      "projects_1": "1 projeto",
+      "projects_5": "5 projetos",
+      "projects_unlimited": "Projetos ilimitados",
+      "chapters_3_per_project": "3 capítulos por projeto",
+      "chapters_unlimited": "Capítulos ilimitados",
+      "ai_generations_5_per_day": "5 gerações IA/dia",
+      "ai_generations_50_per_day": "50 gerações IA/dia",
+      "ai_generations_unlimited": "Gerações IA ilimitadas",
+      "images_2_per_month": "2 ilustrações/mês",
+      "images_20_per_month": "20 ilustrações/mês",
+      "images_80_per_month": "80 ilustrações/mês",
+      "images_200_per_month": "200 ilustrações/mês",
+      "styles_1": "1 estilo de ilustração",
+      "styles_3": "3 estilos de ilustração",
+      "styles_all": "Todos os estilos",
+      "export_pdf_watermark": "Exportação PDF com marca de água",
+      "export_pdf_epub": "Exportação PDF + EPUB",
+      "export_kdp_basic": "Exportação KDP básica",
+      "export_kdp_full": "Exportação KDP completa",
+      "kids_mode": "Modo infantil",
+      "email_support": "Suporte por email",
+      "priority_support": "Suporte prioritário",
+      "ai_cover": "Capa IA",
+      "priority_generation": "Prioridade de geração",
+      "everything_auteur": "Tudo do plano Autor",
+      "api_access": "Acesso API",
+      "white_label": "White-label",
+      "dedicated_support": "Suporte dedicado",
+      "training_1to1": "Formação 1 a 1"
+    },
+    "buttons": {
+      "start_free": "Começar",
+      "try_7_days": "Experimentar 7 dias"
+    },
+    "empty": {
+      "title": "Planos indisponíveis",
+      "subtitle": "Não foi possível carregar os planos neste momento. Tente novamente.",
+      "retry": "Tentar novamente"
+    },
+    "errors": {
+      "checkout": "Ocorreu um erro. Por favor, tente novamente."
+    }
+  },
   "footer": {
     "tagline": "Transforme a sua imaginação em histórias mágicas",
+    "about_text": "Crie livros extraordinários com inteligência artificial.",
     "product": "Produto",
     "features": "Funcionalidades",
     "pricing": "Preços",
+    "how_it_works": "Como funciona",
     "faq": "FAQ",
     "company": "Empresa",
     "about": "Sobre",
@@ -145,7 +233,10 @@
     "careers": "Carreiras",
     "legal": "Legal",
     "privacy": "Privacidade",
-    "terms": "Termos",
+    "terms": "Termos de uso",
+    "sales_terms": "Termos de venda",
+    "mentions": "Aviso legal",
+    "contact": "Contacto",
     "cookies": "Cookies",
     "rights": "Todos os direitos reservados"
   }

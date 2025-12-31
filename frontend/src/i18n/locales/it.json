@@ -23,7 +23,12 @@
     "feature2_title": "IA Creativa",
     "feature2_desc": "La nostra IA genera testo e illustrazioni uniche",
     "feature3_title": "Pubblica facilmente",
-    "feature3_desc": "Formato pronto per Amazon KDP in pochi clic"
+    "feature3_desc": "Formato pronto per Amazon KDP in pochi clic",
+    "trust_badges": {
+      "gdpr": "Conforme al GDPR",
+      "ssl": "Pagamento SSL sicuro",
+      "encrypted": "Dati crittografati"
+    }
   },
   "auth": {
     "login_title": "Bentornato!",
@@ -133,11 +138,94 @@
       "Come esporto su KDP?"
     ]
   },
+  "pricing": {
+    "title": "Scegli il tuo piano",
+    "subtitle": "Crea storie straordinarie con l'IA",
+    "per_month": "/mese",
+    "per_year": "/anno",
+    "free_label": "Gratis",
+    "popular": "Popolare",
+    "price_for_region": "Prezzo per {{region}}",
+    "save_amount": "Risparmia {{amount}} ({{percent}}%)",
+    "billing": {
+      "monthly": "Mensile",
+      "annual": "Annuale"
+    },
+    "region_selector_label": "Regione",
+    "region_groups": {
+      "europe": "🇪🇺 Europa",
+      "americas": "🌎 Americhe",
+      "africa": "🌍 Africa"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratis",
+        "description": "Scopri Hakawa"
+      },
+      "conteur": {
+        "name": "Narratore",
+        "description": "Per gli amanti delle storie"
+      },
+      "auteur": {
+        "name": "Autore",
+        "description": "Per creatori ambiziosi"
+      },
+      "studio": {
+        "name": "Studio",
+        "description": "Per i professionisti"
+      }
+    },
+    "features": {
+      "projects_1": "1 progetto",
+      "projects_5": "5 progetti",
+      "projects_unlimited": "Progetti illimitati",
+      "chapters_3_per_project": "3 capitoli per progetto",
+      "chapters_unlimited": "Capitoli illimitati",
+      "ai_generations_5_per_day": "5 generazioni IA/giorno",
+      "ai_generations_50_per_day": "50 generazioni IA/giorno",
+      "ai_generations_unlimited": "Generazioni IA illimitate",
+      "images_2_per_month": "2 illustrazioni/mese",
+      "images_20_per_month": "20 illustrazioni/mese",
+      "images_80_per_month": "80 illustrazioni/mese",
+      "images_200_per_month": "200 illustrazioni/mese",
+      "styles_1": "1 stile di illustrazione",
+      "styles_3": "3 stili di illustrazione",
+      "styles_all": "Tutti gli stili",
+      "export_pdf_watermark": "Esportazione PDF con watermark",
+      "export_pdf_epub": "Esportazione PDF + EPUB",
+      "export_kdp_basic": "Esportazione KDP base",
+      "export_kdp_full": "Esportazione KDP completa",
+      "kids_mode": "Modalità bambini",
+      "email_support": "Supporto email",
+      "priority_support": "Supporto prioritario",
+      "ai_cover": "Copertina IA",
+      "priority_generation": "Priorità di generazione",
+      "everything_auteur": "Tutto del piano Autore",
+      "api_access": "Accesso API",
+      "white_label": "White-label",
+      "dedicated_support": "Supporto dedicato",
+      "training_1to1": "Formazione 1 a 1"
+    },
+    "buttons": {
+      "start_free": "Inizia",
+      "try_7_days": "Prova 7 giorni"
+    },
+    "empty": {
+      "title": "Piani non disponibili",
+      "subtitle": "Impossibile caricare i piani al momento. Riprova.",
+      "retry": "Riprova"
+    },
+    "errors": {
+      "checkout": "Si è verificato un errore. Riprova."
+    }
+  },
   "footer": {
     "tagline": "Trasforma la tua immaginazione in storie magiche",
+    "about_text": "Crea libri straordinari con l'intelligenza artificiale.",
     "product": "Prodotto",
     "features": "Caratteristiche",
     "pricing": "Prezzi",
+    "how_it_works": "Come funziona",
     "faq": "FAQ",
     "company": "Azienda",
     "about": "Chi siamo",
@@ -145,7 +233,10 @@
     "careers": "Carriere",
     "legal": "Legale",
     "privacy": "Privacy",
-    "terms": "Termini",
+    "terms": "Condizioni",
+    "sales_terms": "Condizioni di vendita",
+    "mentions": "Note legali",
+    "contact": "Contatto",
     "cookies": "Cookie",
     "rights": "Tutti i diritti riservati"
   }

@@ -5,8 +5,13 @@ import { Card } from "../components/ui/Card";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../services/api";
+import { useTranslation } from "react-i18next";
+import { usePricing } from "../hooks/usePricing";
+import { RegionSelector } from "../components/ui/RegionSelector";
 
 export default function Pricing() {
+  const { t } = useTranslation();
+  const { region, convertFromEur, format } = usePricing();
   const [searchParams] = useSearchParams();
   const [billingPeriod, setBillingPeriod] = useState(() => {
     const billing = searchParams.get("billing");
@@ -65,6 +70,9 @@ export default function Pricing() {
 
       const response = await api.post("/stripe/create-checkout-session", {
         price_id: priceId,
+        plan_id: plan.id,
+        region_code: region.code,
+        currency: region.currency,
         billing_period: billingPeriod,
       });
 
@@ -72,7 +80,11 @@ export default function Pricing() {
       window.location.href = response.data.url;
     } catch (error) {
       console.error("Erreur lors de la création de la session:", error);
-      alert("Une erreur est survenue. Veuillez réessayer.");
+      alert(
+        t("pricing.errors.checkout", {
+          defaultValue: "Une erreur est survenue. Veuillez réessayer.",
+        })
+      );
     }
   };
 
@@ -108,11 +120,23 @@ export default function Pricing() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Choisissez votre plan
+            {t("pricing.title", { defaultValue: "Choisissez votre plan" })}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Créez des histoires extraordinaires avec l'IA
+            {t("pricing.subtitle", {
+              defaultValue: "Créez des histoires extraordinaires avec l'IA",
+            })}
           </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <RegionSelector />
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {t("pricing.price_for_region", {
+                region: region.code,
+                defaultValue: `Prix pour ${region.code}`,
+              })}
+            </p>
+          </div>
 
           {/* Billing Period Toggle */}
           <div className="inline-flex items-center bg-white dark:bg-gray-800 rounded-full p-1 shadow-md">
@@ -124,7 +148,7 @@ export default function Pricing() {
                   : "text-gray-600 dark:text-gray-400"
               }`}
             >
-              Mensuel
+              {t("pricing.billing.monthly", { defaultValue: "Mensuel" })}
             </button>
             <button
               onClick={() => setBillingPeriod("annual")}
@@ -134,7 +158,7 @@ export default function Pricing() {
                   : "text-gray-600 dark:text-gray-400"
               }`}
             >
-              Annuel
+              {t("pricing.billing.annual", { defaultValue: "Annuel" })}
               <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
                 -20%
               </span>
@@ -147,16 +171,21 @@ export default function Pricing() {
           <div className="max-w-xl mx-auto mb-12">
             <Card className="p-8 border border-gray-200 dark:border-gray-700 text-center">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Plans indisponibles
+                {t("pricing.empty.title", {
+                  defaultValue: "Plans indisponibles",
+                })}
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Impossible de charger les plans pour le moment. Réessayez.
+                {t("pricing.empty.subtitle", {
+                  defaultValue:
+                    "Impossible de charger les plans pour le moment. Réessayez.",
+                })}
               </p>
               <Button
                 onClick={fetchPricing}
                 className="bg-purple-600 hover:bg-purple-700 text-white"
               >
-                Réessayer
+                {t("pricing.empty.retry", { defaultValue: "Réessayer" })}
               </Button>
             </Card>
           </div>
@@ -164,14 +193,18 @@ export default function Pricing() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {plans.map((plan) => {
               const savings = getSavings(plan);
-              const price =
+              const basePriceEur =
                 billingPeriod === "monthly"
                   ? plan.price_monthly
                   : plan.price_annual;
+              const displayPrice =
+                basePriceEur === 0
+                  ? t("pricing.free_label", { defaultValue: "Gratuit" })
+                  : format(convertFromEur(basePriceEur));
               const pricePerMonth =
                 billingPeriod === "annual"
                   ? (plan.price_annual / 12).toFixed(2)
-                  : price;
+                  : basePriceEur;
 
               return (
                 <Card
@@ -184,7 +217,7 @@ export default function Pricing() {
                 >
                   {plan.popular && (
                     <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
-                      ⭐ Populaire
+                      ⭐ {t("pricing.popular", { defaultValue: "Populaire" })}
                     </div>
                   )}
 
@@ -195,30 +228,46 @@ export default function Pricing() {
                         {getPlanIcon(plan.id)}
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                        {plan.name}
+                        {t(`pricing.plans.${plan.id}.name`, {
+                          defaultValue: plan.name,
+                        })}
                       </h3>
 
                       {/* Price */}
                       <div className="mb-4">
-                        {price === 0 ? (
+                        {basePriceEur === 0 ? (
                           <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                            Gratuit
+                            {t("pricing.free_label", {
+                              defaultValue: "Gratuit",
+                            })}
                           </div>
                         ) : (
                           <>
                             <div className="flex items-baseline">
                               <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                                {price}€
+                                {displayPrice}
                               </span>
                               <span className="text-gray-600 dark:text-gray-400 ml-2">
-                                /{billingPeriod === "monthly" ? "mois" : "an"}
+                                {billingPeriod === "monthly"
+                                  ? t("pricing.per_month", {
+                                      defaultValue: "/mois",
+                                    })
+                                  : t("pricing.per_year", {
+                                      defaultValue: "/an",
+                                    })}
                               </span>
                             </div>
                             {billingPeriod === "annual" && savings && (
                               <div className="text-sm text-green-600 dark:text-green-400 mt-1">
-                                Économisez {savings.amount}€ (
-                                {savings.percentage}
-                                %)
+                                {t("pricing.save_amount", {
+                                  amount: format(
+                                    convertFromEur(savings.amount)
+                                  ),
+                                  percent: savings.percentage,
+                                  defaultValue: `Économisez ${format(
+                                    convertFromEur(savings.amount)
+                                  )} (${savings.percentage}%)`,
+                                })}
                               </div>
                             )}
                           </>
@@ -232,7 +281,9 @@ export default function Pricing() {
                         <li key={index} className="flex items-start">
                           <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                           <span className="text-sm text-gray-700 dark:text-gray-300">
-                            {feature}
+                            {t(`pricing.features.${feature}`, {
+                              defaultValue: feature,
+                            })}
                           </span>
                         </li>
                       ))}
@@ -247,7 +298,13 @@ export default function Pricing() {
                           : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white"
                       }`}
                     >
-                      {plan.id === "free" ? "Commencer" : "Essayer 7 jours"}
+                      {plan.id === "free"
+                        ? t("pricing.buttons.start_free", {
+                            defaultValue: "Commencer",
+                          })
+                        : t("pricing.buttons.try_7_days", {
+                            defaultValue: "Essayer 7 jours",
+                          })}
                     </Button>
                   </div>
                 </Card>

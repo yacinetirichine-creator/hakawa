@@ -1,7 +1,6 @@
-"""
-Service Stripe pour gérer les paiements et abonnements Hakawa
-"""
+"""Service Stripe pour gérer les paiements et abonnements Hakawa."""
 
+import os
 import stripe
 from typing import Optional, Dict, Any
 from datetime import datetime, timedelta
@@ -45,6 +44,96 @@ class StripeService:
             "illustration_styles": 999,
         },
     }
+
+    @staticmethod
+    def resolve_price_id(
+        plan_id: str, billing_period: str, currency: str
+    ) -> Optional[str]:
+        """Resolve a Stripe Price ID from plan/period/currency.
+
+        Priority:
+        1) Explicit multi-currency env vars (recommended)
+           - STRIPE_PRICE_ID_<PLAN>_<CURRENCY>_<PERIOD>
+             ex: STRIPE_PRICE_ID_CONTEUR_USD_MONTHLY
+        2) Legacy Hakawa settings (EUR only)
+           - settings.stripe_price_<plan>_<period>
+        3) Looser env vars without period (legacy / custom)
+           - STRIPE_PRICE_ID_<PLAN>_<CURRENCY>
+        """
+
+        plan = (plan_id or "").strip().lower()
+        period = (billing_period or "monthly").strip().lower()
+        curr = (currency or "EUR").strip().upper()
+
+        if plan not in {"conteur", "auteur", "studio"}:
+            return None
+        if period not in {"monthly", "annual"}:
+            return None
+
+        period_key = "MONTHLY" if period == "monthly" else "ANNUAL"
+        env_key = f"STRIPE_PRICE_ID_{plan.upper()}_{curr}_{period_key}"
+        if os.getenv(env_key):
+            return os.getenv(env_key)
+
+        # Legacy EUR-only settings
+        if curr == "EUR":
+            legacy_attr = f"stripe_price_{plan}_{period}"
+            legacy_value = getattr(settings, legacy_attr, None)
+            if legacy_value:
+                return legacy_value
+
+        # Legacy / custom: no period in key
+        env_key_no_period = f"STRIPE_PRICE_ID_{plan.upper()}_{curr}"
+        if os.getenv(env_key_no_period):
+            return os.getenv(env_key_no_period)
+
+        return None
+
+    @staticmethod
+    def _all_configured_price_ids() -> Dict[str, str]:
+        """Return mapping price_id -> plan (best-effort)."""
+
+        mapping: Dict[str, str] = {}
+
+        # Legacy settings
+        legacy = {
+            "conteur": [
+                settings.stripe_price_conteur_monthly,
+                settings.stripe_price_conteur_annual,
+            ],
+            "auteur": [
+                settings.stripe_price_auteur_monthly,
+                settings.stripe_price_auteur_annual,
+            ],
+            "studio": [
+                settings.stripe_price_studio_monthly,
+                settings.stripe_price_studio_annual,
+            ],
+        }
+        for plan, values in legacy.items():
+            for value in values:
+                if value:
+                    mapping[str(value)] = plan
+
+        # Multi-currency env vars
+        for key, value in os.environ.items():
+            if not key.startswith("STRIPE_PRICE_ID_"):
+                continue
+            if not value:
+                continue
+
+            # Expected formats:
+            # - STRIPE_PRICE_ID_<PLAN>_<CURRENCY>_<PERIOD>
+            # - STRIPE_PRICE_ID_<PLAN>_<CURRENCY>
+            parts = key.split("_")
+            # ['STRIPE','PRICE','ID',PLAN,...]
+            if len(parts) < 4:
+                continue
+            plan_part = parts[3].lower()
+            if plan_part in {"conteur", "auteur", "studio"}:
+                mapping[str(value)] = plan_part
+
+        return mapping
 
     @staticmethod
     def create_checkout_session(
@@ -377,14 +466,7 @@ class StripeService:
         Raises:
             ValueError: Si price_id inconnu
         """
-        price_mapping = {
-            settings.stripe_price_conteur_monthly: "conteur",
-            settings.stripe_price_conteur_annual: "conteur",
-            settings.stripe_price_auteur_monthly: "auteur",
-            settings.stripe_price_auteur_annual: "auteur",
-            settings.stripe_price_studio_monthly: "studio",
-            settings.stripe_price_studio_annual: "studio",
-        }
+        price_mapping = StripeService._all_configured_price_ids()
 
         tier = price_mapping.get(price_id)
         if not tier:

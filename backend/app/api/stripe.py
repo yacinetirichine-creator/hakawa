@@ -2,8 +2,9 @@
 Routes API pour les paiements Stripe
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Request, Header
+from fastapi import APIRouter, HTTPException, Depends, Request, Header, Body
 from typing import Optional
+from pydantic import BaseModel
 import stripe
 from app.config import settings
 from app.services.stripe_service import stripe_service
@@ -13,6 +14,14 @@ router = APIRouter()
 
 # Configuration Stripe
 stripe.api_key = settings.stripe_secret_key
+
+
+class CheckoutSessionCreateBody(BaseModel):
+    price_id: Optional[str] = None
+    plan_id: Optional[str] = None
+    region_code: Optional[str] = None
+    currency: Optional[str] = None
+    billing_period: str = "monthly"
 
 
 @router.get("/pricing")
@@ -29,19 +38,88 @@ async def get_pricing():
 
 @router.post("/create-checkout-session")
 async def create_checkout_session(
-    price_id: str,
-    billing_period: str = "monthly",
+    payload: Optional[CheckoutSessionCreateBody] = Body(default=None),
+    price_id: Optional[str] = None,
+    plan_id: Optional[str] = None,
+    region_code: Optional[str] = None,
+    currency: Optional[str] = None,
+    billing_period: Optional[str] = None,
     profile: dict = Depends(get_user_profile),
 ):
     """
     Crée une session Stripe Checkout pour un abonnement
 
     Args:
-        price_id: ID du prix Stripe
+        price_id: ID du prix Stripe (legacy / query)
+        plan_id: ID du plan Hakawa ("conteur", "auteur", "studio")
+        region_code: Pays (ex: "FR") pour déduire la devise si besoin
+        currency: Devise (ex: "EUR", "USD")
         billing_period: "monthly" ou "annual"
         profile: Profil utilisateur (injecté)
     """
     try:
+        body = payload.model_dump() if payload else {}
+
+        effective_plan_id = plan_id or body.get("plan_id")
+        effective_region_code = region_code or body.get("region_code")
+        effective_currency = currency or body.get("currency")
+        effective_billing_period = (
+            billing_period or body.get("billing_period") or "monthly"
+        )
+        effective_price_id = price_id or body.get("price_id")
+
+        resolved_price_id: Optional[str] = None
+
+        # If the frontend sends a plan, resolve the Stripe Price ID server-side
+        if effective_plan_id:
+            curr = (
+                (effective_currency or "").strip().upper()
+                if effective_currency
+                else None
+            )
+            if not curr:
+                region = (
+                    (effective_region_code or "").strip().upper()
+                    if effective_region_code
+                    else ""
+                )
+                region_currency = {
+                    # Europe
+                    "FR": "EUR",
+                    "BE": "EUR",
+                    "CH": "EUR",
+                    "ES": "EUR",
+                    # North America
+                    "US": "USD",
+                    "CA": "CAD",
+                    # LatAm
+                    "MX": "MXN",
+                    "AR": "ARS",
+                    "CO": "COP",
+                    # Africa
+                    "MA": "MAD",
+                    "SN": "XOF",
+                    "CI": "XOF",
+                }
+                curr = region_currency.get(region, "EUR")
+                if not effective_currency:
+                    effective_currency = curr
+
+            resolved_price_id = stripe_service.resolve_price_id(
+                plan_id=effective_plan_id,
+                billing_period=effective_billing_period,
+                currency=curr,
+            )
+
+        # Backward compatibility: allow explicitly provided Stripe price_id
+        if not resolved_price_id:
+            resolved_price_id = effective_price_id
+
+        if not resolved_price_id:
+            raise ValueError(
+                "Impossible de déterminer le price_id Stripe (plan_id/currency non configurés)."
+            )
+
         # URLs de redirection
         success_url = f"{settings.frontend_url}/dashboard?payment=success"
         cancel_url = f"{settings.frontend_url}/pricing?payment=cancelled"
@@ -49,10 +127,19 @@ async def create_checkout_session(
         # Créer la session
         session_data = stripe_service.create_checkout_session(
             user_id=profile["id"],
-            price_id=price_id,
+            price_id=resolved_price_id,
             success_url=success_url,
             cancel_url=cancel_url,
-            metadata={"billing_period": billing_period},
+            metadata={
+                "billing_period": effective_billing_period,
+                **({"plan_id": effective_plan_id} if effective_plan_id else {}),
+                **(
+                    {"region_code": effective_region_code}
+                    if effective_region_code
+                    else {}
+                ),
+                **({"currency": effective_currency} if effective_currency else {}),
+            },
         )
 
         return session_data

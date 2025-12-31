@@ -17,6 +17,7 @@ from app.api import (
     profiles,
     chatbot,
     stripe as stripe_routes,
+    geo,
     admin,
     account,
     manuscripts,
@@ -119,6 +120,7 @@ app.include_router(images.router, prefix="/api/images", tags=["images"])
 app.include_router(chatbot.router)
 app.include_router(exports.router, prefix="/api/exports", tags=["exports"])
 app.include_router(stripe_routes.router, prefix="/api/stripe", tags=["stripe"])
+app.include_router(geo.router, prefix="/api/geo", tags=["geo"])
 app.include_router(admin.router)  # Admin routes
 app.include_router(account.router)  # Account management routes
 app.include_router(manuscripts.router)  # Manuscript upload and improvement
