@@ -60,11 +60,11 @@ export default function CGU() {
                   <strong>Capital social :</strong> 1 000,00 EUR
                 </li>
                 <li>
-                  <strong>SIREN :</strong> 984 594 565
+                  <strong>SIREN :</strong> 938 848 546
                 </li>
                 <li>
-                  <strong>Siège social :</strong> 22 Rue du Docteur Louis
-                  Marçon, 34070 MONTPELLIER, France
+                  <strong>Siège social :</strong> 64 Avenue Marinville, 94100
+                  Saint-Maur-des-Fossés, France
                 </li>
                 <li>
                   <strong>Email :</strong>{" "}
@@ -76,8 +76,8 @@ export default function CGU() {
                   </a>
                 </li>
                 <li>
-                  <strong>Directeur de publication :</strong> Représentant légal
-                  de JARVIS SAS
+                  <strong>Directeur de publication :</strong> Présidente : Asmae
+                  HOUAT (nom d'usage TIRICHINE)
                 </li>
               </ul>
             </div>
@@ -413,7 +413,7 @@ export default function CGU() {
             <p>
               Les présentes CGU sont régies par le droit français. En cas de
               litige, et à défaut d'accord amiable, compétence exclusive est
-              attribuée au <strong>Tribunal de commerce de Montpellier</strong>.
+              attribuée au <strong>Tribunal de commerce de Créteil</strong>.
             </p>
           </section>
 

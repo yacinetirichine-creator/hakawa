@@ -56,11 +56,11 @@ export default function Privacy() {
                 <strong>Raison sociale :</strong> JARVIS SAS
               </li>
               <li>
-                <strong>SIREN :</strong> 984 594 565
+                <strong>SIREN :</strong> 938 848 546
               </li>
               <li>
-                <strong>Siège social :</strong> 22 Rue du Docteur Louis Marçon,
-                34070 MONTPELLIER
+                <strong>Siège social :</strong> 64 Avenue Marinville, 94100
+                Saint-Maur-des-Fossés
               </li>
               <li>
                 <strong>DPO (Délégué à la Protection des Données) :</strong>{" "}

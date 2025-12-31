@@ -12,8 +12,9 @@
 JARVIS  
 Forme juridique : Société par actions simplifiée (SAS)  
 Capital social : 1 000,00 EUR  
-SIREN : 984 594 565  
-Siège social : 22 Rue du Docteur Louis Marçon, 34070 MONTPELLIER, France  
+SIREN : 938 848 546  
+RCS : 938 848 546 R.C.S. Créteil  
+Siège social : 64 Avenue Marinville, 94100 Saint-Maur-des-Fossés, France  
 Date de création : 24 décembre 2024
 
 **Directeur de publication :** Représentant légal de JARVIS  
@@ -291,7 +292,7 @@ Il s'engage à ne pas importer de contenus violant des droits tiers.
 Le traitement des données personnelles est régi par notre **Politique de Confidentialité** et conforme au RGPD.
 
 **Responsable du traitement :**  
-JARVIS SAS - SIREN 984 594 565  
+JARVIS SAS - SIREN 938 848 546  
 Contact DPO : privacy@hakawa.app
 
 **Droits des Utilisateurs :**
@@ -463,7 +464,7 @@ Site : https://www.cm2c.net
 **Juridiction compétente :**  
 À défaut de règlement amiable, les tribunaux français sont seuls compétents.
 
-Siège de compétence : **Tribunal de commerce de Montpellier**
+Siège de compétence : **Tribunal de commerce de Créteil**
 
 ---
 
@@ -472,7 +473,7 @@ Siège de compétence : **Tribunal de commerce de Montpellier**
 Pour toute question concernant les CGU :
 
 **Email :** legal@hakawa.app  
-**Adresse :** JARVIS SAS, 22 Rue du Docteur Louis Marçon, 34070 MONTPELLIER, France  
+**Adresse :** JARVIS SAS, 64 Avenue Marinville, 94100 Saint-Maur-des-Fossés, France  
 **Téléphone :** +33 (0)4 XX XX XX XX _(à compléter)_
 
 ---

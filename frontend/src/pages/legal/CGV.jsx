@@ -55,17 +55,17 @@ export default function CGV() {
                   000,00 EUR
                 </li>
                 <li>
-                  <strong>SIREN :</strong> 984 594 565
+                  <strong>SIREN :</strong> 938 848 546
                 </li>
                 <li>
-                  <strong>Adresse :</strong> 22 Rue du Docteur Louis Marçon,
-                  34070 MONTPELLIER
+                  <strong>RCS :</strong> 938 848 546 R.C.S. Créteil
+                </li>
+                <li>
+                  <strong>Adresse :</strong> 64 Avenue Marinville, 94100
+                  Saint-Maur-des-Fossés
                 </li>
                 <li>
                   <strong>Email :</strong> billing@hakawa.app
-                </li>
-                <li>
-                  <strong>TVA :</strong> FR XX 984594565
                 </li>
               </ul>
             </div>
@@ -496,7 +496,7 @@ export default function CGV() {
             </h3>
             <p>
               À défaut d'accord amiable, compétence exclusive est attribuée au{" "}
-              <strong>Tribunal de commerce de Montpellier</strong>.
+              <strong>Tribunal de commerce de Créteil</strong>.
             </p>
           </section>
 

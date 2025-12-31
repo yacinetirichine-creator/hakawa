@@ -55,10 +55,10 @@ export default function Mentions() {
                     <strong>Capital social :</strong> 1 000,00 EUR
                   </li>
                   <li>
-                    <strong>SIREN :</strong> 984 594 565
+                    <strong>SIREN :</strong> 938 848 546
                   </li>
                   <li>
-                    <strong>TVA intracommunautaire :</strong> FR XX 984594565
+                    <strong>RCS :</strong> 938 848 546 R.C.S. Créteil
                   </li>
                   <li>
                     <strong>Date de création :</strong> 24 décembre 2024
@@ -72,9 +72,9 @@ export default function Mentions() {
                   Siège social
                 </h3>
                 <address className="not-italic text-sm text-gray-700 mb-4">
-                  22 Rue du Docteur Louis Marçon
+                  64 Avenue Marinville
                   <br />
-                  34070 MONTPELLIER
+                  94100 Saint-Maur-des-Fossés
                   <br />
                   France
                 </address>
@@ -83,7 +83,7 @@ export default function Mentions() {
                   Directeur de publication
                 </h3>
                 <p className="text-sm text-gray-700">
-                  Représentant légal de JARVIS SAS
+                  Présidente : Asmae HOUAT (nom d'usage TIRICHINE)
                 </p>
               </div>
             </div>
@@ -288,7 +288,7 @@ export default function Mentions() {
               >
                 Politique de Confidentialité
               </Link>
-              .
+              to="/legal/terms"
             </p>
             <div className="bg-white p-4 rounded-lg">
               <p className="text-sm text-gray-700">
@@ -361,7 +361,7 @@ export default function Mentions() {
             <p className="text-gray-700">
               En cas de litige et à défaut d'accord amiable, compétence
               exclusive est attribuée au{" "}
-              <strong>Tribunal de commerce de Montpellier</strong>, nonobstant
+              <strong>Tribunal de commerce de Créteil</strong>, nonobstant
               pluralité de défendeurs ou appel en garantie.
             </p>
           </section>
@@ -412,7 +412,7 @@ export default function Mentions() {
               </Link>
 
               <Link
-                to="/legal/terms"
+                to="/legal/cgu"
                 className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-orient-purple transition"
               >
                 <span className="text-2xl">⚖️</span>

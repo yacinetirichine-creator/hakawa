@@ -20,8 +20,9 @@ La présente Politique de Confidentialité décrit comment nous collectons, util
 
 JARVIS  
 Société par actions simplifiée (SAS)  
-SIREN : 984 594 565  
-Siège social : 22 Rue du Docteur Louis Marçon, 34070 MONTPELLIER, France  
+SIREN : 938 848 546  
+RCS : 938 848 546 R.C.S. Créteil  
+Siège social : 64 Avenue Marinville, 94100 Saint-Maur-des-Fossés, France  
 Email : privacy@hakawa.app  
 Site web : https://hakawa.app
 
@@ -372,8 +373,8 @@ privacy@hakawa.app
 
 **Par courrier postal :**  
 JARVIS SAS - Service Protection des Données  
-22 Rue du Docteur Louis Marçon  
-34070 MONTPELLIER, France
+64 Avenue Marinville  
+94100 Saint-Maur-des-Fossés, France
 
 **Directement sur la plateforme :**  
 Paramètres > Confidentialité et données
@@ -540,8 +541,8 @@ dpo@hakawa.app
 
 **Courrier postal :**  
 JARVIS SAS - Service Protection des Données  
-22 Rue du Docteur Louis Marçon  
-34070 MONTPELLIER, France
+64 Avenue Marinville  
+94100 Saint-Maur-des-Fossés, France
 
 **Téléphone :**  
 +33 (0)4 XX XX XX XX _(à compléter)_

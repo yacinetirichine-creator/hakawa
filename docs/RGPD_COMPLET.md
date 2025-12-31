@@ -680,7 +680,7 @@ Suite à l'arrêt Schrems II (CJUE, 16 juillet 2020), JARVIS a réalisé une év
 
 **Délégué à la Protection des Données (DPO) :**  
 Email : dpo@hakawa.app  
-Courrier : JARVIS SAS - DPO, 22 Rue du Docteur Louis Marçon, 34070 MONTPELLIER
+Courrier : JARVIS SAS - DPO, 64 Avenue Marinville, 94100 Saint-Maur-des-Fossés
 
 **Service protection des données :**  
 Email : privacy@hakawa.app

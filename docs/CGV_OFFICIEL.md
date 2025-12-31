@@ -14,9 +14,10 @@ Les présentes Conditions Générales de Vente (ci-après « CGV ») régissent 
 JARVIS  
 Société par actions simplifiée (SAS)  
 Capital social : 1 000,00 EUR  
-SIREN : 984 594 565  
-Siège social : 22 Rue du Docteur Louis Marçon, 34070 MONTPELLIER, France  
-Numéro de TVA intracommunautaire : FR XX 984594565 _(à obtenir)_  
+SIREN : 938 848 546  
+RCS : 938 848 546 R.C.S. Créteil  
+Siège social : 64 Avenue Marinville, 94100 Saint-Maur-des-Fossés, France  
+Numéro de TVA intracommunautaire : _(à obtenir)_  
 Email : contact@hakawa.app  
 Téléphone : +33 (0)4 XX XX XX XX _(à compléter)_
 
@@ -370,7 +371,7 @@ Cette licence prend fin à la résiliation de l'abonnement.
 Le traitement des données personnelles est conforme au **RGPD** (Règlement UE 2016/679).
 
 **Responsable du traitement :**  
-JARVIS SAS - SIREN 984 594 565
+JARVIS SAS - SIREN 938 848 546
 
 **Données collectées :**
 
@@ -441,7 +442,7 @@ https://ec.europa.eu/consumers/odr
 
 À défaut de règlement amiable, compétence exclusive des tribunaux français.
 
-**Siège de compétence :** Tribunal de commerce de Montpellier
+**Siège de compétence :** Tribunal de commerce de Créteil
 
 ---
 
@@ -491,11 +492,11 @@ Si une clause est déclarée nulle ou inapplicable, les autres clauses restent e
 ## ARTICLE 19 - CONTACT
 
 **JARVIS SAS**  
-22 Rue du Docteur Louis Marçon  
-34070 MONTPELLIER, France
+64 Avenue Marinville  
+94100 Saint-Maur-des-Fossés, France
 
-**SIREN :** 984 594 565  
-**TVA :** FR XX 984594565 _(à obtenir)_
+**SIREN :** 938 848 546  
+**TVA :** _(à obtenir)_
 
 **Email général :** contact@hakawa.app  
 **Facturation :** billing@hakawa.app  

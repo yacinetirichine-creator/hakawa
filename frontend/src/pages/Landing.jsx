@@ -305,7 +305,7 @@ export default function Landing() {
                   </li>
                   <li>
                     <Link
-                      to="/legal/terms"
+                      to="/legal/mentions"
                       className="hover:text-orient-purple transition"
                     >
                       {t("footer.mentions")}
@@ -334,7 +334,27 @@ export default function Landing() {
             </div>
 
             {/* Mentions légales entreprise */}
-            {/* Infos légales: à renseigner avec les données officielles (Mentions légales) */}
+            <div className="border-t border-gray-200 pt-8 pb-4">
+              <div className="text-center space-y-2">
+                <p className="text-sm text-gray-700 font-semibold">
+                  JARVIS — Société par actions simplifiée (SAS)
+                </p>
+                <p className="text-xs text-gray-600">
+                  Capital social : 1 000,00 € • SIREN : 938 848 546 • RCS
+                  Créteil
+                </p>
+                <p className="text-xs text-gray-600">
+                  Siège social : 64 Avenue Marinville, 94100
+                  Saint-Maur-des-Fossés, France
+                </p>
+
+                <div className="pt-4">
+                  <p className="text-sm text-gray-600">
+                    © 2024-2025 {t("app.name")} - {t("footer.tagline")}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
