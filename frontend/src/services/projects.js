@@ -12,7 +12,10 @@ export const projectsService = {
   },
 
   create: async (projectData, userId) => {
-    const response = await api.post(`/projects?user_id=${userId}`, projectData);
+    const response = await api.post(
+      `/projects/?user_id=${userId}`,
+      projectData
+    );
     return response.data;
   },
 
