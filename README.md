@@ -1,129 +1,164 @@
-# 🌙 HAKAWA
+# 🔧 Corrections - Génération d'histoires Hakawa
 
-> **L'art de raconter, réinventé**
+## 📋 Résumé du problème
 
-Hakawa est une plateforme de création de livres assistée par IA. De l'idée brute au livre publié sur Amazon KDP, Hakawa accompagne auteurs, parents et créateurs dans leur voyage créatif.
+La génération d'histoires ne fonctionne pas car **2 méthodes critiques sont appelées mais n'existent pas** :
 
----
-
-## ✨ Fonctionnalités
-
-- **💬 Atelier Créatif** : Chat conversationnel pour développer tes idées
-- **📐 Modélisation** : Structure ton récit avec personnages et chapitres
-- **✍️ Écriture Assistée** : L'IA t'aide à écrire, tu restes aux commandes
-- **🎨 Illustrations IA** : Génère des images manga, BD, réalistes...
-- **📚 Export KDP** : PDF prêts pour Amazon, EPUB pour Kindle
-- **👶 Mode Enfant** : Interface simplifiée pour les plus jeunes
+| Méthode manquante | Appelée depuis | Impact |
+|-------------------|----------------|--------|
+| `generationService.generatePlan()` | Plan.jsx | ❌ Impossible de générer un plan |
+| `generationService.writeChapter()` | Write.jsx | ❌ Impossible d'écrire avec l'IA |
 
 ---
 
-## 🎭 L'Histoire de Hakawa
-
-**Hakawa** vient de l'arabe **الحكواتي** (Al-Hakawati), le Conteur traditionnel du monde arabe.
-
-Dans les cafés de Bagdad, Damas et Le Caire, les Hakawatis captivaient les foules avec les récits des **Mille et Une Nuits**. Comme **Shéhérazade** qui sauva sa vie en racontant des histoires, Hakawa t'aide à donner vie aux tiennes.
-
----
-
-## 📁 Structure du Projet
+## ✅ Fichiers de correction fournis
 
 ```
-hakawa/
-├── docs/           # Documentation complète
-│   ├── BRAND_BOOK.md       # Identité de marque
-│   ├── UI_UX_GUIDE.md      # Guide design
-│   ├── BUSINESS_PLAN.md    # Stratégie commerciale
-│   └── TECH_SPECS.md       # Spécifications techniques
-├── frontend/       # Application React
-├── backend/        # API FastAPI
-└── supabase/       # Configuration base de données
+FIXES/
+├── backend_generation.py    → Remplace backend/app/api/generation.py
+├── frontend_generation.js   → Remplace frontend/src/services/generation.js
+└── README.md               → Ce fichier
 ```
 
 ---
 
-## 🚀 Démarrage Rapide
+## 🚀 Instructions d'application
 
-### Prérequis
-
-- Node.js 18+
-- Python 3.11+
-- Compte Supabase
-- Clés API : Anthropic, Replicate
-
-### Installation
+### Étape 1 : Backend
 
 ```bash
-# 1. Cloner
-git clone https://github.com/yourusername/hakawa.git
-cd hakawa
+# Sauvegarder l'ancien fichier
+cp backend/app/api/generation.py backend/app/api/generation.py.backup
 
-# 2. Backend
+# Copier le nouveau fichier
+cp FIXES/backend_generation.py backend/app/api/generation.py
+```
+
+### Étape 2 : Frontend
+
+```bash
+# Sauvegarder l'ancien fichier  
+cp frontend/src/services/generation.js frontend/src/services/generation.js.backup
+
+# Copier le nouveau fichier
+cp FIXES/frontend_generation.js frontend/src/services/generation.js
+```
+
+### Étape 3 : Redémarrer les services
+
+```bash
+# Backend (si en local)
 cd backend
-python -m venv venv
-source venv/bin/activate  # ou venv\Scripts\activate sur Windows
-pip install -r requirements.txt
-cp .env.example .env  # Éditer avec vos clés
+uvicorn app.main:app --reload
 
-# 3. Frontend
-cd ../frontend
-npm install
-cp .env.example .env
+# Frontend (si en local)
+cd frontend
+npm run dev
+```
 
-# 4. Lancer
-# Terminal 1:
-cd backend && uvicorn app.main:app --reload
+### Étape 4 : Déployer sur Render
 
-# Terminal 2:
-cd frontend && npm run dev
+```bash
+git add .
+git commit -m "fix: Ajout endpoints génération plan et chapitre"
+git push origin main
+```
+
+Render redéploiera automatiquement.
+
+---
+
+## 🧪 Tests de validation
+
+### Test 1 : Génération de plan
+
+1. Créer un nouveau projet avec titre, pitch, genre
+2. Aller sur `/create/{projectId}/plan`
+3. Cliquer sur **"Générer le plan"**
+4. ✅ Attendu : 10 chapitres avec titres et résumés apparaissent
+
+### Test 2 : Écriture de chapitre
+
+1. Aller sur `/create/{projectId}/write`
+2. Sélectionner un chapitre
+3. Cliquer sur **"Continuer avec l'IA"** (icône baguette magique)
+4. ✅ Attendu : Du texte est généré et ajouté à l'éditeur
+
+### Test 3 : Chat créatif (Explore)
+
+1. Aller sur `/create/{projectId}/explore`
+2. Envoyer un message comme "Raconte-moi l'histoire d'un dragon"
+3. ✅ Attendu : L'IA répond de manière contextuelle
+
+---
+
+## 📝 Nouvelles routes API ajoutées
+
+| Route | Méthode | Description |
+|-------|---------|-------------|
+| `/generation/plan` | POST | Génère un plan de X chapitres |
+| `/generation/chapter` | POST | Génère/continue un chapitre |
+
+### Exemple d'appel `/generation/plan`
+
+```json
+POST /generation/plan?user_id=xxx
+
+{
+  "project_id": "uuid-du-projet",
+  "num_chapters": 10
+}
+
+// Réponse
+[
+  {"id": "...", "title": "L'éveil", "summary": "...", "number": 1, ...},
+  {"id": "...", "title": "La quête", "summary": "...", "number": 2, ...},
+  ...
+]
+```
+
+### Exemple d'appel `/generation/chapter`
+
+```json
+POST /generation/chapter?user_id=xxx
+
+{
+  "chapter_id": "uuid-du-chapitre",
+  "instruction": "Ajoute plus de dialogue"  // optionnel
+}
+
+// Réponse
+{
+  "generated_text": "Le soleil se levait sur la vallée...",
+  "tokens_used": 1234,
+  "chapter_id": "uuid-du-chapitre"
+}
 ```
 
 ---
 
-## 📖 Documentation
+## ⚠️ Notes importantes
 
-| Document | Description |
-|----------|-------------|
-| [Brand Book](docs/BRAND_BOOK.md) | Identité visuelle, couleurs, typographie |
-| [UI/UX Guide](docs/UI_UX_GUIDE.md) | Composants, wireframes, design system |
-| [Business Plan](docs/BUSINESS_PLAN.md) | Stratégie, pricing, roadmap |
-| [Tech Specs](docs/TECH_SPECS.md) | Architecture, API, base de données |
+1. **Les anciens chapitres sont supprimés** quand on génère un nouveau plan. C'est voulu pour repartir de zéro.
 
----
+2. **Le contenu est AJOUTÉ**, pas remplacé, quand on clique sur "Continuer" dans l'éditeur.
 
-## 🎨 Palette de Couleurs
+3. **L'IA utilise le contexte** des chapitres précédents pour maintenir la cohérence narrative.
 
-| Couleur | Hex | Usage |
-|---------|-----|-------|
-| 🌙 Bleu Nuit | `#0F1B2E` | Fond principal |
-| ✨ Or | `#D4A853` | Accents, boutons |
-| 🏜️ Sable | `#E8DCC4` | Fonds clairs |
-| 📜 Parchemin | `#F5F0E6` | Cartes, texte |
+4. **En cas d'erreur de parsing JSON**, le backend crée des chapitres génériques (fallback).
 
 ---
 
-## 🛠️ Stack Technique
+## 🐛 Dépannage
 
-- **Frontend** : React 18, Vite, Tailwind CSS
-- **Backend** : FastAPI, Python 3.11
-- **Database** : Supabase (PostgreSQL)
-- **IA Texte** : Anthropic Claude
-- **IA Images** : Replicate (Flux, SDXL, Anything v4)
-- **Exports** : ReportLab, WeasyPrint, ebooklib
+### "Chapter not found"
+→ L'ID du chapitre est invalide. Vérifier que le chapitre existe en base.
 
----
+### "Project not found"  
+→ L'ID du projet est invalide ou l'utilisateur n'y a pas accès.
 
-## 📝 Licence
+### La génération est lente
+→ Normal, Claude peut prendre 10-30 secondes pour générer 1000+ mots.
 
-Projet privé - Tous droits réservés © 2025
-
----
-
-## 🙏 Crédits
-
-- Inspiré par la tradition des Hakawatis arabes
-- Anthropic Claude pour la génération de texte
-- Replicate pour la génération d'images
-
----
-
-*Hakawa - L'art de raconter, réinventé 🌙*
+### Le JSON est mal formaté
+→ L'IA n'a pas respecté le format. Le fallback crée des chapitres vides.
