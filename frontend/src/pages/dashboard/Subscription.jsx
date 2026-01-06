@@ -46,7 +46,7 @@ export default function Subscription() {
     const info = {
       free: {
         name: "🌙 Gratuit",
-        color: "gray",
+        colorClass: "bg-gray-100 text-gray-800",
         features: [
           "1 projet",
           "3 chapitres",
@@ -56,7 +56,7 @@ export default function Subscription() {
       },
       conteur: {
         name: "✨ Conteur",
-        color: "blue",
+        colorClass: "bg-blue-100 text-blue-800",
         features: [
           "5 projets",
           "Chapitres illimités",
@@ -66,7 +66,7 @@ export default function Subscription() {
       },
       auteur: {
         name: "📚 Auteur",
-        color: "purple",
+        colorClass: "bg-purple-100 text-purple-800",
         features: [
           "Projets illimités",
           "Générations IA illimitées",
@@ -76,7 +76,7 @@ export default function Subscription() {
       },
       studio: {
         name: "🏢 Studio",
-        color: "indigo",
+        colorClass: "bg-indigo-100 text-indigo-800",
         features: [
           "Tout du plan Auteur",
           "200 illustrations/mois",
@@ -122,9 +122,7 @@ export default function Subscription() {
               Gérez votre plan et vos paiements
             </p>
           </div>
-          <Badge
-            className={`bg-${tierInfo.color}-100 text-${tierInfo.color}-800`}
-          >
+          <Badge className={tierInfo.colorClass}>
             {tierInfo.name}
           </Badge>
         </div>
@@ -157,7 +155,7 @@ export default function Subscription() {
                 Crédits illustrations
               </div>
               <div className="text-lg font-semibold text-gray-900 dark:text-white">
-                {subscription.credits_illustrations.toLocaleString("fr-FR")}
+                {(subscription.credits_illustrations ?? 0).toLocaleString("fr-FR")}
               </div>
             </div>
           </div>
