@@ -20,7 +20,6 @@ ai_service = AIService()
 # SCHEMAS ADDITIONNELS
 # ═══════════════════════════════════════════════════════════════
 
-
 class PlanGenerationRequest(BaseModel):
     project_id: str
     num_chapters: int = 10
@@ -45,10 +44,10 @@ class ImproveRequest(BaseModel):
 # ENDPOINTS DE BASE
 # ═══════════════════════════════════════════════════════════════
 
-
 @router.post("/text", response_model=GenerationResponse)
 async def generate_text(
-    request: GenerationRequest, profile: dict = Depends(get_user_profile)
+    request: GenerationRequest,
+    profile: dict = Depends(get_user_profile)
 ):
     """Generate text using Claude AI"""
     try:
@@ -64,7 +63,8 @@ async def generate_text(
 
 @router.post("/continue", response_model=GenerationResponse)
 async def continue_writing(
-    request: ContinueRequest, profile: dict = Depends(get_user_profile)
+    request: ContinueRequest,
+    profile: dict = Depends(get_user_profile)
 ):
     """Continue writing from existing text"""
     try:
@@ -91,15 +91,15 @@ async def improve_text(
 # GÉNÉRATION DE PLAN
 # ═══════════════════════════════════════════════════════════════
 
-
 @router.post("/plan")
 async def generate_plan(
-    request: PlanGenerationRequest, profile: dict = Depends(get_user_profile)
+    request: PlanGenerationRequest,
+    profile: dict = Depends(get_user_profile)
 ):
     """
     Génère un plan de chapitres pour un projet.
     Supprime les chapitres existants et en crée de nouveaux.
-
+    
     Returns: Liste des chapitres créés
     """
     try:
@@ -128,7 +128,7 @@ Génère un plan détaillé et captivant pour ce livre :
 - Genre : {project.get('genre', 'Non défini')}
 - Style : {project.get('style', 'roman')}
 - Public cible : {project.get('target_audience', 'adult')}
-- Thèmes : {', '.join(project.get('themes', [])) or 'Non définis'}
+- Thèmes : {', '.join(project.get('themes', [])) if project.get('themes') else 'Non définis'}
 
 📝 INSTRUCTIONS :
 Génère exactement {request.num_chapters} chapitres avec une progression narrative cohérente.
@@ -151,30 +151,26 @@ Pour chaque chapitre, fournis :
         # Parser la réponse JSON
         try:
             text = result.text.strip()
-
+            
             # Nettoyer les backticks markdown si présents
             if "```json" in text:
-                text = text.split("```json")[1].split("```")[0]
+                text = text.split("```json")[1]
             if "```" in text:
-                text = (
-                    text.split("```")[1].split("```")[0]
-                    if text.count("```") >= 2
-                    else text
-                )
-
+                text = text.split("```")[0]
+            
             text = text.strip()
-
+            
             # Trouver le JSON dans la réponse
-            start_idx = text.find("[")
-            end_idx = text.rfind("]") + 1
+            start_idx = text.find('[')
+            end_idx = text.rfind(']') + 1
             if start_idx != -1 and end_idx > start_idx:
                 text = text[start_idx:end_idx]
-
+            
             chapters_data = json.loads(text)
-
+            
             if not isinstance(chapters_data, list):
-                raise ValueError("La réponse n'est pas une liste")
-
+                raise ValueError("Le résultat n'est pas une liste")
+                
         except (json.JSONDecodeError, ValueError) as e:
             # Fallback : créer des chapitres génériques
             chapters_data = [
@@ -203,9 +199,10 @@ Pour chaque chapitre, fournis :
                 created_chapters.append(result.data[0])
 
         # Mettre à jour le projet
-        supabase.table("projects").update(
-            {"chapter_count": len(created_chapters), "status": "planning"}
-        ).eq("id", request.project_id).execute()
+        supabase.table("projects").update({
+            "chapter_count": len(created_chapters),
+            "status": "planning"
+        }).eq("id", request.project_id).execute()
 
         return created_chapters
 
@@ -219,16 +216,16 @@ Pour chaque chapitre, fournis :
 # GÉNÉRATION DE CHAPITRE
 # ═══════════════════════════════════════════════════════════════
 
-
 @router.post("/chapter")
 async def generate_chapter_content(
-    request: ChapterGenerationRequest, profile: dict = Depends(get_user_profile)
+    request: ChapterGenerationRequest,
+    profile: dict = Depends(get_user_profile)
 ):
     """
     Génère ou continue le contenu d'un chapitre.
     Si le chapitre a déjà du contenu, il est continué.
     Sinon, un nouveau contenu est généré.
-
+    
     Returns: {generated_text, tokens_used, chapter_id}
     """
     try:
@@ -247,7 +244,10 @@ async def generate_chapter_content(
 
         # Récupérer le projet
         project_result = (
-            supabase.table("projects").select("*").eq("id", project_id).execute()
+            supabase.table("projects")
+            .select("*")
+            .eq("id", project_id)
+            .execute()
         )
         if not project_result.data:
             raise HTTPException(status_code=404, detail="Project not found")
@@ -270,7 +270,16 @@ async def generate_chapter_content(
         chapters_context = ""
         for ch in all_chapters.data or []:
             if ch["number"] < chapter["number"]:
-                chapters_context += f"\nChapitre {ch['number']} - {ch['title']}: {ch.get('summary', '')[:200]}"
+                chapters_context += f"\n--- Chapitre {ch['number']} : {ch['title']} ---\n"
+                if ch.get("content"):
+                    # Résumer le contenu précédent (derniers 300 caractères)
+                    content = ch["content"]
+                    if len(content) > 300:
+                        chapters_context += "..." + content[-300:]
+                    else:
+                        chapters_context += content
+                elif ch.get("summary"):
+                    chapters_context += f"[Résumé: {ch['summary']}]"
 
         # Déterminer si on continue ou on écrit depuis le début
         existing_content = (chapter.get("content") or "").strip()
@@ -299,7 +308,7 @@ Ne répète PAS le texte existant.
 """
         else:
             # ÉCRIRE un nouveau chapitre
-            prompt = f"""Tu es un écrivain talentueux. Écris un chapitre captivant pour ce livre.
+            prompt = f"""Tu es un écrivain talentueux. Écris ce chapitre de manière immersive et captivante.
 
 📖 CONTEXTE DU LIVRE :
 - Titre : {project.get('title', 'Sans titre')}
@@ -307,15 +316,20 @@ Ne répète PAS le texte existant.
 - Genre : {project.get('genre', 'Non défini')}
 - Style : {project.get('style', 'roman')}
 - Public : {project.get('target_audience', 'adult')}
+- Thèmes : {', '.join(project.get('themes', [])) if project.get('themes') else 'Non définis'}
 
-{f"📚 CHAPITRES PRÉCÉDENTS :{chapters_context}" if chapters_context else "📚 C'est le premier chapitre."}
+{f"📚 RÉSUMÉ DES CHAPITRES PRÉCÉDENTS :{chapters_context}" if chapters_context else "📚 C'est le PREMIER chapitre de l'histoire."}
 
-📑 CHAPITRE À ÉCRIRE : {chapter.get('title')}
-Objectif : {chapter.get('summary', 'Développe librement ce chapitre')}
+📑 CHAPITRE À ÉCRIRE : {chapter.get('title')} (Chapitre {chapter.get('number')})
+Objectif : {chapter.get('summary', 'Développe ce chapitre librement')}
 
-{f"✏️ INSTRUCTIONS : {request.instruction}" if request.instruction else ""}
+{f"✏️ Instructions de l'auteur : {request.instruction}" if request.instruction else ""}
 
-Écris le chapitre (environ 800-1500 mots) :"""
+---
+Écris le chapitre complet (800-1200 mots).
+Commence directement par le récit, sans répéter le titre.
+Utilise un style adapté au genre et au public cible.
+"""
 
         # Générer le contenu
         result = await ai_service.generate_text(prompt=prompt, max_tokens=3000)
