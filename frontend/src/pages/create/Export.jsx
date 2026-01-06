@@ -52,17 +52,48 @@ export default function Export() {
       // Trigger export generation
       const result = await exportsService.create(projectId, format);
 
+      // Cas 1: Le serveur retourne directement une URL de fichier
+      if (result?.file_url) {
+        window.open(result.file_url, "_blank");
+        toast.success(`${t("project.export_success")} ${format.toUpperCase()}`);
+        return;
+      }
+
+      // Cas 2: Le serveur retourne un export_id pour télécharger
       if (result?.export_id) {
         const response = await exportsService.download(result.export_id);
-        const blob = new Blob([response.data]);
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `${project?.title || "hakawa"}.${format}`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(url);
+
+        // Cas 2a: La réponse est un Blob (fichier binaire)
+        if (response.data instanceof Blob) {
+          const url = window.URL.createObjectURL(response.data);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `${project?.title || "hakawa"}.${format}`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          window.URL.revokeObjectURL(url);
+        }
+        // Cas 2b: La réponse contient une URL de téléchargement
+        else if (response.data?.download_url) {
+          window.open(response.data.download_url, "_blank");
+        }
+        // Cas 2c: La réponse est du texte (probablement une URL)
+        else if (typeof response.data === "string") {
+          window.open(response.data, "_blank");
+        }
+        // Cas 2d: Fallback - essayer de créer un blob quand même
+        else {
+          const blob = new Blob([response.data]);
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `${project?.title || "hakawa"}.${format}`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          window.URL.revokeObjectURL(url);
+        }
       }
 
       toast.success(`${t("project.export_success")} ${format.toUpperCase()}`);
