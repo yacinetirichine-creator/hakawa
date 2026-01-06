@@ -1,39 +1,38 @@
 """
-User profiles routes
+User profiles routes - VERSION SÉCURISÉE
+Utilise l'authentification JWT via get_user_profile
 """
 
 from fastapi import APIRouter, HTTPException, Depends
 from typing import Optional
 from app.models.schemas import UserProfile, UserProfileUpdate
 from app.utils.supabase import supabase
+from app.utils.admin import get_user_profile
 
 router = APIRouter()
 
 
 @router.get("/me", response_model=UserProfile)
-async def get_my_profile(user_id: str):
+async def get_my_profile(profile: dict = Depends(get_user_profile)):
     """Get current user's profile"""
-    try:
-        result = supabase.table("profiles").select("*").eq("id", user_id).execute()
-
-        if not result.data:
-            raise HTTPException(status_code=404, detail="Profile not found")
-
-        return result.data[0]
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    # Le profil est déjà récupéré et validé par get_user_profile
+    return profile
 
 
 @router.put("/me", response_model=UserProfile)
-async def update_my_profile(profile_data: UserProfileUpdate, user_id: str):
+async def update_my_profile(
+    profile_data: UserProfileUpdate,
+    profile: dict = Depends(get_user_profile)
+):
     """Update current user's profile"""
     try:
         update_data = profile_data.model_dump(exclude_unset=True)
 
         result = (
-            supabase.table("profiles").update(update_data).eq("id", user_id).execute()
+            supabase.table("profiles")
+            .update(update_data)
+            .eq("id", profile["id"])
+            .execute()
         )
 
         if not result.data:
@@ -47,9 +46,11 @@ async def update_my_profile(profile_data: UserProfileUpdate, user_id: str):
 
 
 @router.get("/me/stats")
-async def get_my_stats(user_id: str):
+async def get_my_stats(profile: dict = Depends(get_user_profile)):
     """Get user statistics"""
     try:
+        user_id = profile["id"]
+        
         # Get projects count
         projects = (
             supabase.table("projects")
@@ -69,18 +70,23 @@ async def get_my_stats(user_id: str):
             status_counts[status] = status_counts.get(status, 0) + 1
 
         # Get illustrations count
-        illustrations = (
-            supabase.table("illustrations")
-            .select("id", count="exact")
-            .in_("project_id", [p["id"] for p in projects.data])
-            .execute()
-        )
+        project_ids = [p["id"] for p in projects.data]
+        illustrations_count = 0
+        
+        if project_ids:
+            illustrations = (
+                supabase.table("illustrations")
+                .select("id", count="exact")
+                .in_("project_id", project_ids)
+                .execute()
+            )
+            illustrations_count = illustrations.count if illustrations.count else 0
 
         return {
             "total_projects": total_projects,
             "total_words": total_words,
             "total_chapters": total_chapters,
-            "total_illustrations": illustrations.count if illustrations.count else 0,
+            "total_illustrations": illustrations_count,
             "projects_by_status": status_counts,
             "published_books": status_counts.get("published", 0),
         }
@@ -89,13 +95,16 @@ async def get_my_stats(user_id: str):
 
 
 @router.post("/me/child-mode")
-async def toggle_child_mode(enabled: bool, user_id: str):
+async def toggle_child_mode(
+    enabled: bool,
+    profile: dict = Depends(get_user_profile)
+):
     """Toggle child mode"""
     try:
         result = (
             supabase.table("profiles")
             .update({"is_child_mode": enabled})
-            .eq("id", user_id)
+            .eq("id", profile["id"])
             .execute()
         )
 
@@ -108,23 +117,9 @@ async def toggle_child_mode(enabled: bool, user_id: str):
 
 
 @router.get("/me/credits")
-async def get_credits(user_id: str):
+async def get_credits(profile: dict = Depends(get_user_profile)):
     """Get user's illustration credits"""
-    try:
-        result = (
-            supabase.table("profiles")
-            .select("credits_illustrations, subscription_tier")
-            .eq("id", user_id)
-            .execute()
-        )
-
-        if not result.data:
-            raise HTTPException(status_code=404, detail="Profile not found")
-
-        profile = result.data[0]
-        return {
-            "credits_illustrations": profile.get("credits_illustrations", 0),
-            "subscription_tier": profile.get("subscription_tier", "free"),
-        }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    return {
+        "credits_illustrations": profile.get("credits_illustrations", 0),
+        "subscription_tier": profile.get("subscription_tier", "free"),
+    }
