@@ -50,7 +50,7 @@ export default function Plan() {
         chaptersService.getAll(projectId, user.id),
       ]);
       setProject(projectData);
-      setChapters(chaptersData.sort((a, b) => a.order_index - b.order_index));
+      setChapters(chaptersData.sort((a, b) => a.number - b.number));
     } catch (error) {
       console.error(error);
       toast.error(t("project.load_error"));
@@ -79,11 +79,8 @@ export default function Plan() {
   const handleAddChapter = async () => {
     try {
       const newChapter = await chaptersService.create(
-        {
-          project_id: projectId,
-          title: "Nouveau Chapitre",
-          order_index: chapters.length + 1,
-        },
+        projectId,
+        { title: "Nouveau Chapitre" },
         user.id
       );
       setChapters([...chapters, newChapter]);
@@ -97,7 +94,9 @@ export default function Plan() {
   const handleDeleteChapter = async (id) => {
     if (!window.confirm(t("project.delete_chapter_confirm"))) return;
     try {
-      await chaptersService.delete(id, user.id);
+      const chapter = chapters.find((c) => c.id === id);
+      if (!chapter) return;
+      await chaptersService.delete(projectId, chapter.number, user.id);
       setChapters(chapters.filter((c) => c.id !== id));
       toast.success(t("project.chapter_deleted"));
     } catch (error) {
@@ -113,8 +112,11 @@ export default function Plan() {
   const saveEditing = async () => {
     if (!editTitle.trim()) return;
     try {
+      const chapter = chapters.find((c) => c.id === editingId);
+      if (!chapter) return;
       const updated = await chaptersService.update(
-        editingId,
+        projectId,
+        chapter.number,
         { title: editTitle },
         user.id
       );
