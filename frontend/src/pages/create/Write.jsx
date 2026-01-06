@@ -50,7 +50,7 @@ export default function Write() {
       ]);
       setProject(projectData);
       const sortedChapters = chaptersData.sort(
-        (a, b) => a.order_index - b.order_index
+        (a, b) => a.number - b.number
       );
       setChapters(sortedChapters);
 
@@ -75,7 +75,12 @@ export default function Write() {
     if (!currentChapter) return;
     setSaving(true);
     try {
-      await chaptersService.update(currentChapter.id, { content }, user.id);
+      await chaptersService.update(
+        projectId,
+        currentChapter.number,
+        { content },
+        user.id
+      );
       // Update local state
       setChapters(
         chapters.map((c) =>
